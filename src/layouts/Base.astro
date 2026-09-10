@@ -4,7 +4,7 @@ import '../styles/base.css';
 import '../styles/motion.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { SITE } from '../site';
+import { SITE, cleanPath } from '../site';
 
 interface Props {
   title: string;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const { title, description, ogType = 'website', accent } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const canonical = new URL(cleanPath(Astro.url.pathname), Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
 ---
 

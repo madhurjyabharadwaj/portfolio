@@ -4,15 +4,18 @@ import { WORK_TYPE_LABEL } from '../lib/work';
 
 interface Props {
   entry: CollectionEntry<'work'>;
+  /** Heading level so the tile sits correctly under whatever heads its section. */
+  headingLevel?: 'h2' | 'h3';
 }
 
-const { entry } = Astro.props;
+const { entry, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
 const { title, name, type } = entry.data;
 ---
 
 <a class="tile" href={`/work/${entry.id}`} data-type={type}>
   <span class="pill" data-type={type}>{WORK_TYPE_LABEL[type]}</span>
-  <h3>{title}</h3>
+  <Heading>{title}</Heading>
   <span class="name label">{name}</span>
 </a>
 
@@ -31,6 +34,7 @@ const { title, name, type } = entry.data;
     text-decoration: none;
   }
 
+  h2,
   h3 {
     font-family: var(--font-display);
     font-size: var(--size-tile);
@@ -44,6 +48,7 @@ const { title, name, type } = entry.data;
     padding-top: 0.5rem;
   }
 
+  .tile:hover h2,
   .tile:hover h3 {
     color: var(--cobalt);
   }

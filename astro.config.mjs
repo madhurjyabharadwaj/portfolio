@@ -9,5 +9,9 @@ export default defineConfig({
   site: SITE_URL,
   output: 'static',
   trailingSlash: 'never',
-  build: { format: 'file' },
+  build: {
+    format: 'file',
+    // One request fewer per page: the whole stylesheet is small enough to inline.
+    inlineStylesheets: 'always',
+  },
 });

@@ -11,6 +11,11 @@ export const SITE = {
   formEndpoint: 'https://formspree.io/f/PLACEHOLDER',
 };
 
+// Build output is one .html file per route, so pathnames at build time look
+// like /about.html. Everything user-facing (canonical, nav state) uses this.
+export const cleanPath = (pathname: string) =>
+  pathname.replace(/\.html$/, '').replace(/\/index$/, '').replace(/\/$/, '') || '/';
+
 export const NAV = [
   { label: 'About', href: '/about' },
   { label: 'Experience', href: '/experience' },
