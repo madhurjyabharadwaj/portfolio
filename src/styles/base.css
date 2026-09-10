@@ -31,7 +31,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--white);
+  background: var(--frost);
   color: var(--slate);
   font-family: var(--font-text);
   font-size: var(--size-body);
