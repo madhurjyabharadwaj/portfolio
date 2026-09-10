@@ -60,7 +60,7 @@ const roles = [
   </section>
 
   <nav class="menu container" aria-label="Sections">
-    <ul>
+    <ul data-reveal-group>
       {
         menu.map((item) => (
           <li>
@@ -76,7 +76,7 @@ const roles = [
   </nav>
 
   <section class="scorecard container" aria-label="At a glance">
-    <ul>
+    <ul data-reveal-group>
       {
         scorecard.map((item) => (
           <li>
@@ -89,10 +89,10 @@ const roles = [
   </section>
 
   <section class="section container" aria-labelledby="what-title">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <h2 id="what-title" class="title">What I do</h2>
     </div>
-    <ul class="roles">
+    <ul class="roles" data-reveal-group>
       {
         roles.map((item) => (
           <li>
@@ -106,14 +106,14 @@ const roles = [
   </section>
 
   <section id="work" class="section container" aria-labelledby="work-title">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <h2 id="work-title" class="title">Work</h2>
       <p class="lead">
         Two case studies and two projects. The case studies are analysis work, where the output was a
         recommendation someone had to act on. The projects are things I designed and built myself.
       </p>
     </div>
-    <ul class="tiles">
+    <ul class="tiles" data-reveal-group>
       {
         work.map((entry) => (
           <li>

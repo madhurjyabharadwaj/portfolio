@@ -1,0 +1,218 @@
+/* Motion. Every rule here is either gated by a class that JavaScript adds, or
+   is a hover/transition that degrades to nothing. Reduced motion turns it
+   all off at the bottom of this file. */
+
+/* Hero entrance: one orchestrated sequence, only when JS is present so the
+   no-JS page never hides anything. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes arch-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes portrait-in {
+  from {
+    transform: translateY(6%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.js .hero-copy .display,
+.js .hero-copy .lead,
+.js .hero-copy .hero-actions {
+  animation: rise-in 600ms var(--ease-out) both;
+}
+
+.js .hero-copy .lead {
+  animation-delay: 160ms;
+}
+
+.js .hero-copy .hero-actions {
+  animation-delay: 320ms;
+}
+
+.js .hero-avatar {
+  animation: arch-in 700ms var(--ease-out) 240ms both;
+}
+
+.js .hero-avatar img {
+  animation: portrait-in 800ms var(--ease-out) 420ms both;
+}
+
+/* Scroll reveal. `.reveal` is only ever added by JavaScript. */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Card lift: small rise, slight scale, a shadow that widens and softens. */
+.menu-card,
+.tile {
+  transition:
+    transform var(--dur-card) var(--ease-spring),
+    box-shadow var(--dur-card) var(--ease-out),
+    border-color var(--dur-card) var(--ease-out);
+  will-change: transform;
+}
+
+.menu-card:hover,
+.tile:hover {
+  transform: translateY(-3px) scale(1.01);
+  border-color: transparent;
+  box-shadow:
+    0 2px 4px -2px rgba(20, 27, 61, 0.08),
+    0 18px 36px -16px rgba(20, 27, 61, 0.28);
+}
+
+.tile[data-type='case-study']:hover {
+  box-shadow:
+    0 2px 4px -2px rgba(39, 72, 245, 0.1),
+    0 18px 36px -16px rgba(39, 72, 245, 0.35);
+}
+
+.tile[data-type='project']:hover {
+  box-shadow:
+    0 2px 4px -2px rgba(199, 38, 79, 0.1),
+    0 18px 36px -16px rgba(199, 38, 79, 0.32);
+}
+
+/* Pill nav once the page has scrolled past the hero. */
+.site-header .pill-nav {
+  transition:
+    background-color var(--dur-card) var(--ease-out),
+    box-shadow var(--dur-card) var(--ease-out);
+}
+
+.site-header.is-scrolled .pill-nav {
+  background: rgba(255, 255, 255, 0.74);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px -14px rgba(20, 27, 61, 0.3);
+}
+
+/* Custom cursor. Both layers ignore pointer events so they never eat a click.
+   White with difference blending so they stay visible over ink and cobalt. */
+.has-cursor,
+.has-cursor a,
+.has-cursor button,
+.has-cursor label,
+.has-cursor summary {
+  cursor: none;
+}
+
+.has-cursor input,
+.has-cursor textarea,
+.has-cursor select,
+.has-cursor [contenteditable='true'] {
+  cursor: auto;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.cursor-visible .cursor-dot,
+.cursor-visible .cursor-ring {
+  opacity: 1;
+}
+
+.cursor-native .cursor-dot,
+.cursor-native .cursor-ring {
+  opacity: 0;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: #fff;
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1.5px solid #fff;
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    width var(--dur-card) var(--ease-spring),
+    height var(--dur-card) var(--ease-spring),
+    margin var(--dur-card) var(--ease-spring),
+    border-width var(--dur-card) var(--ease-out);
+}
+
+.cursor-hover .cursor-ring {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border-width: 1px;
+}
+
+.cursor-down .cursor-ring {
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-width: 2px;
+}
+
+/* Reduced motion: no entrance, no lift, no reveal, no cursor. */
+@media (prefers-reduced-motion: reduce) {
+  .js .hero-copy .display,
+  .js .hero-copy .lead,
+  .js .hero-copy .hero-actions,
+  .js .hero-avatar,
+  .js .hero-avatar img {
+    animation: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .menu-card:hover,
+  .tile:hover {
+    transform: none;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}

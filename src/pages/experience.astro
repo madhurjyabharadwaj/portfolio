@@ -54,12 +54,12 @@ const jobs = [
   accent="var(--cobalt)"
 >
   <div class="container">
-    <header class="page-head">
+    <header class="page-head" data-reveal>
       <h1 class="title">Experience</h1>
       <p class="lead">Most recent first.</p>
     </header>
 
-    <ol class="jobs">
+    <ol class="jobs" data-reveal-group>
       {
         jobs.map((job) => (
           <li class="job">
@@ -84,7 +84,7 @@ const jobs = [
       }
     </ol>
 
-    <section class="extra" aria-labelledby="education">
+    <section class="extra" aria-labelledby="education" data-reveal>
       <h2 id="education">Education</h2>
       <ul>
         <li>ESSEC Business School, Master in Management (Grande École), 2023 to 2026</li>
@@ -92,7 +92,7 @@ const jobs = [
       </ul>
     </section>
 
-    <section class="extra" aria-labelledby="certifications">
+    <section class="extra" aria-labelledby="certifications" data-reveal>
       <h2 id="certifications">Certifications</h2>
       <ul>
         <li>McKinsey Forward Program, 2026</li>
@@ -101,7 +101,7 @@ const jobs = [
       </ul>
     </section>
 
-    <section class="extra" aria-labelledby="languages">
+    <section class="extra" aria-labelledby="languages" data-reveal>
       <h2 id="languages">Languages</h2>
       <ul>
         <li>English (bilingual)</li>

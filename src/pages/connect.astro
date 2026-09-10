@@ -9,7 +9,7 @@ import { SITE } from '../site';
   accent="var(--ink)"
 >
   <div class="container">
-    <header class="page-head">
+    <header class="page-head" data-reveal>
       <h1 class="title">Let's talk</h1>
       <p class="lead">
         I'm looking for Product Manager roles in France and Europe, starting October 2026. Happy to walk
@@ -18,14 +18,14 @@ import { SITE } from '../site';
     </header>
 
     <div class="connect">
-      <ul class="ways" aria-label="Ways to reach me">
+      <ul class="ways" aria-label="Ways to reach me" data-reveal-group>
         <li><a href={`mailto:${SITE.email}`}>Email</a><span class="label">{SITE.email}</span></li>
         <li><a href={SITE.linkedin} rel="me">LinkedIn</a><span class="label">madhurjya-bharadwaj</span></li>
         <li><a href={SITE.github} rel="me">GitHub</a><span class="label">madhurjyabharadwaj</span></li>
         <li><a href={SITE.cv} download>Download CV</a><span class="label">PDF</span></li>
       </ul>
 
-      <form class="form" action={SITE.formEndpoint} method="POST">
+      <form class="form" data-reveal action={SITE.formEndpoint} method="POST">
         <div class="field">
           <label for="name">Name</label>
           <input id="name" name="name" type="text" autocomplete="name" required />
