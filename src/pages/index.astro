@@ -162,8 +162,9 @@ const roles = [
     background: var(--butter);
   }
 
-  .hero-avatar img {
-    width: 118%;
+  /* :global because the <Image> component's img is not scoped to this file. */
+  .hero-avatar :global(img) {
+    width: 130%;
     max-width: none;
     height: auto;
     margin-bottom: -2%;
@@ -257,12 +258,17 @@ const roles = [
   }
 
   .scorecard ul {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     gap: 1.5rem 2rem;
     padding-block: 2rem;
     border-top: 1px solid var(--hairline);
     border-bottom: 1px solid var(--hairline);
+  }
+
+  .scorecard li {
+    flex: 1 1 9rem;
   }
 
   .scorecard strong {
@@ -271,18 +277,14 @@ const roles = [
     font-weight: 400;
     font-size: var(--size-number);
     line-height: 1;
+    white-space: nowrap;
     color: var(--ink);
   }
 
   .scorecard .label {
     display: block;
+    max-width: 20ch;
     margin-top: 0.5rem;
-  }
-
-  @media (max-width: 720px) {
-    .scorecard ul {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 
   /* What I do: a hairline table, not cards. */
