@@ -19,7 +19,7 @@ const alsoBuilt = await Promise.all(
   accent="var(--raspberry)"
 >
   <div class="container">
-    <header class="page-head">
+    <header class="page-head" data-reveal>
       <h1 class="title">Work</h1>
       <p class="lead">
         Two case studies and two projects. The case studies are analysis work, where the output was a
@@ -27,7 +27,7 @@ const alsoBuilt = await Promise.all(
       </p>
     </header>
 
-    <ul class="tiles">
+    <ul class="tiles" data-reveal-group>
       {
         work.map((entry) => (
           <li>
@@ -38,11 +38,11 @@ const alsoBuilt = await Promise.all(
     </ul>
 
     <section class="also section" aria-labelledby="also-title">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 id="also-title" class="title">Also built</h2>
         <p class="lead">Two smaller things, listed because they're the ones I enjoyed most.</p>
       </div>
-      <ul class="also-list">
+      <ul class="also-list" data-reveal-group>
         {
           alsoBuilt.map(({ entry, Content }) => (
             <li>

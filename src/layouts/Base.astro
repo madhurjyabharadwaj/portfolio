@@ -1,6 +1,7 @@
 ---
 import '../styles/tokens.css';
 import '../styles/base.css';
+import '../styles/motion.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { SITE } from '../site';
@@ -30,6 +31,7 @@ const ogImage = new URL('/og.png', Astro.site);
     <link rel="sitemap" href="/sitemap.xml" />
     <meta name="theme-color" content="#2748f5" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
@@ -55,5 +57,6 @@ const ogImage = new URL('/og.png', Astro.site);
       <slot />
     </main>
     <Footer />
+    <script src="../scripts/motion.js"></script>
   </body>
 </html>
