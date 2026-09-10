@@ -11,6 +11,7 @@
   --raspberry: #c7264f;
   --raspberry-tint: #fbe4ea;
   --white: #ffffff;
+  --frost: #f3f5fb; /* page ground: a faint cobalt tint so white surfaces read as cards */
   --hairline: rgba(20, 27, 61, 0.14);
   --hairline-strong: rgba(20, 27, 61, 0.3);
 

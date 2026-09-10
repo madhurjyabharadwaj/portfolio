@@ -64,7 +64,8 @@ const roles = [
       {
         menu.map((item) => (
           <li>
-            <a href={item.href} class={`menu-card ${item.colour}`}>
+            <a href={item.href} class="menu-card">
+              <span class={`menu-mark ${item.colour}`} aria-hidden="true"></span>
               <span class="menu-label">{item.label}</span>
               <span class="menu-sub">{item.sub}</span>
             </a>
@@ -182,7 +183,8 @@ const roles = [
     }
   }
 
-  /* Card menu: the one bold element on the site. */
+  /* Card menu: white cards on the frost ground, one small mark each in its
+     section colour. The same colour reappears as the rule under that page's title. */
   .menu ul {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -192,16 +194,42 @@ const roles = [
   .menu-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 2.5rem;
+    gap: 0.5rem;
     min-height: 13rem;
     height: 100%;
     padding: 1.5rem;
+    border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-menu);
+    background: var(--white);
+    color: var(--ink);
     text-decoration: none;
   }
 
+  .menu-mark {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-bottom: auto;
+    border-radius: 4px;
+  }
+
+  .menu-mark.butter {
+    background: var(--butter);
+  }
+
+  .menu-mark.cobalt {
+    background: var(--cobalt);
+  }
+
+  .menu-mark.raspberry {
+    background: var(--raspberry);
+  }
+
+  .menu-mark.ink {
+    background: var(--ink);
+  }
+
   .menu-label {
+    margin-top: 2.5rem;
     font-family: var(--font-display);
     font-size: var(--size-tile);
     line-height: 1.1;
@@ -213,26 +241,11 @@ const roles = [
     font-size: var(--size-label);
     font-weight: 500;
     line-height: 1.4;
+    color: var(--muted);
   }
 
-  .menu-card.butter {
-    background: var(--butter);
-    color: var(--ink);
-  }
-
-  .menu-card.cobalt {
-    background: var(--cobalt);
-    color: var(--white);
-  }
-
-  .menu-card.raspberry {
-    background: var(--raspberry);
-    color: var(--white);
-  }
-
-  .menu-card.ink {
-    background: var(--ink);
-    color: var(--white);
+  .menu-card:hover .menu-label {
+    color: var(--cobalt);
   }
 
   @media (max-width: 900px) {
@@ -248,7 +261,10 @@ const roles = [
 
     .menu-card {
       min-height: 0;
-      gap: 1.25rem;
+    }
+
+    .menu-label {
+      margin-top: 1.25rem;
     }
   }
 
