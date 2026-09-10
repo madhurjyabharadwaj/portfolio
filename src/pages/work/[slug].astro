@@ -1,0 +1,93 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { WORK_TYPE_LABEL } from '../../lib/work';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const { title, name, type, links, deck } = entry.data;
+const { Content } = await render(entry);
+---
+
+<Base title={`${name} · Madhurjya Bharadwaj`} description={title} ogType="article" accent="var(--raspberry)">
+  <article class="container">
+    <header class="page-head">
+      <p class="meta">
+        <span class="pill" data-type={type}>{WORK_TYPE_LABEL[type]}</span>
+        <span class="label">{name}</span>
+      </p>
+      <h1 class="title">{title}</h1>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {
+      (deck || links.length > 0) && (
+        <div class="actions">
+          {deck && (
+            /* Placeholder: `deck` in the markdown frontmatter points at a file that
+               does not exist yet. Upload the cleaned PDF to public/decks/ and update
+               the path in src/content/work/<slug>.md. */
+            <a class="button primary" href={deck} download>
+              Download the deck
+            </a>
+          )}
+          {links.map((link) => (
+            <a class="button" href={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    <p class="back">
+      <a href="/work">All work</a>
+    </p>
+  </article>
+</Base>
+
+<style>
+  .container {
+    padding-top: var(--nav-offset);
+  }
+
+  .page-head {
+    max-width: 24ch;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-width: var(--measure);
+    margin-top: 3rem;
+  }
+
+  .back {
+    max-width: var(--measure);
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--hairline);
+    font-weight: 500;
+  }
+</style>
