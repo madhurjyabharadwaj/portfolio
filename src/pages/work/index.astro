@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import WorkTile from '../../components/WorkTile.astro';
+import { byOrder } from '../../lib/work';
+
+const work = (await getCollection('work')).sort(byOrder);
+const alsoBuilt = await Promise.all(
+  (await getCollection('alsoBuilt')).sort(byOrder).map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+  }))
+);
+---
+
+<Base
+  title="Work · Madhurjya Bharadwaj"
+  description="Two case studies and two projects. The case studies are analysis work, where the output was a recommendation someone had to act on. The projects are things I designed and built myself."
+  accent="var(--raspberry)"
+>
+  <div class="container">
+    <header class="page-head">
+      <h1 class="title">Work</h1>
+      <p class="lead">
+        Two case studies and two projects. The case studies are analysis work, where the output was a
+        recommendation someone had to act on. The projects are things I designed and built myself.
+      </p>
+    </header>
+
+    <ul class="tiles">
+      {
+        work.map((entry) => (
+          <li>
+            <WorkTile entry={entry} />
+          </li>
+        ))
+      }
+    </ul>
+
+    <section class="also section" aria-labelledby="also-title">
+      <div class="section-head">
+        <h2 id="also-title" class="title">Also built</h2>
+        <p class="lead">Two smaller things, listed because they're the ones I enjoyed most.</p>
+      </div>
+      <ul class="also-list">
+        {
+          alsoBuilt.map(({ entry, Content }) => (
+            <li>
+              <h3>{entry.data.name}</h3>
+              <div class="prose small">
+                <Content />
+              </div>
+              <ul class="links" aria-label={`${entry.data.name} links`}>
+                {entry.data.links.map((link) => (
+                  <li>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .container {
+    padding-top: var(--nav-offset);
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .tiles {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .also {
+    padding-bottom: 0;
+  }
+
+  .also-list > li {
+    padding-block: 2rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .also-list h3 {
+    font-family: var(--font-display);
+    font-size: var(--size-tile);
+    line-height: 1.15;
+  }
+
+  .also-list .prose {
+    margin-top: 1rem;
+  }
+
+  .also-list .prose.small :global(p:first-child) {
+    font-size: var(--size-body);
+    line-height: var(--leading-body);
+    color: var(--slate);
+  }
+
+  .links {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+</style>

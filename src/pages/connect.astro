@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+
+<Base
+  title="Let's talk · Madhurjya Bharadwaj"
+  description="I'm looking for Product Manager roles in France and Europe, starting October 2026. Happy to walk through any of the work above properly if it's useful."
+  accent="var(--ink)"
+>
+  <div class="container">
+    <header class="page-head">
+      <h1 class="title">Let's talk</h1>
+      <p class="lead">
+        I'm looking for Product Manager roles in France and Europe, starting October 2026. Happy to walk
+        through any of the work above properly if it's useful.
+      </p>
+    </header>
+
+    <div class="connect">
+      <ul class="ways" aria-label="Ways to reach me">
+        <li><a href={`mailto:${SITE.email}`}>Email</a><span class="label">{SITE.email}</span></li>
+        <li><a href={SITE.linkedin} rel="me">LinkedIn</a><span class="label">madhurjya-bharadwaj</span></li>
+        <li><a href={SITE.github} rel="me">GitHub</a><span class="label">madhurjyabharadwaj</span></li>
+        <li><a href={SITE.cv} download>Download CV</a><span class="label">PDF</span></li>
+      </ul>
+
+      <form class="form" action={SITE.formEndpoint} method="POST">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        <!-- Formspree honeypot: bots fill it, people never see it. -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
+        <button class="button primary" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .container {
+    padding-top: var(--nav-offset);
+  }
+
+  .connect {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .ways li {
+    display: flex;
+    flex-direction: column;
+    padding-block: 1rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .ways li:last-child {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .ways a {
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .ways a:hover {
+    color: var(--cobalt);
+    text-decoration: underline;
+  }
+
+  .form {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  label {
+    font-size: var(--size-label);
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid var(--hairline-strong);
+    border-radius: var(--radius-button);
+    background: var(--white);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  input:hover,
+  textarea:hover {
+    border-color: var(--ink);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 8rem;
+  }
+
+  .form .button {
+    justify-self: start;
+  }
+
+  @media (max-width: 720px) {
+    .connect {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

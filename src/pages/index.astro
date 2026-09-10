@@ -1,0 +1,350 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import WorkTile from '../components/WorkTile.astro';
+import avatar from '../assets/avatar.png';
+import { byOrder } from '../lib/work';
+import { SITE } from '../site';
+
+const work = (await getCollection('work')).sort(byOrder);
+
+const menu = [
+  { href: '/about', label: 'Who I am', sub: 'Engineer who moved into product', colour: 'butter' },
+  { href: '/experience', label: "Where I've worked", sub: "Air Liquide, L'Oréal, Spinny, ZoomRx", colour: 'cobalt' },
+  { href: '/work', label: 'Case studies and projects', sub: 'Two of each', colour: 'raspberry' },
+  { href: '/connect', label: "Let's talk", sub: 'Open to Product Manager roles', colour: 'ink' },
+];
+
+const scorecard = [
+  { figure: '4+ years', caption: 'in product and analytics' },
+  { figure: '4 sectors', caption: 'pharma, e-commerce, beauty, industrial' },
+  { figure: '20+ markets', caption: 'worked across' },
+  { figure: 'Paris', caption: 'open across Europe' },
+];
+
+const roles = [
+  { role: 'Product Owner', word: 'Backlog', text: 'PRDs, user stories, refinement. Taking a vague ask and turning it into something an engineering team can start on Monday.' },
+  { role: 'Product Manager', word: 'Roadmap', text: 'Vision, prioritisation, keeping stakeholders pointed the same way. Deciding what gets built and when, then holding that line when someone senior wants to jump the queue.' },
+  { role: 'Data', word: 'Evidence', text: 'SQL, Python, Power BI. I try to agree the metric before we build, because agreeing it afterwards never goes well.' },
+  { role: 'Build', word: 'Ship', text: 'I write and deploy my own products. It keeps me honest about what’s actually hard to build and what only sounds hard.' },
+];
+---
+
+<Base
+  title="Madhurjya Bharadwaj, Product Manager in Paris"
+  description="Product Manager in Paris. Four years across pharma research, consumer e-commerce, beauty and heavy industry. I build things on the side, and most of them are on this site."
+>
+  <section class="hero container" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <h1 id="hero-title" class="display">Hey.<br />I'm Madhurjya.</h1>
+      <p class="lead">
+        Product Manager in Paris. Four years across pharma research, consumer e-commerce, beauty and heavy
+        industry. I build things on the side, and most of them are on this site.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#work">See my work</a>
+        <a class="button" href={SITE.cv} download>Download CV</a>
+      </div>
+    </div>
+    <div class="hero-avatar">
+      <Image
+        src={avatar}
+        alt="Illustration of Madhurjya smiling at a laptop, in glasses, a dark jacket and a white t-shirt."
+        widths={[420, 640, 900]}
+        sizes="(min-width: 900px) 420px, 80vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  <nav class="menu container" aria-label="Sections">
+    <ul>
+      {
+        menu.map((item) => (
+          <li>
+            <a href={item.href} class={`menu-card ${item.colour}`}>
+              <span class="menu-label">{item.label}</span>
+              <span class="menu-sub">{item.sub}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <section class="scorecard container" aria-label="At a glance">
+    <ul>
+      {
+        scorecard.map((item) => (
+          <li>
+            <strong>{item.figure}</strong>
+            <span class="label">{item.caption}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="what-title">
+    <div class="section-head">
+      <h2 id="what-title" class="title">What I do</h2>
+    </div>
+    <ul class="roles">
+      {
+        roles.map((item) => (
+          <li>
+            <span class="label">{item.role}</span>
+            <h3>{item.word}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section id="work" class="section container" aria-labelledby="work-title">
+    <div class="section-head">
+      <h2 id="work-title" class="title">Work</h2>
+      <p class="lead">
+        Two case studies and two projects. The case studies are analysis work, where the output was a
+        recommendation someone had to act on. The projects are things I designed and built myself.
+      </p>
+    </div>
+    <ul class="tiles">
+      {
+        work.map((entry) => (
+          <li>
+            <WorkTile entry={entry} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: end;
+    gap: clamp(2rem, 5vw, 4rem);
+    padding-top: calc(var(--nav-offset) + clamp(2rem, 6vw, 5rem));
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .hero-copy .lead {
+    margin-top: 1.75rem;
+    color: var(--ink);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-avatar {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    aspect-ratio: 4 / 5;
+    max-width: 420px;
+    width: 100%;
+    justify-self: end;
+    overflow: hidden;
+    border-radius: 999px 999px var(--radius-menu) var(--radius-menu);
+    background: var(--butter);
+  }
+
+  .hero-avatar img {
+    width: 118%;
+    max-width: none;
+    height: auto;
+    margin-bottom: -2%;
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .hero-avatar {
+      justify-self: start;
+      max-width: 300px;
+    }
+  }
+
+  /* Card menu: the one bold element on the site. */
+  .menu ul {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .menu-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
+    min-height: 13rem;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: var(--radius-menu);
+    text-decoration: none;
+  }
+
+  .menu-label {
+    font-family: var(--font-display);
+    font-size: var(--size-tile);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .menu-sub {
+    font-size: var(--size-label);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .menu-card.butter {
+    background: var(--butter);
+    color: var(--ink);
+  }
+
+  .menu-card.cobalt {
+    background: var(--cobalt);
+    color: var(--white);
+  }
+
+  .menu-card.raspberry {
+    background: var(--raspberry);
+    color: var(--white);
+  }
+
+  .menu-card.ink {
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  @media (max-width: 900px) {
+    .menu ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .menu ul {
+      grid-template-columns: 1fr;
+    }
+
+    .menu-card {
+      min-height: 0;
+      gap: 1.25rem;
+    }
+  }
+
+  /* Scorecard strip */
+  .scorecard {
+    margin-top: var(--section-gap);
+  }
+
+  .scorecard ul {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem 2rem;
+    padding-block: 2rem;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .scorecard strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--size-number);
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .scorecard .label {
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .scorecard ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* What I do: a hairline table, not cards. */
+  .roles {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .roles li {
+    padding-block: 2rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .roles li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .roles h3 {
+    margin-top: 0.5rem;
+    font-family: var(--font-display);
+    font-size: var(--size-word);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .roles p {
+    margin-top: 1rem;
+    max-width: 44ch;
+  }
+
+  @media (min-width: 721px) {
+    .roles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .roles li {
+      padding: 2.5rem 2.5rem 2.5rem 0;
+    }
+
+    .roles li:nth-child(-n + 2) {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .roles li:nth-child(even) {
+      padding-left: 2.5rem;
+      padding-right: 0;
+      border-left: 1px solid var(--hairline);
+    }
+  }
+
+  /* Work tiles */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .tiles {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
