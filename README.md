@@ -27,7 +27,7 @@ Every push to `main` deploys production. Pull requests get preview URLs.
 
 | What | Where |
 |---|---|
-| Site URL | `SITE_URL` in `astro.config.mjs` and the `Sitemap:` line in `public/robots.txt`. Drives canonical links, Open Graph tags and `sitemap.xml`. |
+| Site URL | `SITE_URL` in `astro.config.mjs`, one line. Drives canonical links, Open Graph tags, `robots.txt` and `sitemap.xml`. It must match the address the site is actually served from, or link previews break. |
 | Formspree endpoint | `formEndpoint` in `src/site.ts`. Create a form at formspree.io and paste its URL. |
 | Entalpic deck | Upload the cleaned PDF to `public/decks/` and set `deck:` in `src/content/work/entalpic.md` to its path. Remove the `deck:` line to hide the button. |
 | CV | Replace `public/cv/Madhurjya-Bharadwaj-CV.pdf` with a newer file of the same name. |
