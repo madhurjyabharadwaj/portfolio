@@ -28,9 +28,24 @@ Every push to `main` deploys production. Pull requests get preview URLs.
 | What | Where |
 |---|---|
 | Site URL | `SITE_URL` in `astro.config.mjs`, one line. Drives canonical links, Open Graph tags, `robots.txt` and `sitemap.xml`. It must match the address the site is actually served from, or link previews break. |
-| Formspree endpoint | `formEndpoint` in `src/site.ts`. Create a form at formspree.io and paste its URL. |
+| Formspree endpoint | `formEndpoint` in `src/site.ts`. See "Connecting the contact form" below. |
 | Entalpic deck | Upload the cleaned PDF to `public/decks/` and set `deck:` in `src/content/work/entalpic.md` to its path. Remove the `deck:` line to hide the button. |
 | CV | Replace `public/cv/Madhurjya-Bharadwaj-CV.pdf` with a newer file of the same name. |
+
+## Connecting the contact form
+
+The form posts to Formspree, which forwards each submission to an inbox. There is no backend and no API key in the repo.
+
+1. Sign up at [formspree.io](https://formspree.io) using `mbharadwajofficial@gmail.com`, and confirm the address from the email they send. Submissions are delivered to the account email.
+2. Create a new form. Name it anything, "Portfolio" is fine.
+3. Formspree shows an endpoint like `https://formspree.io/f/xdkoqwer`. Copy it.
+4. Paste it over the `formEndpoint` value in `src/site.ts`, replacing the whole `PLACEHOLDER` URL.
+5. Commit and push. Vercel redeploys and the form goes live.
+6. Send yourself a test message from the live site and confirm it arrives.
+
+**Until step 4 is done the form does not render at all.** The Connect page shows a plain email link instead, so nobody can type a message that goes nowhere. That switch is automatic, driven by `isFormConfigured` in `src/site.ts`.
+
+The free tier allows 50 submissions a month, which is ample for a portfolio. The first submission from a new form may need a one-off confirmation click in your inbox, depending on Formspree's current flow.
 
 ## Adding work
 

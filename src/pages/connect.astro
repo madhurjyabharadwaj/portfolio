@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../site';
+import { SITE, isFormConfigured } from '../site';
 ---
 
 <Base
@@ -25,26 +25,102 @@ import { SITE } from '../site';
         <li><a href={SITE.cv} download>Download CV</a><span class="label">PDF</span></li>
       </ul>
 
-      <form class="form" data-reveal action={SITE.formEndpoint} method="POST">
-        <div class="field">
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" autocomplete="name" required />
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" required />
-        </div>
-        <div class="field">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="6" required></textarea>
-        </div>
-        <!-- Formspree honeypot: bots fill it, people never see it. -->
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
-        <button class="button primary" type="submit">Send</button>
-      </form>
+      {
+        isFormConfigured ? (
+          <form class="form" data-reveal action={SITE.formEndpoint} method="POST">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required />
+            </div>
+            {/* Sets the subject line of the email Formspree sends. */}
+            <input type="hidden" name="_subject" value="Message from the portfolio site" />
+            {/* Formspree honeypot: bots fill it, people never see it. */}
+            <input
+              type="text"
+              name="_gotcha"
+              tabindex="-1"
+              autocomplete="off"
+              class="sr-only"
+              aria-hidden="true"
+            />
+            <button class="button primary" type="submit">
+              Send
+            </button>
+            <p class="form-status" role="status" aria-live="polite" tabindex="-1" hidden />
+          </form>
+        ) : (
+          /* No form until `formEndpoint` in src/site.ts is real. Better a
+             working mailto than a box that swallows what someone types. */
+          <p class="form-fallback" data-reveal>
+            The form isn't connected yet. Email me directly at{' '}
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+          </p>
+        )
+      }
     </div>
   </div>
 </Base>
+
+<script>
+  // Submit through fetch so the sender stays on the page instead of being
+  // handed to a Formspree-branded thank-you screen. Without JavaScript the
+  // form still posts normally, which also works.
+  const form = document.querySelector<HTMLFormElement>('.form');
+  const status = document.querySelector<HTMLParagraphElement>('.form-status');
+
+  if (form && status) {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+    const show = (message: string, ok: boolean) => {
+      status.textContent = message;
+      status.classList.toggle('is-error', !ok);
+      status.hidden = false;
+      status.focus();
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!button) return;
+
+      button.disabled = true;
+      button.textContent = 'Sending';
+      status.hidden = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+
+        if (response.ok) {
+          form.reset();
+          show('Thanks. Your message is on its way.', true);
+          button.textContent = 'Sent';
+          return;
+        }
+
+        // Formspree returns the reason in an errors array when it can.
+        const data = await response.json().catch(() => null);
+        const reason = data?.errors?.map((e: { message: string }) => e.message).join(', ');
+        show(reason || 'That did not send. Please email me instead.', false);
+      } catch {
+        show('That did not send. Please email me instead.', false);
+      }
+
+      button.disabled = false;
+      button.textContent = 'Send';
+    });
+  }
+</script>
 
 <style>
   .container {
@@ -118,6 +194,29 @@ import { SITE } from '../site';
 
   .form .button {
     justify-self: start;
+  }
+
+  .form .button:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  .form-status {
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 3px solid var(--butter);
+    color: var(--ink);
+  }
+
+  .form-status.is-error {
+    border-left-color: var(--raspberry);
+    color: var(--raspberry);
+  }
+
+  .form-fallback {
+    padding-left: 1rem;
+    border-left: 3px solid var(--butter);
+    color: var(--ink);
   }
 
   @media (max-width: 720px) {
