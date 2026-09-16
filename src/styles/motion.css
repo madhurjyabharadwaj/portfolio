@@ -35,32 +35,97 @@
   }
 }
 
-.js .hero-copy > * {
+/* Each headline line is unmasked from its baseline, one after the other. */
+@keyframes line-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(-0.2em 0 -0.2em 0);
+  }
+}
+
+.js .hero-pill {
   animation: rise-in 600ms var(--ease-out) both;
 }
 
+.js .hero-title .line-in {
+  animation: line-in 900ms var(--ease-out) both;
+}
+
+.js .hero-title .line:nth-child(1) .line-in {
+  animation-delay: 80ms;
+}
+
+.js .hero-title .line:nth-child(2) .line-in {
+  animation-delay: 200ms;
+}
+
+.js .hero-title .line:nth-child(3) .line-in {
+  animation-delay: 320ms;
+}
+
+.js .hero-copy > * {
+  animation: rise-in 700ms var(--ease-out) both;
+}
+
+.js .hero-copy > :nth-child(1) {
+  animation-delay: 520ms;
+}
+
 .js .hero-copy > :nth-child(2) {
-  animation-delay: 120ms;
+  animation-delay: 640ms;
 }
 
 .js .hero-copy > :nth-child(3) {
-  animation-delay: 240ms;
-}
-
-.js .hero-copy > :nth-child(4) {
-  animation-delay: 360ms;
-}
-
-.js .hero-copy > :nth-child(5) {
-  animation-delay: 480ms;
+  animation-delay: 760ms;
 }
 
 .js .hero-avatar {
-  animation: arch-in 700ms var(--ease-out) 240ms both;
+  animation: arch-in 800ms var(--ease-out) 600ms both;
 }
 
 .js .hero-avatar img {
-  animation: portrait-in 800ms var(--ease-out) 420ms both;
+  animation: portrait-in 900ms var(--ease-out) 760ms both;
+}
+
+/* Scroll drift: as the page starts to move, the headline lines leave at
+   different speeds and the portrait lags behind, so the hero has depth.
+   Runs on the compositor in browsers with scroll-driven animations; the
+   rest simply scroll. */
+@supports (animation-timeline: scroll()) {
+  .hero-title .line,
+  .hero-avatar-wrap {
+    animation: drift-up linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 90vh;
+  }
+
+  .hero-title .line:nth-child(1) {
+    --drift: -12vh;
+  }
+
+  .hero-title .line:nth-child(2) {
+    --drift: -8vh;
+  }
+
+  .hero-title .line:nth-child(3) {
+    --drift: -4vh;
+  }
+
+  .hero-avatar-wrap {
+    --drift: 6vh;
+  }
+
+  @keyframes drift-up {
+    to {
+      transform: translateY(var(--drift, 0));
+    }
+  }
 }
 
 /* Scroll reveal. `.reveal` is only ever added by JavaScript. */
@@ -68,8 +133,8 @@
   opacity: 0;
   transform: translateY(14px);
   transition:
-    opacity 500ms var(--ease-out),
-    transform 500ms var(--ease-out);
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
 }
 
 .reveal.is-visible {
@@ -120,6 +185,77 @@
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   box-shadow: 0 10px 30px -14px rgba(20, 27, 61, 0.3);
+}
+
+/* Ambient light: two soft pools of the palette's own colours, drifting very
+   slowly behind everything. Radial gradients, not filters, so it costs
+   almost nothing to paint. The cursor nudges them a few pixels. */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient i {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  transform: translate3d(calc(var(--mx, 0) * 1px), calc(var(--my, 0) * 1px), 0);
+}
+
+.ambient-cobalt {
+  top: -20vmax;
+  right: -14vmax;
+  width: 70vmax;
+  height: 70vmax;
+  background: radial-gradient(
+    closest-side,
+    rgba(39, 72, 245, 0.16),
+    rgba(39, 72, 245, 0.05) 55%,
+    transparent 72%
+  );
+  animation: ambient-a 80s ease-in-out infinite alternate;
+}
+
+.ambient-butter {
+  bottom: -26vmax;
+  left: -18vmax;
+  width: 64vmax;
+  height: 64vmax;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 210, 63, 0.24),
+    rgba(255, 210, 63, 0.08) 55%,
+    transparent 72%
+  );
+  animation: ambient-b 96s ease-in-out infinite alternate;
+}
+
+@keyframes ambient-a {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: -8vmax 10vmax;
+  }
+}
+
+@keyframes ambient-b {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 12vmax -8vmax;
+  }
+}
+
+/* Keep the page's own surfaces above the light. */
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
 }
 
 /* Custom cursor. Both layers ignore pointer events so they never eat a click.
@@ -196,12 +332,22 @@
   border-width: 2px;
 }
 
-/* Reduced motion: no entrance, no lift, no reveal, no cursor. */
+/* Reduced motion: no entrance, no drift, no lift, no reveal, no cursor.
+   The ambient light stays, but still. */
 @media (prefers-reduced-motion: reduce) {
+  .js .hero-pill,
+  .js .hero-title .line-in,
   .js .hero-copy > *,
   .js .hero-avatar,
-  .js .hero-avatar img {
+  .js .hero-avatar img,
+  .hero-title .line,
+  .hero-avatar-wrap,
+  .ambient i {
     animation: none;
+  }
+
+  .ambient i {
+    transform: none;
   }
 
   .reveal {

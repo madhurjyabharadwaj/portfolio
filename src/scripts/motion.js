@@ -59,7 +59,7 @@ function initReveal() {
         observer.unobserve(el);
         el.classList.add('is-visible');
         const delay = parseInt(el.style.transitionDelay, 10) || 0;
-        const timer = setTimeout(() => finish(el), delay + 700);
+        const timer = setTimeout(() => finish(el), delay + 800);
         el.addEventListener(
           'transitionend',
           () => {
@@ -78,6 +78,77 @@ function initReveal() {
     el.style.transitionDelay = `${delay}ms`;
     observer.observe(el);
   });
+}
+
+/* ---------------------------------------------------------------------------
+   Scorecard figures count up once, when the strip first arrives. The final
+   number is already in the markup, so nothing depends on this running.
+--------------------------------------------------------------------------- */
+function initCounters() {
+  const nums = document.querySelectorAll('[data-count]');
+  if (!nums.length || !('IntersectionObserver' in window)) return;
+
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const run = (el) => {
+    const target = parseInt(el.dataset.count, 10);
+    const duration = 1100;
+    const start = performance.now();
+    const frame = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      el.textContent = String(Math.round(ease(t) * target));
+      if (t < 1) requestAnimationFrame(frame);
+    };
+    el.textContent = '0';
+    requestAnimationFrame(frame);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        run(entry.target);
+      });
+    },
+    { threshold: 0.6 }
+  );
+  nums.forEach((el) => observer.observe(el));
+}
+
+/* ---------------------------------------------------------------------------
+   Ambient light follows the cursor a little, with lag. Fine pointers only.
+--------------------------------------------------------------------------- */
+function initAmbient() {
+  const ambient = document.querySelector('.ambient');
+  if (!ambient) return;
+  let tx = 0;
+  let ty = 0;
+  let x = 0;
+  let y = 0;
+  let running = false;
+  const frame = () => {
+    x += (tx - x) * 0.04;
+    y += (ty - y) * 0.04;
+    ambient.style.setProperty('--mx', x.toFixed(2));
+    ambient.style.setProperty('--my', y.toFixed(2));
+    if (Math.abs(tx - x) > 0.2 || Math.abs(ty - y) > 0.2) {
+      requestAnimationFrame(frame);
+    } else {
+      running = false;
+    }
+  };
+  document.addEventListener(
+    'mousemove',
+    (event) => {
+      tx = (event.clientX / window.innerWidth - 0.5) * 40;
+      ty = (event.clientY / window.innerHeight - 0.5) * 40;
+      if (!running) {
+        running = true;
+        requestAnimationFrame(frame);
+      }
+    },
+    { passive: true }
+  );
 }
 
 /* ---------------------------------------------------------------------------
@@ -155,6 +226,10 @@ function initCursor() {
 
 if (!reduceMotion) {
   initReveal();
-  if (finePointer) initCursor();
+  initCounters();
+  if (finePointer) {
+    initCursor();
+    initAmbient();
+  }
 }
 initNav();

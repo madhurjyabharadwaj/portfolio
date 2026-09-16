@@ -1,11 +1,11 @@
 /* Fonts, reset, typography and the handful of shared classes. */
 
 @font-face {
-  font-family: 'Young Serif';
+  font-family: 'Bodoni Moda';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 900;
   font-display: swap;
-  src: url('/fonts/young-serif-latin.woff2') format('woff2');
+  src: url('/fonts/bodoni-moda-latin.woff2') format('woff2');
 }
 
 @font-face {
@@ -27,6 +27,15 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-offset);
+  scrollbar-color: var(--hairline-strong) transparent;
+  scrollbar-width: thin;
+  caret-color: var(--cobalt);
+}
+
+/* The parts the browser draws still carry the palette. */
+::selection {
+  background: var(--butter);
+  color: var(--ink);
 }
 
 body {
@@ -68,7 +77,7 @@ svg {
 a {
   color: var(--cobalt);
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.15em;
+  text-underline-offset: 0.18em;
 }
 
 a:hover {
@@ -99,15 +108,24 @@ h3 {
 .display {
   font-family: var(--font-display);
   font-size: var(--size-display);
+  font-weight: 500;
   line-height: var(--leading-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
+  font-variation-settings: 'opsz' 96;
 }
 
 .title {
   font-family: var(--font-display);
   font-size: var(--size-title);
-  line-height: var(--leading-title);
+  font-weight: 500;
+  line-height: 1;
   letter-spacing: -0.01em;
+  font-variation-settings: 'opsz' 72;
+}
+
+/* One word in the hero carries the accent. */
+.display .accent {
+  color: var(--cobalt);
 }
 
 .lead {
@@ -308,9 +326,11 @@ h3 {
 }
 
 .prose blockquote {
-  padding-left: 1.25rem;
-  border-left: 3px solid var(--butter);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background: var(--white);
   color: var(--ink);
+  font-weight: 500;
 }
 
 .prose code {
