@@ -32,12 +32,18 @@ const menu = [
   { href: '/connect', label: "Let's talk", sub: 'Roles, collaboration, or just product', colour: 'ink' },
 ];
 
+// Figures split into the number that counts up and the words after it.
+const figure = (text: string) => {
+  const match = /^(\d+)(.*)$/.exec(text);
+  return match ? { n: match[1], rest: match[2] } : { n: '', rest: text };
+};
+
 const scorecard = [
   { figure: '4+ years', caption: 'in product and analytics' },
   { figure: '4 sectors', caption: 'life sciences, e-commerce, beauty, industrial' },
   { figure: '20+ markets', caption: 'worked across' },
   { figure: `${productsBuilt} products`, caption: 'built, shipped, open source' },
-];
+].map((item) => ({ ...item, ...figure(item.figure) }));
 ---
 
 <Base
@@ -45,35 +51,43 @@ const scorecard = [
   description="I'm a Product Manager who takes products from the first PRD to running in production, and writes the code for my own on the side. Four sectors and twenty-plus markets have taught me one thing that carries across all of them: the real problem usually sits with whoever has to use the product, not whoever asked for it. That's where I start."
 >
   <section class="hero container" aria-labelledby="hero-title">
-    <div class="hero-copy">
-      <p class="label-pill"><span class="dot" aria-hidden="true"></span><span class="eyebrow">Product Manager</span></p>
-      <h1 id="hero-title" class="display">Right problem. Real product. Shipped.</h1>
-      <p class="lead">
-        I'm a Product Manager who takes products from the first PRD to running in production, and writes the
-        code for my own on the side. Four sectors and twenty-plus markets have taught me one thing that
-        carries across all of them: the real problem usually sits with whoever has to use the product, not
-        whoever asked for it. That's where I start.
-      </p>
-      <div class="hero-chips">
-        <p class="eyebrow">Working across the product lifecycle</p>
-        <ul class="tags" aria-label="Areas of work">
-          {chips.map((chip) => <li>{chip}</li>)}
-        </ul>
+    <p class="label-pill hero-pill"><span class="dot" aria-hidden="true"></span><span class="eyebrow">Product Manager</span></p>
+    <h1 id="hero-title" class="display hero-title">
+      <span class="line"><span class="line-in">Right problem.</span></span>
+      <span class="line"><span class="line-in">Real product.</span></span>
+      <span class="line"><span class="line-in accent">Shipped.</span></span>
+    </h1>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="lead">
+          I'm a Product Manager who takes products from the first PRD to running in production, and writes
+          the code for my own on the side. Four sectors and twenty-plus markets have taught me one thing that
+          carries across all of them: the real problem usually sits with whoever has to use the product, not
+          whoever asked for it. That's where I start.
+        </p>
+        <div class="hero-chips">
+          <p class="eyebrow">Working across the product lifecycle</p>
+          <ul class="tags" aria-label="Areas of work">
+            {chips.map((chip) => <li>{chip}</li>)}
+          </ul>
+        </div>
+        <div class="hero-actions">
+          <a class="button primary" href={SITE.cv} download>Resume ↓</a>
+          <a class="button" href="/connect">Let's connect →</a>
+        </div>
       </div>
-      <div class="hero-actions">
-        <a class="button primary" href={SITE.cv} download>Resume ↓</a>
-        <a class="button" href="/connect">Let's connect →</a>
+      <div class="hero-avatar-wrap">
+        <div class="hero-avatar">
+          <Image
+            src={avatar}
+            alt="Illustration of Madhurjya smiling at a laptop, in glasses, a dark jacket and a white t-shirt."
+            widths={[420, 640, 900]}
+            sizes="(min-width: 900px) 400px, 80vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
       </div>
-    </div>
-    <div class="hero-avatar">
-      <Image
-        src={avatar}
-        alt="Illustration of Madhurjya smiling at a laptop, in glasses, a dark jacket and a white t-shirt."
-        widths={[420, 640, 900]}
-        sizes="(min-width: 900px) 420px, 80vw"
-        loading="eager"
-        fetchpriority="high"
-      />
     </div>
   </section>
 
@@ -98,7 +112,7 @@ const scorecard = [
       {
         scorecard.map((item) => (
           <li>
-            <strong>{item.figure}</strong>
+            <strong>{item.n && <span class="num" data-count={item.n}>{item.n}</span>}{item.rest}</strong>
             <span class="label">{item.caption}</span>
           </li>
         ))
@@ -145,23 +159,35 @@ const scorecard = [
 </Base>
 
 <style>
-  /* Hero */
+  /* Hero: the headline owns the full width; copy and portrait sit beneath it. */
   .hero {
+    padding-top: calc(var(--nav-offset) + clamp(1.5rem, 4vw, 3.5rem));
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .hero-title {
+    margin-top: 1.5rem;
+    max-width: 12ch;
+  }
+
+  .hero-title .line {
+    display: block;
+  }
+
+  .hero-title .line-in {
+    display: inline-block;
+  }
+
+  .hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
     align-items: end;
     gap: clamp(2rem, 5vw, 4rem);
-    padding-top: calc(var(--nav-offset) + clamp(2rem, 5vw, 4rem));
-    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
   }
 
   .hero-copy > * + * {
     margin-top: 1.5rem;
-  }
-
-  .hero-copy .display {
-    max-width: 14ch;
-    text-wrap: balance;
   }
 
   .hero-copy .lead {
@@ -180,15 +206,19 @@ const scorecard = [
     margin-bottom: 1rem;
   }
 
+  .hero-avatar-wrap {
+    justify-self: end;
+    width: 100%;
+    max-width: 400px;
+  }
+
   .hero-avatar {
     position: relative;
     display: flex;
     align-items: flex-end;
     justify-content: center;
     aspect-ratio: 4 / 5;
-    max-width: 420px;
     width: 100%;
-    justify-self: end;
     overflow: hidden;
     border-radius: 999px 999px var(--radius-menu) var(--radius-menu);
     background: var(--butter);
@@ -203,12 +233,12 @@ const scorecard = [
   }
 
   @media (max-width: 720px) {
-    .hero {
+    .hero-grid {
       grid-template-columns: 1fr;
       align-items: start;
     }
 
-    .hero-avatar {
+    .hero-avatar-wrap {
       justify-self: start;
       max-width: 300px;
     }
@@ -263,8 +293,10 @@ const scorecard = [
     margin-top: 2.5rem;
     font-family: var(--font-display);
     font-size: var(--size-tile);
-    line-height: 1.1;
+    font-weight: 500;
+    line-height: 1.05;
     letter-spacing: -0.01em;
+    font-variation-settings: 'opsz' 48;
     text-wrap: balance;
   }
 
@@ -299,7 +331,7 @@ const scorecard = [
     }
   }
 
-  /* Scorecard strip */
+  /* Scorecard strip: the numbers are the peak of the page. */
   .scorecard {
     margin-top: var(--section-gap);
   }
@@ -309,7 +341,7 @@ const scorecard = [
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1.5rem 2rem;
-    padding-block: 2rem;
+    padding-block: clamp(2rem, 4vw, 3rem);
     border-top: 1px solid var(--hairline);
     border-bottom: 1px solid var(--hairline);
   }
@@ -321,17 +353,23 @@ const scorecard = [
   .scorecard strong {
     display: block;
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 500;
     font-size: var(--size-number);
     line-height: 1;
+    letter-spacing: -0.01em;
+    font-variation-settings: 'opsz' 72;
     white-space: nowrap;
     color: var(--ink);
+  }
+
+  .scorecard .num {
+    font-variant-numeric: tabular-nums;
   }
 
   .scorecard .label {
     display: block;
     max-width: 20ch;
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
   }
 
   /* Work cards */

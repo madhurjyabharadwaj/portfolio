@@ -136,7 +136,51 @@ const steps = [
     bottom: 0.75rem;
     left: 0.4375rem;
     width: 2px;
-    background: var(--hairline-strong);
+    background: var(--cobalt);
+    transform-origin: top;
+  }
+
+  /* The rail draws itself and each node fills as the list moves up the
+     viewport. Browsers without scroll-driven animations see the finished state. */
+  @supports (animation-timeline: view()) {
+    .jobs::before {
+      animation: draw-rail linear both;
+      animation-timeline: view();
+      animation-range: entry 10% exit 60%;
+    }
+
+    .node {
+      animation: fill-node linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+
+    @keyframes draw-rail {
+      from {
+        transform: scaleY(0);
+      }
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    @keyframes fill-node {
+      from {
+        background: var(--frost);
+        transform: scale(0.8);
+      }
+      to {
+        background: var(--cobalt);
+        transform: none;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .jobs::before,
+    .node {
+      animation: none;
+    }
   }
 
   .job {
@@ -165,6 +209,10 @@ const steps = [
 
   .job:first-child .node {
     background: var(--cobalt);
+  }
+
+  .job:first-child .node {
+    animation: none;
   }
 
   .job-when {

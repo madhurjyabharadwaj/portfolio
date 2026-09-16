@@ -52,6 +52,10 @@ const ogImage = new URL('/og.png', Astro.site);
   </head>
   <body style={accent ? `--accent: ${accent}` : undefined}>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="ambient" aria-hidden="true">
+      <i class="ambient-cobalt"></i>
+      <i class="ambient-butter"></i>
+    </div>
     <Nav />
     <main id="main">
       <slot />
