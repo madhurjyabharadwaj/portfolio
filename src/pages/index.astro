@@ -2,49 +2,67 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import WorkTile from '../components/WorkTile.astro';
+import WorkCard from '../components/WorkCard.astro';
 import avatar from '../assets/avatar.png';
-import { byOrder } from '../lib/work';
+import { WORK_TYPE_LABEL, byOrder } from '../lib/work';
 import { SITE } from '../site';
 
 const work = (await getCollection('work')).sort(byOrder);
+const alsoBuilt = await getCollection('alsoBuilt');
+
+// "Products built" on the scorecard: every work entry flagged product:true
+// plus everything under Also built. Add a file and the number moves.
+const productsBuilt = work.filter((entry) => entry.data.product).length + alsoBuilt.length;
+
+const chips = [
+  'Product Discovery',
+  'User Research',
+  'Roadmap & Prioritisation',
+  'Data & Analytics',
+  'AI & Data Products',
+  'Prototyping',
+  'Build & Run',
+  'Stakeholder Alignment',
+];
 
 const menu = [
   { href: '/about', label: 'Who I am', sub: 'Engineer who moved into product', colour: 'butter' },
-  { href: '/experience', label: "Where I've worked", sub: "Air Liquide, L'Oréal, Spinny, ZoomRx", colour: 'cobalt' },
-  { href: '/work', label: 'Case studies and projects', sub: 'Two of each', colour: 'raspberry' },
-  { href: '/connect', label: "Let's talk", sub: 'Open to Product Manager roles', colour: 'ink' },
+  { href: '/experience', label: "Where I've worked", sub: 'Enterprise, beauty, e-commerce, life sciences', colour: 'cobalt' },
+  { href: '/work', label: 'Case studies and projects', sub: 'Problems, trade-offs, shipped outcomes', colour: 'raspberry' },
+  { href: '/connect', label: "Let's talk", sub: 'Roles, collaboration, or just product', colour: 'ink' },
 ];
 
 const scorecard = [
   { figure: '4+ years', caption: 'in product and analytics' },
-  { figure: '4 sectors', caption: 'pharma, e-commerce, beauty, industrial' },
+  { figure: '4 sectors', caption: 'life sciences, e-commerce, beauty, industrial' },
   { figure: '20+ markets', caption: 'worked across' },
-  { figure: 'Paris', caption: 'open across Europe' },
-];
-
-const roles = [
-  { role: 'Product Owner', word: 'Backlog', text: 'PRDs, user stories, refinement. Taking a vague ask and turning it into something an engineering team can start on Monday.' },
-  { role: 'Product Manager', word: 'Roadmap', text: 'Vision, prioritisation, keeping stakeholders pointed the same way. Deciding what gets built and when, then holding that line when someone senior wants to jump the queue.' },
-  { role: 'Data', word: 'Evidence', text: 'SQL, Python, Power BI. I try to agree the metric before we build, because agreeing it afterwards never goes well.' },
-  { role: 'Build', word: 'Ship', text: 'I write and deploy my own products. It keeps me honest about what’s actually hard to build and what only sounds hard.' },
+  { figure: `${productsBuilt} products`, caption: 'built, shipped, open source' },
 ];
 ---
 
 <Base
-  title="Madhurjya Bharadwaj, Product Manager in Paris"
-  description="Product Manager in Paris. Four years across pharma research, consumer e-commerce, beauty and heavy industry. I build things on the side, and most of them are on this site."
+  title="Madhurjya Bharadwaj, Product Manager"
+  description="I'm a Product Manager who takes products from the first PRD to running in production, and writes the code for my own on the side. Four sectors and twenty-plus markets have taught me one thing that carries across all of them: the real problem usually sits with whoever has to use the product, not whoever asked for it. That's where I start."
 >
   <section class="hero container" aria-labelledby="hero-title">
     <div class="hero-copy">
-      <h1 id="hero-title" class="display">Hey.<br />I'm Madhurjya.</h1>
+      <p class="label-pill"><span class="dot" aria-hidden="true"></span><span class="eyebrow">Product Manager</span></p>
+      <h1 id="hero-title" class="display">Right problem. Real product. Shipped.</h1>
       <p class="lead">
-        Product Manager in Paris. Four years across pharma research, consumer e-commerce, beauty and heavy
-        industry. I build things on the side, and most of them are on this site.
+        I'm a Product Manager who takes products from the first PRD to running in production, and writes the
+        code for my own on the side. Four sectors and twenty-plus markets have taught me one thing that
+        carries across all of them: the real problem usually sits with whoever has to use the product, not
+        whoever asked for it. That's where I start.
       </p>
+      <div class="hero-chips">
+        <p class="eyebrow">Working across the product lifecycle</p>
+        <ul class="tags" aria-label="Areas of work">
+          {chips.map((chip) => <li>{chip}</li>)}
+        </ul>
+      </div>
       <div class="hero-actions">
-        <a class="button primary" href="#work">See my work</a>
-        <a class="button" href={SITE.cv} download>Download CV</a>
+        <a class="button primary" href={SITE.cv} download>Resume ↓</a>
+        <a class="button" href="/connect">Let's connect →</a>
       </div>
     </div>
     <div class="hero-avatar">
@@ -65,7 +83,7 @@ const roles = [
         menu.map((item) => (
           <li>
             <a href={item.href} class="menu-card">
-              <span class={`menu-mark ${item.colour}`} aria-hidden="true"></span>
+              <span class={`menu-mark ${item.colour}`} aria-hidden="true" />
               <span class="menu-label">{item.label}</span>
               <span class="menu-sub">{item.sub}</span>
             </a>
@@ -88,36 +106,37 @@ const roles = [
     </ul>
   </section>
 
-  <section class="section container" aria-labelledby="what-title">
-    <div class="section-head" data-reveal>
-      <h2 id="what-title" class="title">What I do</h2>
-    </div>
-    <ul class="roles" data-reveal-group>
-      {
-        roles.map((item) => (
-          <li>
-            <span class="label">{item.role}</span>
-            <h3>{item.word}</h3>
-            <p>{item.text}</p>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-
   <section id="work" class="section container" aria-labelledby="work-title">
     <div class="section-head" data-reveal>
       <h2 id="work-title" class="title">Work</h2>
       <p class="lead">
-        Two case studies and two projects. The case studies are analysis work, where the output was a
-        recommendation someone had to act on. The projects are things I designed and built myself.
+        Case studies and projects. Each one goes into how the problem was framed, the trade-offs, the
+        architecture where there is one, and what actually changed, across AI, B2B, data and consumer
+        products. Every write-up includes the part I'd do differently.
       </p>
     </div>
-    <ul class="tiles" data-reveal-group>
+    <ul class="cards">
       {
-        work.map((entry) => (
-          <li>
-            <WorkTile entry={entry} />
+        work.map((entry, i) => (
+          <li data-reveal>
+            <WorkCard
+              number={String(entry.data.order).padStart(2, '0')}
+              type={entry.data.type}
+              typeLabel={WORK_TYPE_LABEL[entry.data.type]}
+              category={entry.data.category}
+              year={entry.data.year}
+              title={entry.data.title}
+              subtitle={entry.data.subtitle}
+              problem={entry.data.problem}
+              role={entry.data.role}
+              outcome={entry.data.outcome}
+              tags={entry.data.tags}
+              cover={entry.data.cover}
+              coverAlt={entry.data.coverAlt}
+              href={`/work/${entry.id}`}
+              cta="Read the full case study →"
+              flip={i % 2 === 1}
+            />
           </li>
         ))
       }
@@ -129,16 +148,28 @@ const roles = [
   /* Hero */
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
     align-items: end;
     gap: clamp(2rem, 5vw, 4rem);
-    padding-top: calc(var(--nav-offset) + clamp(2rem, 6vw, 5rem));
+    padding-top: calc(var(--nav-offset) + clamp(2rem, 5vw, 4rem));
     padding-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
+  .hero-copy > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .hero-copy .display {
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+
   .hero-copy .lead {
-    margin-top: 1.75rem;
     color: var(--ink);
+  }
+
+  .hero-chips .eyebrow {
+    margin-bottom: 0.75rem;
   }
 
   .hero-actions {
@@ -303,66 +334,9 @@ const roles = [
     margin-top: 0.5rem;
   }
 
-  /* What I do: a hairline table, not cards. */
-  .roles {
+  /* Work cards */
+  .cards {
     display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .roles li {
-    padding-block: 2rem;
-    border-top: 1px solid var(--hairline);
-  }
-
-  .roles li:first-child {
-    border-top: 0;
-    padding-top: 0;
-  }
-
-  .roles h3 {
-    margin-top: 0.5rem;
-    font-family: var(--font-display);
-    font-size: var(--size-word);
-    line-height: 1;
-    letter-spacing: -0.01em;
-  }
-
-  .roles p {
-    margin-top: 1rem;
-    max-width: 44ch;
-  }
-
-  @media (min-width: 721px) {
-    .roles {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .roles li {
-      padding: 2.5rem 2.5rem 2.5rem 0;
-    }
-
-    .roles li:nth-child(-n + 2) {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .roles li:nth-child(even) {
-      padding-left: 2.5rem;
-      padding-right: 0;
-      border-left: 1px solid var(--hairline);
-    }
-  }
-
-  /* Work tiles */
-  .tiles {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
-
-  @media (max-width: 640px) {
-    .tiles {
-      grid-template-columns: 1fr;
-    }
+    gap: 1.5rem;
   }
 </style>

@@ -1,0 +1,269 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * The rich work card used on the home page and /work. The whole card is one
+ * link: the title carries the href and a pseudo-element stretches it over the
+ * card, so the accessible name stays short.
+ */
+interface Props {
+  title: string;
+  subtitle: string;
+  problem: string;
+  role: string;
+  outcome: string;
+  tags: string[];
+  href: string;
+  cta: string;
+  number?: string;
+  type?: 'case-study' | 'project';
+  typeLabel?: string;
+  category?: string;
+  year?: number;
+  cover?: ImageMetadata;
+  coverAlt?: string;
+  /** Put the cover on the right instead of the left. */
+  flip?: boolean;
+  headingLevel?: 'h2' | 'h3';
+  external?: boolean;
+}
+
+const {
+  title,
+  subtitle,
+  problem,
+  role,
+  outcome,
+  tags,
+  href,
+  cta,
+  number,
+  type,
+  typeLabel,
+  category,
+  year,
+  cover,
+  coverAlt = '',
+  flip = false,
+  headingLevel = 'h3',
+  external = false,
+} = Astro.props;
+const Heading = headingLevel;
+---
+
+<article class:list={['work-card', { flip, 'no-cover': !cover }]} data-type={type}>
+  {
+    cover && (
+      <div class="card-cover">
+        <Image src={cover} alt={coverAlt} widths={[560, 840, 1120]} sizes="(min-width: 900px) 520px, 100vw" />
+      </div>
+    )
+  }
+  <div class="card-body">
+    <p class="card-meta">
+      {number && <span class="card-number">{number}</span>}
+      <span class="card-cat">
+        {type && typeLabel && <span class="pill" data-type={type}>{typeLabel}</span>}
+        {category && <span>{category}</span>}
+      </span>
+      {year && <span class="card-year">{year}</span>}
+    </p>
+    <Heading class="card-title">
+      <a class="card-link" href={href} rel={external ? 'noopener' : undefined}>
+        {title}
+      </a>
+    </Heading>
+    <p class="card-subtitle">{subtitle}</p>
+    <blockquote class="card-problem">
+      <span class="eyebrow">Problem statement</span>
+      <p>“{problem}”</p>
+    </blockquote>
+    <dl class="card-facts">
+      <div>
+        <dt>My role</dt>
+        <dd>{role}</dd>
+      </div>
+      <div>
+        <dt>Key outcome</dt>
+        <dd>{outcome}</dd>
+      </div>
+    </dl>
+    <ul class="tags" aria-label="Tags">
+      {tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    <span class="card-cta" aria-hidden="true">{cta}</span>
+  </div>
+</article>
+
+<style>
+  .work-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: center;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-menu);
+    background: var(--white);
+  }
+
+  .work-card.flip .card-cover {
+    order: 2;
+  }
+
+  .work-card.no-cover {
+    grid-template-columns: 1fr;
+  }
+
+  .card-cover {
+    overflow: hidden;
+    border-radius: var(--radius-tile);
+    border: 1px solid var(--hairline);
+    background: var(--frost);
+    aspect-ratio: 4 / 3;
+  }
+
+  .card-cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+    min-width: 0;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    font-size: var(--size-label);
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .card-number {
+    font-weight: 600;
+    color: var(--cobalt);
+  }
+
+  .card-cat {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .card-year {
+    margin-left: auto;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: var(--size-tile);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .card-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  /* Stretch the title link over the whole card. */
+  .card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .work-card:hover .card-link {
+    color: var(--cobalt);
+  }
+
+  .card-subtitle {
+    margin-top: -0.4rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .card-problem {
+    width: 100%;
+    padding: 0.9rem 1.1rem;
+    border-left: 3px solid var(--cobalt);
+    border-radius: 0 10px 10px 0;
+    background: var(--cobalt-tint);
+  }
+
+  .card-problem .eyebrow {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--cobalt);
+  }
+
+  .card-problem p {
+    color: var(--ink);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .card-facts {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .card-facts dt {
+    display: inline;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .card-facts dt::after {
+    content: ': ';
+  }
+
+  .card-facts dd {
+    display: inline;
+    margin: 0;
+    color: var(--slate);
+  }
+
+  .card-cta {
+    margin-top: 0.25rem;
+    padding-bottom: 2px;
+    border-bottom: 2px solid var(--ink);
+    color: var(--ink);
+    font-weight: 600;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .work-card:hover .card-cta {
+    color: var(--cobalt);
+    border-color: var(--cobalt);
+  }
+
+  @media (max-width: 860px) {
+    .work-card {
+      grid-template-columns: 1fr;
+    }
+
+    .work-card.flip .card-cover {
+      order: 0;
+    }
+  }
+</style>

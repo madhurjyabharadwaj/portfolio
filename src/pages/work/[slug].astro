@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
@@ -14,19 +15,30 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, name, type, links, deck } = entry.data;
+const { title, subtitle, name, type, category, year, links, deck, cover, coverAlt } = entry.data;
 const { Content } = await render(entry);
 ---
 
-<Base title={`${name} · Madhurjya Bharadwaj`} description={title} ogType="article" accent="var(--raspberry)">
+<Base
+  title={`${name} · Madhurjya Bharadwaj`}
+  description={`${title} ${subtitle}.`}
+  ogType="article"
+  accent="var(--raspberry)"
+>
   <article class="container">
     <header class="page-head" data-reveal>
       <p class="meta">
         <span class="pill" data-type={type}>{WORK_TYPE_LABEL[type]}</span>
-        <span class="label">{name}</span>
+        <span class="label">{category}</span>
+        <span class="label">{year}</span>
       </p>
       <h1 class="title">{title}</h1>
+      <p class="subtitle">{subtitle}</p>
     </header>
+
+    <figure class="cover" data-reveal>
+      <Image src={cover} alt={coverAlt} widths={[720, 1080, 1440]} sizes="(min-width: 1200px) 1120px, 100vw" loading="eager" />
+    </figure>
 
     <div class="prose">
       <Content />
@@ -73,6 +85,27 @@ const { Content } = await render(entry);
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1.25rem;
+  }
+
+  .subtitle {
+    max-width: var(--measure);
+    margin-top: 1.25rem;
+    font-size: var(--size-lead);
+    line-height: 1.4;
+    color: var(--muted);
+  }
+
+  .cover {
+    margin: 0 0 clamp(2rem, 5vw, 3.5rem);
+    overflow: hidden;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-menu);
+    background: var(--white);
+  }
+
+  .cover :global(img) {
+    width: 100%;
+    height: auto;
   }
 
   .actions {

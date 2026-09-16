@@ -1,8 +1,17 @@
 ---
 title: "Where should an AI materials company go first?"
+subtitle: "Market entry for a generative-AI materials discovery platform"
 name: "Entalpic"
 type: "case-study"
+category: "GTM strategy"
+year: 2026
 order: 1
+problem: "When your technology applies to a dozen industries, the hard question stops being 'can we' and becomes 'which one, and why that one first'."
+role: "Market analysis and go-to-market recommendation"
+outcome: "Mapped data centre cooling into a five-layer value chain, narrowed twelve materials opportunities to one through three filters and a weighted scorecard (PFAS-free direct-to-chip coolants, 4.7 out of 5), and showed why Entalpic can't sell it directly and has to route through hardware vendors and fluid OEMs instead."
+tags: ["Go-to-market", "Market sizing", "Deep tech", "Channel strategy"]
+cover: "../../assets/work/entalpic.png"
+coverAlt: "Bar chart of the weighted scorecard: PFAS-free direct-to-chip coolants at 4.7, inhibitor packages at 4.0, high-temperature secondary-loop fluids at 3.9."
 # TODO: replace with the real path once the cleaned deck is uploaded to public/decks/.
 deck: "/decks/entalpic-opportunity-assessment.pdf"
 ---

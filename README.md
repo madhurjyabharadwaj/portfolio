@@ -49,18 +49,28 @@ The free tier allows 50 submissions a month, which is ample for a portfolio. The
 
 ## Adding work
 
-Create one markdown file in `src/content/work/`. That is the whole change: a tile appears on the home page and on `/work`, and a page is built at `/work/<filename>`.
+Create one markdown file in `src/content/work/` and one cover image in `src/assets/work/`. That is the whole change: a card appears on the home page and on `/work`, a page is built at `/work/<filename>`, and if `product: true` is set the "products built" figure on the home page goes up by one.
 
 ```markdown
 ---
 title: "The question the piece answers"
+subtitle: "One line under the title"
 name: "Client or product name"
-type: "case-study"        # or "project". Sets the tile label.
-order: 5                  # lower comes first
-links:                    # optional, rendered as buttons at the end
+type: "case-study"          # or "project". Sets the label on the card.
+category: "GTM strategy"    # shown next to the label
+year: 2026
+order: 6                    # lower comes first; also the card number
+problem: "The quoted problem statement shown in the highlighted block."
+role: "What you did"
+outcome: "The key outcome, two or three sentences."
+tags: ["Tag one", "Tag two"]
+product: true               # counts towards "products built"; omit for analysis work
+cover: "../../assets/work/my-piece.png"
+coverAlt: "What the image shows, for people who cannot see it."
+links:                      # optional, rendered as buttons at the end of the page
   - label: "Repo"
     href: "https://..."
-deck: "/decks/file.pdf"   # optional, adds a download button
+deck: "/decks/file.pdf"     # optional, adds a download button
 ---
 
 First paragraph is set larger as the lead.
@@ -70,7 +80,9 @@ First paragraph is set larger as the lead.
 Body copy. Blockquotes and inline code are styled.
 ```
 
-Smaller pieces that don't need a page go in `src/content/also-built/` with `name`, `order` and `links`. They list under "Also built" on `/work`.
+Cover images are 1200 by 900. The current ones are screenshots of the live products in a browser or phone frame, and, for the two analysis pieces, a chart and a diagram built from the numbers in the write-up. Replace any of them by overwriting the file with the same name.
+
+Smaller pieces that need a card but no page go in `src/content/also-built/` with `name`, `subtitle`, `problem`, `role`, `outcome`, `tags`, `links` and `order`. They render under "Also built" on `/work`, and the card links to the first link in the list.
 
 ## Where things live
 
@@ -85,6 +97,8 @@ Smaller pieces that don't need a page go in `src/content/also-built/` with `name
 | `src/pages/` | One file per route. Page copy for About, Experience and Connect lives in these files. |
 | `public/fonts/` | Self-hosted Young Serif and Bricolage Grotesque, latin subset. |
 | `public/og.png` | Square Open Graph image (the avatar on butter). |
+| `src/assets/work/` | Cover image for each work card and page, one per markdown file. |
+| `src/components/WorkCard.astro` | The rich work card. Whole card is one link. |
 
 ## Checks that were run
 

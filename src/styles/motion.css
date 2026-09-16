@@ -35,18 +35,24 @@
   }
 }
 
-.js .hero-copy .display,
-.js .hero-copy .lead,
-.js .hero-copy .hero-actions {
+.js .hero-copy > * {
   animation: rise-in 600ms var(--ease-out) both;
 }
 
-.js .hero-copy .lead {
-  animation-delay: 160ms;
+.js .hero-copy > :nth-child(2) {
+  animation-delay: 120ms;
 }
 
-.js .hero-copy .hero-actions {
-  animation-delay: 320ms;
+.js .hero-copy > :nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.js .hero-copy > :nth-child(4) {
+  animation-delay: 360ms;
+}
+
+.js .hero-copy > :nth-child(5) {
+  animation-delay: 480ms;
 }
 
 .js .hero-avatar {
@@ -73,7 +79,7 @@
 
 /* Card lift: small rise, slight scale, a shadow that widens and softens. */
 .menu-card,
-.tile {
+.work-card {
   transition:
     transform var(--dur-card) var(--ease-spring),
     box-shadow var(--dur-card) var(--ease-out),
@@ -82,7 +88,7 @@
 }
 
 .menu-card:hover,
-.tile:hover {
+.work-card:hover {
   transform: translateY(-3px) scale(1.01);
   border-color: transparent;
   box-shadow:
@@ -90,13 +96,13 @@
     0 18px 36px -16px rgba(20, 27, 61, 0.28);
 }
 
-.tile[data-type='case-study']:hover {
+.work-card[data-type='case-study']:hover {
   box-shadow:
     0 2px 4px -2px rgba(39, 72, 245, 0.1),
     0 18px 36px -16px rgba(39, 72, 245, 0.35);
 }
 
-.tile[data-type='project']:hover {
+.work-card[data-type='project']:hover {
   box-shadow:
     0 2px 4px -2px rgba(199, 38, 79, 0.1),
     0 18px 36px -16px rgba(199, 38, 79, 0.32);
@@ -192,9 +198,7 @@
 
 /* Reduced motion: no entrance, no lift, no reveal, no cursor. */
 @media (prefers-reduced-motion: reduce) {
-  .js .hero-copy .display,
-  .js .hero-copy .lead,
-  .js .hero-copy .hero-actions,
+  .js .hero-copy > *,
   .js .hero-avatar,
   .js .hero-avatar img {
     animation: none;
@@ -207,7 +211,7 @@
   }
 
   .menu-card:hover,
-  .tile:hover {
+  .work-card:hover {
     transform: none;
   }
 

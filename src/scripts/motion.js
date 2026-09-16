@@ -102,7 +102,7 @@ function initCursor() {
   let visible = false;
   let running = false;
 
-  const INTERACTIVE = 'a, button, [role="button"], label, summary';
+  const INTERACTIVE = 'a, button, [role="button"], label, summary, .work-card';
   const TEXT_FIELD = 'input, textarea, select, [contenteditable="true"]';
 
   const frame = () => {
