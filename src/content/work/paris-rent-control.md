@@ -1,8 +1,18 @@
 ---
 title: "What does a Paris flat actually return once the rent cap applies?"
+subtitle: "A pipeline that joins sale prices to legal rent ceilings"
 name: "Investing in Paris under rent control"
 type: "case-study"
+category: "Data product"
+year: 2026
 order: 2
+problem: "An investor can find out what a flat costs in about ten seconds and can't find out what it returns at all."
+role: "Product concept, data pipeline and investor tool"
+outcome: "Joined three open French datasets (DVF, DPE, DRIHL) into 8,960 rent-zone records, applied the legal cap to every recorded transaction, and built a ranked table and map of cash-on-cash returns by rooms, budget and arrondissement. Match rate of 58% is documented, not hidden."
+tags: ["Geospatial data", "Python", "Open data", "Investor tool"]
+product: true
+cover: "../../assets/work/paris-rent-control.png"
+coverAlt: "Diagram of the pipeline: DVF sale prices, DPE energy ratings and DRIHL rent zones joined into 8,960 zone records, then a capped cash-on-cash return per flat."
 links:
   - label: "Repo"
     href: "https://github.com/madhurjyabharadwaj/Paris-real-estate-ROI-under-rent-control-data-pipeline-and-investor-tool"

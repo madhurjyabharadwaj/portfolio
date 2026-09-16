@@ -1,8 +1,18 @@
 ---
 title: "PM interview prep you can do on the metro"
+subtitle: "An offline-first coach that works underground, with no signal and no account"
 name: "Out Loud"
 type: "project"
+category: "Consumer / Ed-tech"
+year: 2026
 order: 4
+problem: "Reading isn't practising. And nobody revises at a desk with a stable connection. They revise on the way somewhere."
+role: "Product, content and full build"
+outcome: "One 1.9 MB file holding 27 chapters, 68 scored practice questions and a 352-term glossary on spaced repetition, precached by a service worker so an offline load renders byte-identical. All colour pairs audited to 4.5:1 or better, every tap target at least 44 px."
+tags: ["Offline-first PWA", "Spaced repetition", "Accessibility", "Vanilla JS"]
+product: true
+cover: "../../assets/work/out-loud.png"
+coverAlt: "Out Loud on a phone: the PM interview studio home screen with today's tasks, a level card and the module list."
 links:
   - label: "Live"
     href: "https://madhurjyabharadwaj.github.io/Out-Loud/"

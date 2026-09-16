@@ -1,37 +1,51 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import WorkTile from '../../components/WorkTile.astro';
-import { byOrder } from '../../lib/work';
+import WorkCard from '../../components/WorkCard.astro';
+import { WORK_TYPE_LABEL, byOrder } from '../../lib/work';
 
 const work = (await getCollection('work')).sort(byOrder);
-const alsoBuilt = await Promise.all(
-  (await getCollection('alsoBuilt')).sort(byOrder).map(async (entry) => ({
-    entry,
-    Content: (await render(entry)).Content,
-  }))
-);
+const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
 ---
 
 <Base
   title="Work · Madhurjya Bharadwaj"
-  description="Two case studies and two projects. The case studies are analysis work, where the output was a recommendation someone had to act on. The projects are things I designed and built myself."
+  description="Case studies and projects. Each one goes into how the problem was framed, the trade-offs, the architecture where there is one, and what actually changed, across AI, B2B, data and consumer products."
   accent="var(--raspberry)"
 >
   <div class="container">
     <header class="page-head" data-reveal>
       <h1 class="title">Work</h1>
       <p class="lead">
-        Two case studies and two projects. The case studies are analysis work, where the output was a
-        recommendation someone had to act on. The projects are things I designed and built myself.
+        Case studies and projects. Each one goes into how the problem was framed, the trade-offs, the
+        architecture where there is one, and what actually changed, across AI, B2B, data and consumer
+        products. Every write-up includes the part I'd do differently.
       </p>
     </header>
 
-    <ul class="tiles" data-reveal-group>
+    <ul class="cards">
       {
-        work.map((entry) => (
-          <li>
-            <WorkTile entry={entry} headingLevel="h2" />
+        work.map((entry, i) => (
+          <li data-reveal>
+            <WorkCard
+              headingLevel="h2"
+              number={String(entry.data.order).padStart(2, '0')}
+              type={entry.data.type}
+              typeLabel={WORK_TYPE_LABEL[entry.data.type]}
+              category={entry.data.category}
+              year={entry.data.year}
+              title={entry.data.title}
+              subtitle={entry.data.subtitle}
+              problem={entry.data.problem}
+              role={entry.data.role}
+              outcome={entry.data.outcome}
+              tags={entry.data.tags}
+              cover={entry.data.cover}
+              coverAlt={entry.data.coverAlt}
+              href={`/work/${entry.id}`}
+              cta="Read the full case study →"
+              flip={i % 2 === 1}
+            />
           </li>
         ))
       }
@@ -40,25 +54,28 @@ const alsoBuilt = await Promise.all(
     <section class="also section" aria-labelledby="also-title">
       <div class="section-head" data-reveal>
         <h2 id="also-title" class="title">Also built</h2>
-        <p class="lead">Two smaller things, listed because they're the ones I enjoyed most.</p>
       </div>
-      <ul class="also-list" data-reveal-group>
+      <ul class="cards">
         {
-          alsoBuilt.map(({ entry, Content }) => (
-            <li>
-              <h3>{entry.data.name}</h3>
-              <div class="prose small">
-                <Content />
-              </div>
-              <ul class="links" aria-label={`${entry.data.name} links`}>
-                {entry.data.links.map((link) => (
-                  <li>
-                    <a href={link.href}>{link.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))
+          alsoBuilt.map((entry) => {
+            const repo = entry.data.links.find((l) => l.label === 'Repo') ?? entry.data.links[0];
+            return (
+              <li data-reveal>
+                <WorkCard
+                  headingLevel="h3"
+                  title={entry.data.name}
+                  subtitle={entry.data.subtitle}
+                  problem={entry.data.problem}
+                  role={entry.data.role}
+                  outcome={entry.data.outcome}
+                  tags={entry.data.tags}
+                  href={repo.href}
+                  cta={`${repo.label} →`}
+                  external
+                />
+              </li>
+            );
+          })
         }
       </ul>
     </section>
@@ -70,47 +87,12 @@ const alsoBuilt = await Promise.all(
     padding-top: var(--nav-offset);
   }
 
-  .tiles {
+  .cards {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
-
-  @media (max-width: 640px) {
-    .tiles {
-      grid-template-columns: 1fr;
-    }
+    gap: 1.5rem;
   }
 
   .also {
     padding-bottom: 0;
-  }
-
-  .also-list > li {
-    padding-block: 2rem;
-    border-top: 1px solid var(--hairline);
-  }
-
-  .also-list h3 {
-    font-family: var(--font-display);
-    font-size: var(--size-tile);
-    line-height: 1.15;
-  }
-
-  .also-list .prose {
-    margin-top: 1rem;
-  }
-
-  .also-list .prose.small :global(p:first-child) {
-    font-size: var(--size-body);
-    line-height: var(--leading-body);
-    color: var(--slate);
-  }
-
-  .links {
-    display: flex;
-    gap: 1.25rem;
-    margin-top: 1rem;
-    font-weight: 500;
   }
 </style>

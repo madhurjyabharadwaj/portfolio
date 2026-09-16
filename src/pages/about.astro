@@ -1,58 +1,178 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const leverage = [
+  {
+    title: 'Discovery that starts with the user',
+    text: "Sitting with the people who use the product before writing a line of the PRD. The brief tells you what someone wants built. The user tells you what's actually broken.",
+  },
+  {
+    title: 'Evidence before opinion',
+    text: 'SQL, Python and Power BI, used to settle arguments. I try to agree the metric before we build anything, because agreeing it afterwards never goes well.',
+  },
+  {
+    title: 'I can build it myself',
+    text: "Live, documented, open-source products, written and shipped end to end. It keeps me honest about what's hard to build and what only sounds hard, and it makes engineering conversations shorter.",
+  },
+  {
+    title: 'Delivery that survives contact with production',
+    text: "PRDs, backlog, UAT, governance, cutover, then reliability once it's live. Nobody thanks you for a rollout that goes smoothly, and that's rather the point.",
+  },
+];
 ---
 
 <Base
   title="About · Madhurjya Bharadwaj"
-  description="I trained as an engineer and came out of it more interested in why things get built than in whether they stand up."
+  description="Engineer by training. Product manager by choice. I trained as an engineer and came out of it more interested in why things get built than in whether they stand up."
   accent="var(--butter)"
 >
-  <div class="container">
-    <header class="page-head" data-reveal>
-      <h1 class="title">About</h1>
-    </header>
-    <div class="prose">
-      <p>
+  <div class="container about">
+    <div class="about-main" data-reveal>
+      <p class="eyebrow with-rule">About me</p>
+      <h1 class="title">Engineer by training. Product manager by choice.</h1>
+      <p class="lead">
         I trained as an engineer and came out of it more interested in why things get built than in whether
         they stand up.
       </p>
-      <p>
-        Consulting was the first move. Two years at ZoomRx running competitive benchmarking for Janssen, GSK
-        and Sanofi. How far a drug reaches, what share of voice it holds against its named rivals, and whether
-        a new launch would eat a competitor's share or quietly cannibalise the client's own. It taught me how
-        to take a pile of contradictory evidence and come back with something a client could actually act on,
-        which turns out to be most of the job in product too.
-      </p>
-      <p>
-        Then Spinny. On paper I was a business analyst. In practice I was doing product work, sitting with
-        showroom staff and watching the app get in their way, which is when I decided to move into product
-        properly rather than adjacent to it.
-      </p>
-      <p>
-        ESSEC came next, and two fairly different product roles came with it. At L'Oréal I worked on
-        market-share reporting across the Top 20 markets and shipped an AI agent that maps a thousand-plus
-        brands into business categories, replacing a job people had been doing by hand. At Air Liquide I've
-        spent the last two years owning an enterprise system replacement from the first PRD through to running
-        it in production, which is a very different kind of hard. Nobody thanks you for a cutover that goes
-        smoothly, and that's rather the point.
-      </p>
-      <p>
-        Four sectors now: pharma research, consumer e-commerce, beauty, heavy industry. The thing that carries
-        across all of them is a habit more than a skill. Go and find where the problem actually sits, which is
-        usually with whoever has to use the thing rather than whoever asked for it, and then be specific about
-        what will change and how you'll know it did.
-      </p>
-      <p>
-        I build my own products too. Not prototypes that die in a folder. Things that are live, documented and
-        open source. It's the fastest way I know to stay honest about the distance between deciding something
-        and shipping it.
-      </p>
+      <div class="prose">
+        <p>
+          I work at the point where what a user needs, what engineering can build, and what the business will
+          pay for all meet. Most of my career has been spent getting those three to agree. The last two years
+          of it were spent owning an enterprise system from the first PRD through a zero-downtime cutover and
+          into production, which is a different kind of hard from shipping a feature and moving on.
+        </p>
+        <p>
+          Before product I did analytics and consulting, so I don't take a metric on trust. I'll write the SQL.
+          And because I build and deploy my own products, I have a fairly honest sense of the distance between
+          deciding something in a meeting and having it work on someone's screen.
+        </p>
+      </div>
+      <section class="education" aria-labelledby="education">
+        <h2 id="education" class="eyebrow">Education</h2>
+        <ul>
+          <li>ESSEC Business School, Master in Management (Grande École), 2023 to 2026</li>
+          <li>Vellore Institute of Technology, B.Tech, 2016 to 2020</li>
+        </ul>
+      </section>
     </div>
+
+    <aside class="about-side" aria-labelledby="leverage">
+      <p id="leverage" class="eyebrow with-rule">How I create leverage</p>
+      <ul class="leverage" data-reveal-group>
+        {
+          leverage.map((item) => (
+            <li>
+              <span class="dot" aria-hidden="true" />
+              <div>
+                <h2>{item.title}</h2>
+                <p>{item.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
   </div>
 </Base>
 
 <style>
-  .container {
-    padding-top: var(--nav-offset);
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+    padding-top: calc(var(--nav-offset) + clamp(1.5rem, 5vw, 4rem));
+  }
+
+  .about-main > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .about-main .title {
+    margin-top: 1rem;
+    max-width: 16ch;
+  }
+
+  .about-main .title::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 0.5rem;
+    margin-top: 1.25rem;
+    border-radius: 2px;
+    background: var(--accent, var(--ink));
+  }
+
+  .about-main .lead {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .education {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .education ul {
+    margin-top: 0.75rem;
+    font-size: var(--size-label);
+    color: var(--slate);
+  }
+
+  .education li + li {
+    margin-top: 0.35rem;
+  }
+
+  .about-side {
+    /* Line up the aside heading with the main eyebrow, then let the cards run. */
+    padding-top: 0;
+  }
+
+  .leverage {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .leverage li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-tile);
+    background: var(--white);
+  }
+
+  .leverage .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-top: 0.55rem;
+    border-radius: 50%;
+    background: var(--cobalt);
+  }
+
+  .leverage h2 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .leverage p {
+    margin-top: 0.35rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--slate);
+  }
+
+  @media (max-width: 860px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+
+    .about-side {
+      padding-top: 1rem;
+    }
   }
 </style>

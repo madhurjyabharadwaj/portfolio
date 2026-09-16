@@ -1,9 +1,12 @@
 ---
 name: "Wavelength"
+subtitle: "A music player where nothing is streamed"
 order: 1
+problem: "Can a Spotify-style player work with zero audio files in the repository?"
+role: "Product and full build"
+outcome: "Every track is synthesised in the browser by a Web Audio engine from tempo, key and chord progression. Seeking works because every random choice is a pure hash of the track seed and step, so playback is identical every time. Full as-built PRD in the repo."
+tags: ["Web Audio", "Generative", "PRD"]
 links:
   - label: "Repo"
     href: "https://github.com/madhurjyabharadwaj/Wavelength"
 ---
-
-A music player built like Spotify: library sidebar, home shelves, search, album and artist pages, a persistent player bar, a live queue. There are no audio files in the repository and nothing is streamed. Every track is generated in the browser by a small Web Audio synthesiser that schedules drums, bass, pads and leads from the track's tempo, key and chord progression. Seeking works because every random choice in the generator is a pure hash of the track seed and the step, so a track plays back identically every time. There's a full as-built PRD in the repo, mostly because I wanted to find out whether I'd hold myself to that standard when nobody was checking.

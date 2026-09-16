@@ -199,7 +199,51 @@ h3 {
   background: var(--ink);
 }
 
-/* Type pill on work tiles and pages. Colour comes from data-type. */
+/* Small tracked caps label used above sections and in the hero pill. */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eyebrow.with-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.eyebrow.with-rule::before {
+  content: '';
+  width: 1.5rem;
+  height: 2px;
+  background: var(--cobalt);
+}
+
+/* Hero label pill: a dot and an eyebrow in a bordered box. */
+.label-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.label-pill .dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--cobalt);
+}
+
+.label-pill .eyebrow {
+  color: var(--ink);
+}
+
+/* Type pill on work cards and pages. Colour comes from data-type. */
 .pill {
   display: inline-block;
   padding: 0.3rem 0.75rem;
@@ -219,7 +263,7 @@ h3 {
   color: var(--raspberry);
 }
 
-/* Tag chips on the Experience page. */
+/* Tag chips: hero lifecycle row, experience themes, work card tags. */
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -230,6 +274,7 @@ h3 {
   padding: 0.35rem 0.75rem;
   border: 1px solid var(--hairline-strong);
   border-radius: 8px;
+  background: var(--white);
   font-size: var(--size-label);
   font-weight: 500;
   color: var(--ink);
