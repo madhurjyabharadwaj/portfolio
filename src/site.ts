@@ -7,11 +7,10 @@ export const SITE = {
   linkedin: 'https://www.linkedin.com/in/madhurjya-bharadwaj',
   github: 'https://github.com/madhurjyabharadwaj',
   cv: '/cv/Madhurjya-Bharadwaj-CV.pdf',
-  // TODO: replace PLACEHOLDER with the id of the form created at formspree.io.
-  // It looks like https://formspree.io/f/xdkoqwer. Until this is a real
-  // endpoint the contact form is replaced by a plain email link, so a visitor
-  // is never invited to type a message that goes nowhere.
-  formEndpoint: 'https://formspree.io/f/PLACEHOLDER',
+  // Formspree form, delivering to the account email above. If this is ever
+  // reset to a PLACEHOLDER value the contact form is replaced by a plain email
+  // link, so a visitor is never invited to type a message that goes nowhere.
+  formEndpoint: 'https://formspree.io/f/mppwaebb',
 };
 
 /** False while `formEndpoint` is still the placeholder. */
