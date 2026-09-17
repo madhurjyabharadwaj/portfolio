@@ -68,7 +68,12 @@ const Heading = headingLevel;
       <div class="card-cover">
         <Image src={cover} alt={coverAlt} widths={[560, 840, 1120]} sizes="(min-width: 900px) 520px, 100vw" />
         {video && (
-          <span class="cover-clip">
+          <span
+            class="cover-clip"
+            style={`--clip-aspect: ${video.poster.width / video.poster.height}; --clip-width: ${
+              video.poster.width < video.poster.height ? '26%' : '40%'
+            }`}
+          >
             <Image src={video.poster} alt="" widths={[180, 360]} sizes="120px" />
             <span class="cover-clip-label">
               <svg viewBox="0 0 12 12" width="9" height="9" aria-hidden="true">
@@ -211,9 +216,9 @@ const Heading = headingLevel;
     position: absolute;
     right: 0.75rem;
     bottom: 0.75rem;
-    width: 26%;
-    max-width: 140px;
-    aspect-ratio: 9 / 16;
+    width: var(--clip-width, 26%);
+    max-width: 190px;
+    aspect-ratio: var(--clip-aspect, 9 / 16);
     overflow: hidden;
     border-radius: 12px;
     box-shadow:

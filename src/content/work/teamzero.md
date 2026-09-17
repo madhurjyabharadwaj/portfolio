@@ -12,6 +12,11 @@ outcome: "Rules-based matching with explicit weights (role fit 30%, commitment 2
 tags: ["Matching", "Explainable scoring", "Two-sided marketplace", "PRD"]
 cover: "../../assets/work/teamzero.png"
 coverAlt: "TeamZero landing page: the headline 'Find your first teammate. Not your hundredth contact.' with Start as Founder and I'm a candidate buttons."
+video:
+  src: "/videos/teamzero-launch.mp4"
+  poster: "../../assets/video/teamzero-launch.png"
+  alt: "Launch video for TeamZero: a founder writes a structured brief, sees ranked matches, and the score breaks down into role fit, commitment, skills, industry and style."
+  seconds: 22
 links:
   - label: "Live"
     href: "https://teamzero.lovable.app"
