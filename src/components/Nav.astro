@@ -1,5 +1,5 @@
 ---
-import { NAV, cleanPath } from '../site';
+import { NAV, SECTION_NAV, cleanPath } from '../site';
 
 const path = cleanPath(Astro.url.pathname);
 const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
@@ -8,11 +8,25 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 <header class="site-header">
   <nav class="pill-nav" aria-label="Primary">
     <a class="wordmark" href="/" aria-label="Home">M.</a>
-    <ul>
+    {/* Rendered for everyone, but only shown once JavaScript can collapse the list. */}
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-links">
+      <span class="menu-bars" aria-hidden="true"></span>
+      Menu
+    </button>
+    <ul id="primary-links">
       {
         NAV.map((item) => (
           <li>
             <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+      {
+        SECTION_NAV.map((item, i) => (
+          <li class:list={['section-link', { first: i === 0 }]}>
+            <a href={item.href} data-section={item.href.replace('/#', '')}>
               {item.label}
             </a>
           </li>
@@ -37,9 +51,11 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 
   .pill-nav {
     pointer-events: auto;
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
+    max-width: 100%;
     padding: 0.5rem 0.75rem 0.5rem 1.25rem;
     border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-pill);
@@ -58,17 +74,19 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 
   ul {
     display: flex;
+    align-items: center;
     gap: 0.25rem;
   }
 
   li a {
     display: inline-block;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.7rem;
     border-radius: var(--radius-pill);
     color: var(--ink);
     font-size: var(--size-label);
     font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
     transition: background-color var(--dur-fast) var(--ease-out);
   }
 
@@ -81,22 +99,122 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     color: var(--white);
   }
 
-  @media (max-width: 480px) {
-    .wordmark {
-      display: none;
+  /* Section links jump into the landing page; the active one is underlined
+     rather than filled, so it never competes with the current page. */
+  .section-link a[aria-current='true'] {
+    color: var(--cobalt);
+    background: var(--cobalt-tint);
+  }
+
+  .section-link.first {
+    margin-left: 0.6rem;
+    border-left: 1px solid var(--hairline);
+    padding-left: 0.6rem;
+  }
+
+  /* The menu button only appears once JavaScript is there to run it, so the
+     list stays reachable when it is not. */
+  .menu-button {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-pill);
+    background: var(--white);
+    color: var(--ink);
+    font-size: var(--size-label);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .menu-bars {
+    position: relative;
+    width: 0.875rem;
+    height: 2px;
+    background: currentColor;
+  }
+
+  .menu-bars::before,
+  .menu-bars::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+  }
+
+  .menu-bars::before {
+    top: -5px;
+  }
+
+  .menu-bars::after {
+    top: 5px;
+  }
+
+  @media (max-width: 1024px) {
+    li a {
+      padding: 0.5rem 0.55rem;
     }
 
     .pill-nav {
-      gap: 0;
-      padding: 0.375rem 0.5rem;
+      gap: 0.75rem;
+    }
+  }
+
+  /* Narrow screens: one button, and the links become a panel under the pill. */
+  @media (max-width: 860px) {
+    :global(html.js) .menu-button {
+      display: inline-flex;
     }
 
-    ul {
-      gap: 0;
+    :global(html.js) .pill-nav ul {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      z-index: 1;
+      display: grid;
+      gap: 0.15rem;
+      min-width: 12rem;
+      padding: 0.5rem;
+      border: 1px solid var(--hairline-strong);
+      border-radius: var(--radius-menu);
+      background: var(--white);
+      box-shadow: 0 18px 40px -18px rgba(20, 27, 61, 0.45);
     }
 
-    li a {
-      padding: 0.5rem 0.55rem;
+    :global(html.js) .pill-nav ul[hidden] {
+      display: none;
+    }
+
+    :global(html.js) li a {
+      display: block;
+      padding: 0.6rem 0.75rem;
+      border-radius: 10px;
+    }
+
+    :global(html.js) .section-link.first {
+      margin-left: 0;
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--hairline);
+      margin-top: 0.35rem;
+      padding-top: 0.35rem;
+    }
+  }
+
+  /* No JavaScript: the list simply wraps under the wordmark. */
+  @media (max-width: 860px) {
+    :global(html:not(.js)) .pill-nav {
+      flex-wrap: wrap;
+      justify-content: center;
+      border-radius: var(--radius-menu);
+    }
+
+    :global(html:not(.js)) ul {
+      flex-wrap: wrap;
+      justify-content: center;
     }
   }
 </style>

@@ -21,9 +21,17 @@ export const isFormConfigured = !SITE.formEndpoint.includes('PLACEHOLDER');
 export const cleanPath = (pathname: string) =>
   pathname.replace(/\.html$/, '').replace(/\/index$/, '').replace(/\/$/, '') || '/';
 
+/** Pages. */
 export const NAV = [
   { label: 'About', href: '/about' },
   { label: 'Experience', href: '/experience' },
   { label: 'Work', href: '/work' },
   { label: 'Connect', href: '/connect' },
+];
+
+/** Sections of the landing page, linked from the nav and the footer. */
+export const SECTION_NAV = [
+  { label: 'Roles', href: '/#roles' },
+  { label: 'Approach', href: '/#approach' },
+  { label: 'Toolkit', href: '/#toolkit' },
 ];

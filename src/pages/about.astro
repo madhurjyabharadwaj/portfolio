@@ -20,42 +20,6 @@ const leverage = [
   },
 ];
 
-// Grouped from the skills section of the CV, plus the tools the projects on
-// this site were actually built with.
-const toolkit = [
-  {
-    group: 'Product',
-    items: [
-      'Discovery',
-      'PRDs and user stories',
-      'Roadmap and backlog',
-      'Prioritisation',
-      'Experimentation and A/B testing',
-      'KPI and OKR design',
-      'UAT',
-      'Rollout and change management',
-      'Build and run',
-      'Stakeholder management',
-    ],
-  },
-  {
-    group: 'Data and analytics',
-    items: ['SQL', 'Python', 'Power BI', 'Tableau', 'Looker', 'Excel'],
-  },
-  {
-    group: 'AI',
-    items: ['LLM-powered MVPs', 'Prompt engineering', 'AI agent deployment', 'Fuzzy matching'],
-  },
-  {
-    group: 'Platforms and tools',
-    items: ['Jira', 'ServiceNow', 'Figma', 'AWS', 'GCP', 'Git'],
-  },
-  {
-    group: 'Building',
-    items: ['JavaScript', 'Three.js', 'Web Audio', 'Offline-first PWAs', 'Lovable', 'Replit', 'Glide'],
-  },
-];
-
 const education = [
   {
     dates: '2023 to 2026',
@@ -137,28 +101,6 @@ const education = [
     </aside>
   </div>
 
-  <section class="container toolkit" aria-labelledby="toolkit-title">
-    <div class="section-head" data-reveal>
-      <h2 id="toolkit-title" class="title">Capabilities and toolkit</h2>
-      <p class="lead">What I actually use, grouped by the job it does.</p>
-    </div>
-    <dl class="stack" data-reveal-group>
-      {
-        toolkit.map((row) => (
-          <div class="stack-row">
-            <dt>{row.group}</dt>
-            <dd>
-              <ul class="tags">
-                {row.items.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </dd>
-          </div>
-        ))
-      }
-    </dl>
-  </section>
 </Base>
 
 <style>
@@ -291,40 +233,6 @@ const education = [
     font-size: 0.95rem;
     line-height: 1.55;
     color: var(--slate);
-  }
-
-  /* Capabilities: label on the left, chips on the right, one row per group. */
-  .toolkit {
-    padding-top: var(--section-gap);
-  }
-
-  .stack-row {
-    display: grid;
-    grid-template-columns: minmax(0, 0.5fr) minmax(0, 2fr);
-    gap: 0.75rem 2rem;
-    padding-block: 1.5rem;
-    border-top: 1px solid var(--hairline);
-  }
-
-  .stack-row:last-child {
-    border-bottom: 1px solid var(--hairline);
-  }
-
-  .stack-row dt {
-    font-size: var(--size-label);
-    font-weight: 600;
-    color: var(--ink);
-  }
-
-  .stack-row dd {
-    margin: 0;
-  }
-
-  @media (max-width: 720px) {
-    .stack-row {
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
-    }
   }
 
   @media (max-width: 860px) {
