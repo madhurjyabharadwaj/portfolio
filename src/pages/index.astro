@@ -8,11 +8,6 @@ import { WORK_TYPE_LABEL, byOrder } from '../lib/work';
 import { SITE } from '../site';
 
 const work = (await getCollection('work')).sort(byOrder);
-const alsoBuilt = await getCollection('alsoBuilt');
-
-// "Products built" on the scorecard: every work entry flagged product:true
-// plus everything under Also built. Add a file and the number moves.
-const productsBuilt = work.filter((entry) => entry.data.product).length + alsoBuilt.length;
 
 const chips = [
   'Product Discovery',
@@ -33,6 +28,7 @@ const menu = [
 ];
 
 // Figures split into the number that counts up and the words after it.
+// A zero does not count up; it is already where it should be.
 const figure = (text: string) => {
   const match = /^(\d+)(.*)$/.exec(text);
   return match ? { n: match[1], rest: match[2] } : { n: '', rest: text };
@@ -42,8 +38,51 @@ const scorecard = [
   { figure: '4+ years', caption: 'in product and analytics' },
   { figure: '4 sectors', caption: 'life sciences, e-commerce, beauty, industrial' },
   { figure: '20+ markets', caption: 'worked across' },
-  { figure: `${productsBuilt} products`, caption: 'built, shipped, open source' },
+  { figure: '0 downtime', caption: 'on an enterprise cutover, first PRD to production' },
 ].map((item) => ({ ...item, ...figure(item.figure) }));
+
+// The four jobs inside the product role.
+const roles = [
+  {
+    role: 'Product Owner',
+    word: 'Backlog',
+    text: 'PRDs, user stories, refinement. Taking a vague ask and turning it into something an engineering team can start on Monday.',
+  },
+  {
+    role: 'Product Manager',
+    word: 'Roadmap',
+    text: 'Vision, prioritisation, keeping stakeholders pointed the same way. Deciding what gets built and when, then holding that line when someone senior wants to jump the queue.',
+  },
+  {
+    role: 'PMO',
+    word: 'Cadence',
+    text: 'UAT plans, governance reviews, cutover checklists and the monthly numbers. The rhythm that keeps a programme honest about where it actually is.',
+  },
+  {
+    role: 'User Research',
+    word: 'Discovery',
+    text: 'Interviews, shadowing and funnel data, read side by side. Watching where people get stuck tells you more than asking what they want.',
+  },
+];
+
+const principles = [
+  {
+    title: 'Start with the problem',
+    text: "A feature request is somebody's guess at a solution. I work back from it until the problem fits in one sentence, and only then start talking about what to build.",
+  },
+  {
+    title: 'Validate before scaling',
+    text: 'A prototype, a pilot and a handful of honest conversations cost less than a quarter of engineering time. Better to find the flaw in an idea while it still takes a week to change.',
+  },
+  {
+    title: 'Balance user value and feasibility',
+    text: "Every real decision gives something up. I'd rather name the trade-off, write down why, and defend it than ship a compromise nobody actually chose.",
+  },
+  {
+    title: 'Measure outcomes, not outputs',
+    text: 'Shipping on time is where the question starts, not where it ends. What counts is whether people use it, whether it holds up in production, and whether anything measurable moved.',
+  },
+];
 ---
 
 <Base
@@ -112,12 +151,56 @@ const scorecard = [
       {
         scorecard.map((item) => (
           <li>
-            <strong>{item.n && <span class="num" data-count={item.n}>{item.n}</span>}{item.rest}</strong>
+            {/* Kept on one line: any whitespace here would appear between the number and its unit. */}
+            <strong>{item.n === '0' ? <span class="num">{item.n}</span> : item.n && <span class="num" data-count={item.n}>{item.n}</span>}{item.rest}</strong>
             <span class="label">{item.caption}</span>
           </li>
         ))
       }
     </ul>
+  </section>
+
+  <section class="section container" aria-labelledby="roles-title">
+    <div class="section-head" data-reveal>
+      <h2 id="roles-title" class="title">The whole product job</h2>
+      <p class="lead">
+        Product manager, product owner and programme lead are different jobs. I've done each of them in a real
+        team, usually more than one at once.
+      </p>
+    </div>
+    <ul class="roles" data-reveal-group>
+      {
+        roles.map((item) => (
+          <li>
+            <span class="role-label">{item.role}</span>
+            <h3 class="role-word">{item.word}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section container philosophy" aria-labelledby="philosophy-title">
+    <div class="philosophy-head" data-reveal>
+      <h2 id="philosophy-title" class="title">How I think about products</h2>
+      <p class="lead">A few principles I keep coming back to, whatever the sector or the size of the team.</p>
+    </div>
+    <ol class="principles" data-reveal-group>
+      {
+        principles.map((item, i) => (
+          <li>
+            <span class="principle-n" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
   </section>
 
   <section id="work" class="section container" aria-labelledby="work-title">
@@ -167,7 +250,6 @@ const scorecard = [
 
   .hero-title {
     margin-top: 1.5rem;
-    max-width: 12ch;
   }
 
   .hero-title .line {
@@ -293,10 +375,9 @@ const scorecard = [
     margin-top: 2.5rem;
     font-family: var(--font-display);
     font-size: var(--size-tile);
-    font-weight: 500;
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    font-variation-settings: 'opsz' 48;
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
@@ -331,33 +412,29 @@ const scorecard = [
     }
   }
 
-  /* Scorecard strip: the numbers are the peak of the page. */
+  /* Scorecard strip: four figures on one line. The figures size themselves
+     from the strip's own width, so they fit whatever the viewport. */
   .scorecard {
     margin-top: var(--section-gap);
   }
 
   .scorecard ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.5rem 2rem;
-    padding-block: clamp(2rem, 4vw, 3rem);
+    padding-block: clamp(1.75rem, 3vw, 2.5rem);
     border-top: 1px solid var(--hairline);
     border-bottom: 1px solid var(--hairline);
-  }
-
-  .scorecard li {
-    flex: 1 1 9rem;
   }
 
   .scorecard strong {
     display: block;
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: var(--size-number);
-    line-height: 1;
-    letter-spacing: -0.01em;
-    font-variation-settings: 'opsz' 72;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.4cqi, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     white-space: nowrap;
     color: var(--ink);
   }
@@ -368,8 +445,156 @@ const scorecard = [
 
   .scorecard .label {
     display: block;
-    max-width: 20ch;
+    max-width: 24ch;
     margin-top: 0.6rem;
+  }
+
+  @media (max-width: 900px) {
+    .scorecard ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 2rem;
+    }
+
+    .scorecard strong {
+      font-size: clamp(1.5rem, 6.5cqi, 2.5rem);
+    }
+  }
+
+  /* Consecutive sections share one gap rather than stacking two. */
+  .section + .section {
+    padding-top: 0;
+  }
+
+  /* The four jobs: one panel divided by hairlines, so it reads as a single
+     object rather than four more cards. */
+  .roles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-menu);
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  .roles li {
+    padding: clamp(1.5rem, 2.5vw, 2rem);
+  }
+
+  .roles li + li {
+    border-left: 1px solid var(--hairline);
+  }
+
+  .role-label {
+    display: block;
+    font-size: var(--size-label);
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .role-word {
+    margin-top: 0.5rem;
+    font-family: var(--font-display);
+    font-size: var(--size-word);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .roles p {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--slate);
+  }
+
+  @media (max-width: 960px) {
+    .roles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .roles li:nth-child(odd) {
+      border-left: 0;
+    }
+
+    .roles li:nth-child(n + 3) {
+      border-top: 1px solid var(--hairline);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .roles {
+      grid-template-columns: 1fr;
+    }
+
+    .roles li + li {
+      border-left: 0;
+      border-top: 1px solid var(--hairline);
+    }
+  }
+
+  /* Philosophy: the heading holds its place while the principles scroll past. */
+  .philosophy {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .philosophy-head {
+    position: sticky;
+    top: calc(var(--nav-offset) + 2rem);
+  }
+
+  .philosophy-head .lead {
+    margin-top: 1rem;
+  }
+
+  .principles li {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: clamp(1.5rem, 2.5vw, 2rem);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .principles li:last-child {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .principle-n {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--cobalt);
+  }
+
+  .principles h3 {
+    font-size: var(--size-subhead);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  .principles p {
+    margin-top: 0.5rem;
+    max-width: 52ch;
+  }
+
+  @media (max-width: 860px) {
+    .philosophy {
+      grid-template-columns: 1fr;
+    }
+
+    .philosophy-head {
+      position: static;
+    }
+
+    .principles li {
+      grid-template-columns: 2.75rem minmax(0, 1fr);
+    }
   }
 
   /* Work cards */

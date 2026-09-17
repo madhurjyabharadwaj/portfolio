@@ -10,7 +10,6 @@ problem: "I can't quickly find someone who complements me, is serious about it, 
 role: "Product owner and builder, PRD to live"
 outcome: "Rules-based matching with explicit weights (role fit 30%, commitment 25%, proof of work 20%, industry 15%, working style 10%), hard filters above the score, and a reason shown for every match. Live on seeded data, built for a real cohort pilot."
 tags: ["Matching", "Explainable scoring", "Two-sided marketplace", "PRD"]
-product: true
 cover: "../../assets/work/teamzero.png"
 coverAlt: "TeamZero landing page: the headline 'Find your first teammate. Not your hundredth contact.' with Start as Founder and I'm a candidate buttons."
 links:

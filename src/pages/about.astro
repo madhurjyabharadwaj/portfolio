@@ -8,7 +8,7 @@ const leverage = [
   },
   {
     title: 'Evidence before opinion',
-    text: 'SQL, Python and Power BI, used to settle arguments. I try to agree the metric before we build anything, because agreeing it afterwards never goes well.',
+    text: 'Data used to settle arguments, not decorate them. I try to agree the metric before we build anything, because agreeing it afterwards never goes well.',
   },
   {
     title: 'I can build it myself',
@@ -17,6 +17,21 @@ const leverage = [
   {
     title: 'Delivery that survives contact with production',
     text: "PRDs, backlog, UAT, governance, cutover, then reliability once it's live. Nobody thanks you for a rollout that goes smoothly, and that's rather the point.",
+  },
+];
+
+const education = [
+  {
+    dates: '2023 to 2026',
+    place: 'Paris, France',
+    degree: 'Master in Management (Grande École)',
+    school: 'ESSEC Business School',
+  },
+  {
+    dates: '2016 to 2020',
+    place: 'India',
+    degree: 'B.Tech',
+    school: 'Vellore Institute of Technology',
   },
 ];
 ---
@@ -42,17 +57,29 @@ const leverage = [
           into production, which is a different kind of hard from shipping a feature and moving on.
         </p>
         <p>
-          Before product I did analytics and consulting, so I don't take a metric on trust. I'll write the SQL.
-          And because I build and deploy my own products, I have a fairly honest sense of the distance between
-          deciding something in a meeting and having it work on someone's screen.
+          Before product I did analytics and consulting, so I don't take a metric on trust, and I'm happy to go
+          into the data myself. And because I build and deploy my own products, I have a fairly honest sense of
+          the distance between deciding something in a meeting and having it work on someone's screen.
         </p>
       </div>
       <section class="education" aria-labelledby="education">
         <h2 id="education" class="eyebrow">Education</h2>
-        <ul>
-          <li>ESSEC Business School, Master in Management (Grande École), 2023 to 2026</li>
-          <li>Vellore Institute of Technology, B.Tech, 2016 to 2020</li>
-        </ul>
+        <ol class="schools">
+          {
+            education.map((item) => (
+              <li class="school">
+                <div class="school-when">
+                  <p class="dates">{item.dates}</p>
+                  <p class="place">{item.place}</p>
+                </div>
+                <div class="school-what">
+                  <h3>{item.degree}</h3>
+                  <p class="school-name">{item.school}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
       </section>
     </div>
 
@@ -114,14 +141,55 @@ const leverage = [
     border-top: 1px solid var(--hairline);
   }
 
-  .education ul {
-    margin-top: 0.75rem;
-    font-size: var(--size-label);
-    color: var(--slate);
+  /* Education mirrors an Experience entry: dates and place on the left,
+     qualification and school on the right. */
+  .schools {
+    margin-top: 0.5rem;
   }
 
-  .education li + li {
-    margin-top: 0.35rem;
+  .school {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+    gap: 0.25rem 1.5rem;
+    padding-block: 1rem;
+  }
+
+  .school + .school {
+    border-top: 1px solid var(--hairline);
+  }
+
+  .school .dates {
+    font-size: var(--size-label);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .school .place {
+    margin-top: 0.15rem;
+    font-size: var(--size-label);
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .school h3 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .school-name {
+    margin-top: 0.15rem;
+    color: var(--cobalt);
+  }
+
+  @media (max-width: 480px) {
+    .school {
+      grid-template-columns: 1fr;
+    }
+
+    .school-what {
+      margin-top: 0.4rem;
+    }
   }
 
   .about-side {

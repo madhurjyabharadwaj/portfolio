@@ -10,7 +10,6 @@ problem: "Arcade games had three minutes and one coin to teach you the rules, ma
 role: "Design and full build"
 outcome: "2,325 lines, one file, zero assets. Every model is built from Three.js primitives at runtime and every sound is synthesised. Kept the arcade grammar (shrinking threat reticles, hit zones, a three-phase boss) and changed the incentives: disarming an enemy pays more than shooting them, and civilians in the line of fire cost you."
 tags: ["Three.js", "Game design", "Procedural", "Systems design"]
-product: true
 cover: "../../assets/work/virtua-justice.png"
 coverAlt: "Virtua Justice title screen: rail shooter controls, a difficulty choice between Rookie and Veteran, and a Start Game button over a night-time street scene."
 links:

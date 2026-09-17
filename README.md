@@ -49,7 +49,7 @@ The free tier allows 50 submissions a month, which is ample for a portfolio. The
 
 ## Adding work
 
-Create one markdown file in `src/content/work/` and one cover image in `src/assets/work/`. That is the whole change: a card appears on the home page and on `/work`, a page is built at `/work/<filename>`, and if `product: true` is set the "products built" figure on the home page goes up by one.
+Create one markdown file in `src/content/work/` and one cover image in `src/assets/work/`. That is the whole change: a card appears on the home page and on `/work`, a page is built at `/work/<filename>`.
 
 ```markdown
 ---
@@ -64,7 +64,6 @@ problem: "The quoted problem statement shown in the highlighted block."
 role: "What you did"
 outcome: "The key outcome, two or three sentences."
 tags: ["Tag one", "Tag two"]
-product: true               # counts towards "products built"; omit for analysis work
 cover: "../../assets/work/my-piece.png"
 coverAlt: "What the image shows, for people who cannot see it."
 links:                      # optional, rendered as buttons at the end of the page
@@ -95,7 +94,7 @@ Smaller pieces that need a card but no page go in `src/content/also-built/` with
 | `src/site.ts` | Name, contact links, CV path, form endpoint, nav items. |
 | `src/content.config.ts` | Collection schemas. |
 | `src/pages/` | One file per route. Page copy for About, Experience and Connect lives in these files. |
-| `public/fonts/` | Self-hosted Young Serif and Bricolage Grotesque, latin subset. |
+| `public/fonts/` | Self-hosted Bricolage Grotesque, variable, latin subset. The only typeface on the site. |
 | `public/og.png` | Square Open Graph image (the avatar on butter). |
 | `src/assets/work/` | Cover image for each work card and page, one per markdown file. |
 | `src/components/WorkCard.astro` | The rich work card. Whole card is one link. |

@@ -1,14 +1,6 @@
 /* Fonts, reset, typography and the handful of shared classes. */
 
 @font-face {
-  font-family: 'Bodoni Moda';
-  font-style: normal;
-  font-weight: 400 900;
-  font-display: swap;
-  src: url('/fonts/bodoni-moda-latin.woff2') format('woff2');
-}
-
-@font-face {
   font-family: 'Bricolage Grotesque';
   font-style: normal;
   font-weight: 200 800;
@@ -105,22 +97,24 @@ h3 {
   font-weight: 400;
 }
 
+/* Optical size is held at a moderate value so large headings stay plain and
+   open instead of picking up the face's condensed display character. */
 .display {
   font-family: var(--font-display);
   font-size: var(--size-display);
-  font-weight: 500;
+  font-weight: 700;
   line-height: var(--leading-display);
-  letter-spacing: -0.015em;
-  font-variation-settings: 'opsz' 96;
+  letter-spacing: -0.03em;
+  font-variation-settings: 'opsz' 32;
 }
 
 .title {
   font-family: var(--font-display);
   font-size: var(--size-title);
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  font-variation-settings: 'opsz' 72;
+  font-weight: 700;
+  line-height: var(--leading-title);
+  letter-spacing: -0.025em;
+  font-variation-settings: 'opsz' 32;
 }
 
 /* One word in the hero carries the accent. */
