@@ -43,6 +43,8 @@ const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
               cover={entry.data.cover}
               coverAlt={entry.data.coverAlt}
               video={entry.data.video}
+              links={entry.data.links}
+              name={entry.data.name}
               href={`/work/${entry.id}`}
               cta="Read the full case study →"
               flip={i % 2 === 1}
@@ -59,7 +61,8 @@ const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
       <ul class="cards">
         {
           alsoBuilt.map((entry) => {
-            const repo = entry.data.links.find((l) => l.label === 'Repo') ?? entry.data.links[0];
+            // The card itself opens the live thing when there is one.
+            const primary = entry.data.links.find((l) => l.label === 'Live') ?? entry.data.links[0];
             return (
               <li data-reveal>
                 <WorkCard
@@ -70,8 +73,9 @@ const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
                   role={entry.data.role}
                   outcome={entry.data.outcome}
                   tags={entry.data.tags}
-                  href={repo.href}
-                  cta={`${repo.label} →`}
+                  links={entry.data.links}
+                  name={entry.data.name}
+                  href={primary.href}
                   external
                 />
               </li>

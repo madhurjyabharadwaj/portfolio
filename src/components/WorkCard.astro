@@ -17,7 +17,12 @@ interface Props {
   outcome: string;
   tags: string[];
   href: string;
-  cta: string;
+  /** Text of the card's own call to action. Omitted when the links carry it. */
+  cta?: string;
+  /** Live site, repo, anything else worth reaching without opening the page. */
+  links?: { label: string; href: string }[];
+  /** Used to tell one card's links from another's for screen readers. */
+  name?: string;
   number?: string;
   type?: 'case-study' | 'project';
   typeLabel?: string;
@@ -41,6 +46,8 @@ const {
   tags,
   href,
   cta,
+  links = [],
+  name,
   number,
   type,
   typeLabel,
@@ -106,7 +113,30 @@ const Heading = headingLevel;
     <ul class="tags" aria-label="Tags">
       {tags.map((tag) => <li>{tag}</li>)}
     </ul>
-    <span class="card-cta" aria-hidden="true">{cta}</span>
+    <div class="card-actions">
+      {cta && <span class="card-cta" aria-hidden="true">{cta}</span>}
+      {links.length > 0 && (
+        <ul class="card-links">
+          {links.map((link) => (
+            <li>
+              <a href={link.href} rel="noopener" aria-label={name ? `${link.label}: ${name}` : undefined}>
+                <svg viewBox="0 0 14 14" width="11" height="11" aria-hidden="true">
+                  <path
+                    d="M5.5 2.5H2.5v9h9v-3M8.5 2.5h3v3M11.5 2.5 6 8"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   </div>
 </article>
 
@@ -270,10 +300,13 @@ const Heading = headingLevel;
     transition: color var(--dur-fast) var(--ease-out);
   }
 
-  /* Stretch the title link over the whole card. */
+  /* Stretch the title link over the whole card. The z-index lifts it above
+     positioned children such as the problem block, while the actions row
+     shares the same level and wins on document order. */
   .card-link::after {
     content: '';
     position: absolute;
+    z-index: 1;
     inset: 0;
     border-radius: inherit;
   }
@@ -343,8 +376,47 @@ const Heading = headingLevel;
     color: var(--slate);
   }
 
-  .card-cta {
+  /* Sits above the stretched title link, so these links stay clickable while
+     the rest of the card still opens the write-up. */
+  .card-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
     margin-top: 0.25rem;
+  }
+
+  .card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .card-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--ink);
+    font-size: var(--size-label);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .card-links a:hover {
+    border-color: var(--cobalt);
+    color: var(--cobalt);
+  }
+
+  .card-cta {
     padding-bottom: 2px;
     border-bottom: 2px solid var(--ink);
     color: var(--ink);

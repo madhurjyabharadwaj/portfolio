@@ -13,6 +13,8 @@ tags: ["Matching", "Explainable scoring", "Two-sided marketplace", "PRD"]
 cover: "../../assets/work/teamzero.png"
 coverAlt: "TeamZero landing page: the headline 'Find your first teammate. Not your hundredth contact.' with Start as Founder and I'm a candidate buttons."
 links:
+  - label: "Live"
+    href: "https://teamzero.lovable.app"
   - label: "Repo"
     href: "https://github.com/madhurjyabharadwaj/teamzero"
 ---
