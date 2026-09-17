@@ -21,7 +21,17 @@ const work = defineCollection({
       cover: image(),                          // card and page image
       coverAlt: z.string(),
       links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
-      deck: z.string().optional(),             // path to a downloadable deck, if any
+      // Files offered for download at the end of the page: deck, model, anything.
+      downloads: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
+      // A short launch video, shown beside the cover and flagged on the card.
+      video: z
+        .object({
+          src: z.string(),                     // file in public/videos/
+          poster: image(),                     // still frame, used until play
+          alt: z.string(),
+          seconds: z.number(),
+        })
+        .optional(),
     }),
 });
 

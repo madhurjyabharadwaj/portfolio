@@ -28,7 +28,7 @@ const menu = [
 ];
 
 // Figures split into the number that counts up and the words after it.
-// A zero does not count up; it is already where it should be.
+// A figure with no leading number, such as a location, simply sits there.
 const figure = (text: string) => {
   const match = /^(\d+)(.*)$/.exec(text);
   return match ? { n: match[1], rest: match[2] } : { n: '', rest: text };
@@ -38,49 +38,49 @@ const scorecard = [
   { figure: '4+ years', caption: 'in product and analytics' },
   { figure: '4 sectors', caption: 'life sciences, e-commerce, beauty, industrial' },
   { figure: '20+ markets', caption: 'worked across' },
-  { figure: '0 downtime', caption: 'on an enterprise cutover, first PRD to production' },
+  { figure: 'Paris & remote', caption: 'open to roles internationally' },
 ].map((item) => ({ ...item, ...figure(item.figure) }));
 
 // The four jobs inside the product role.
 const roles = [
   {
-    role: 'Product Owner',
-    word: 'Backlog',
-    text: 'PRDs, user stories, refinement. Taking a vague ask and turning it into something an engineering team can start on Monday.',
+    role: 'Product management',
+    word: 'Roadmaps',
+    text: 'Prioritising, sequencing, and keeping a room full of opinions pointed the same way. Choosing what gets built next, then holding that line when someone senior wants to jump the queue.',
   },
   {
-    role: 'Product Manager',
-    word: 'Roadmap',
-    text: 'Vision, prioritisation, keeping stakeholders pointed the same way. Deciding what gets built and when, then holding that line when someone senior wants to jump the queue.',
+    role: 'Product ownership',
+    word: 'Backlogs',
+    text: 'PRDs, user stories, refinement. Turning a vague ask into something an engineering team can pick up on Monday morning without asking me three questions first.',
   },
   {
-    role: 'PMO',
-    word: 'Cadence',
-    text: 'UAT plans, governance reviews, cutover checklists and the monthly numbers. The rhythm that keeps a programme honest about where it actually is.',
+    role: 'Programme delivery',
+    word: 'Governance',
+    text: 'Test plans, sign-offs, cutover checklists and the monthly numbers. The unglamorous rhythm that tells you where a programme actually is, rather than where the status slide says it is.',
   },
   {
-    role: 'User Research',
-    word: 'Discovery',
-    text: 'Interviews, shadowing and funnel data, read side by side. Watching where people get stuck tells you more than asking what they want.',
+    role: 'Research',
+    word: 'Fieldwork',
+    text: 'Interviews, shadowing, and funnel data read alongside them. Where somebody gets stuck says far more than what they tell you they want.',
   },
 ];
 
 const principles = [
   {
-    title: 'Start with the problem',
-    text: "A feature request is somebody's guess at a solution. I work back from it until the problem fits in one sentence, and only then start talking about what to build.",
+    title: 'Name the problem first',
+    text: "A feature request is somebody's guess at a solution. I work backwards from it until the problem fits in one sentence, and only then talk about what to build.",
   },
   {
-    title: 'Validate before scaling',
-    text: 'A prototype, a pilot and a handful of honest conversations cost less than a quarter of engineering time. Better to find the flaw in an idea while it still takes a week to change.',
+    title: 'Buy certainty cheaply',
+    text: 'A prototype, a pilot and four honest conversations cost less than a quarter of engineering time. Better to break an idea while it still takes a week to fix.',
   },
   {
-    title: 'Balance user value and feasibility',
-    text: "Every real decision gives something up. I'd rather name the trade-off, write down why, and defend it than ship a compromise nobody actually chose.",
+    title: 'Make the trade-off visible',
+    text: "Every real decision gives something up. I'd rather write down what we're sacrificing and defend it than ship a compromise nobody actually chose.",
   },
   {
-    title: 'Measure outcomes, not outputs',
-    text: 'Shipping on time is where the question starts, not where it ends. What counts is whether people use it, whether it holds up in production, and whether anything measurable moved.',
+    title: 'Judge it by what moved',
+    text: 'Shipping on time is where the question starts. What counts is whether people use it, whether it survives production, and whether a number anyone cares about changed.',
   },
 ];
 ---
@@ -152,7 +152,7 @@ const principles = [
         scorecard.map((item) => (
           <li>
             {/* Kept on one line: any whitespace here would appear between the number and its unit. */}
-            <strong>{item.n === '0' ? <span class="num">{item.n}</span> : item.n && <span class="num" data-count={item.n}>{item.n}</span>}{item.rest}</strong>
+            <strong>{item.n && <span class="num" data-count={item.n}>{item.n}</span>}{item.rest}</strong>
             <span class="label">{item.caption}</span>
           </li>
         ))
@@ -162,10 +162,10 @@ const principles = [
 
   <section class="section container" aria-labelledby="roles-title">
     <div class="section-head" data-reveal>
-      <h2 id="roles-title" class="title">The whole product job</h2>
+      <h2 id="roles-title" class="title">Four jobs, one role</h2>
       <p class="lead">
-        Product manager, product owner and programme lead are different jobs. I've done each of them in a real
-        team, usually more than one at once.
+        Most teams split these between different people. I have carried them in the same week, which is the
+        argument for hiring someone who has done all four rather than one of them very neatly.
       </p>
     </div>
     <ul class="roles" data-reveal-group>
@@ -183,16 +183,16 @@ const principles = [
 
   <section class="section container philosophy" aria-labelledby="philosophy-title">
     <div class="philosophy-head" data-reveal>
-      <h2 id="philosophy-title" class="title">How I think about products</h2>
-      <p class="lead">A few principles I keep coming back to, whatever the sector or the size of the team.</p>
+      <h2 id="philosophy-title" class="title">How I make the call</h2>
+      <p class="lead">
+        Four habits that decide what I do when the evidence is thin and somebody wants an answer today.
+      </p>
     </div>
     <ol class="principles" data-reveal-group>
       {
-        principles.map((item, i) => (
+        principles.map((item) => (
           <li>
-            <span class="principle-n" aria-hidden="true">
-              {String(i + 1).padStart(2, '0')}
-            </span>
+            <span class="principle-mark" aria-hidden="true" />
             <div>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
@@ -230,6 +230,7 @@ const principles = [
               tags={entry.data.tags}
               cover={entry.data.cover}
               coverAlt={entry.data.coverAlt}
+              video={entry.data.video}
               href={`/work/${entry.id}`}
               cta="Read the full case study →"
               flip={i % 2 === 1}
@@ -432,7 +433,7 @@ const principles = [
     display: block;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(1.5rem, 3.4cqi, 2.75rem);
+    font-size: clamp(1.5rem, 3.6cqi, 2.75rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
     white-space: nowrap;
@@ -551,8 +552,8 @@ const principles = [
 
   .principles li {
     display: grid;
-    grid-template-columns: 3.5rem minmax(0, 1fr);
-    gap: 1rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1.25rem;
     padding-block: clamp(1.5rem, 2.5vw, 2rem);
     border-top: 1px solid var(--hairline);
   }
@@ -561,14 +562,16 @@ const principles = [
     border-bottom: 1px solid var(--hairline);
   }
 
-  .principle-n {
-    font-family: var(--font-display);
-    font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    font-variant-numeric: tabular-nums;
-    color: var(--cobalt);
+  .principle-mark {
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-top: 0.5rem;
+    border: 2px solid var(--cobalt);
+    border-radius: 3px;
+  }
+
+  .principles li:first-child .principle-mark {
+    background: var(--cobalt);
   }
 
   .principles h3 {
@@ -593,7 +596,7 @@ const principles = [
     }
 
     .principles li {
-      grid-template-columns: 2.75rem minmax(0, 1fr);
+      gap: 1rem;
     }
   }
 

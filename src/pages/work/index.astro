@@ -42,6 +42,7 @@ const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
               tags={entry.data.tags}
               cover={entry.data.cover}
               coverAlt={entry.data.coverAlt}
+              video={entry.data.video}
               href={`/work/${entry.id}`}
               cta="Read the full case study →"
               flip={i % 2 === 1}

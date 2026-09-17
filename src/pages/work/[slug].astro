@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
@@ -15,8 +15,12 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, subtitle, name, type, category, year, links, deck, cover, coverAlt } = entry.data;
+const { title, subtitle, name, type, category, year, links, downloads, cover, coverAlt, video } = entry.data;
 const { Content } = await render(entry);
+
+// The poster is optimised at build time; the video itself is only fetched
+// once someone presses play.
+const poster = video ? await getImage({ src: video.poster, width: 540, format: 'webp' }) : null;
 ---
 
 <Base
@@ -36,25 +40,41 @@ const { Content } = await render(entry);
       <p class="subtitle">{subtitle}</p>
     </header>
 
-    <figure class="cover" data-reveal>
-      <Image src={cover} alt={coverAlt} widths={[720, 1080, 1440]} sizes="(min-width: 1200px) 1120px, 100vw" loading="eager" />
-    </figure>
+    <div class:list={['media', { 'with-video': !!video }]} data-reveal>
+      <figure class="cover">
+        <Image
+          src={cover}
+          alt={coverAlt}
+          widths={[720, 1080, 1440]}
+          sizes="(min-width: 1200px) 760px, 100vw"
+          loading="eager"
+        />
+      </figure>
+      {
+        video && poster && (
+          <figure class="clip">
+            <video controls preload="none" playsinline poster={poster.src} aria-label={video.alt}>
+              <source src={video.src} type="video/mp4" />
+              Your browser cannot play this video.
+            </video>
+            <figcaption>Launch video, {video.seconds} seconds, with sound</figcaption>
+          </figure>
+        )
+      }
+    </div>
 
     <div class="prose">
       <Content />
     </div>
 
     {
-      (deck || links.length > 0) && (
+      (downloads.length > 0 || links.length > 0) && (
         <div class="actions">
-          {deck && (
-            /* Placeholder: `deck` in the markdown frontmatter points at a file that
-               does not exist yet. Upload the cleaned PDF to public/decks/ and update
-               the path in src/content/work/<slug>.md. */
-            <a class="button primary" href={deck} download>
-              Download the deck
+          {downloads.map((file, i) => (
+            <a class:list={['button', { primary: i === 0 }]} href={file.href} download>
+              {file.label}
             </a>
-          )}
+          ))}
           {links.map((link) => (
             <a class="button" href={link.href}>
               {link.label}
@@ -95,8 +115,24 @@ const { Content } = await render(entry);
     color: var(--muted);
   }
 
+  /* Cover and launch video sit side by side, sized so their heights match. */
+  .media {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .media.with-video {
+    grid-template-columns: minmax(0, 2.37fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .cover,
+  .clip {
+    margin: 0;
+  }
+
   .cover {
-    margin: 0 0 clamp(2rem, 5vw, 3.5rem);
     overflow: hidden;
     border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-menu);
@@ -106,6 +142,33 @@ const { Content } = await render(entry);
   .cover :global(img) {
     width: 100%;
     height: auto;
+  }
+
+  .clip video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    border-radius: var(--radius-menu);
+    background: var(--ink);
+    box-shadow: 0 18px 40px -22px rgba(20, 27, 61, 0.5);
+  }
+
+  .clip figcaption {
+    margin-top: 0.6rem;
+    font-size: var(--size-label);
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  @media (max-width: 860px) {
+    .media.with-video {
+      grid-template-columns: 1fr;
+      justify-items: start;
+    }
+
+    .clip {
+      width: min(100%, 320px);
+    }
   }
 
   .actions {

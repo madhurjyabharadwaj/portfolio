@@ -12,6 +12,11 @@ outcome: "One 1.9 MB file holding 27 chapters, 68 scored practice questions and 
 tags: ["Offline-first PWA", "Spaced repetition", "Accessibility", "Vanilla JS"]
 cover: "../../assets/work/out-loud.png"
 coverAlt: "Out Loud on a phone: the PM interview studio home screen with today's tasks, a level card and the module list."
+video:
+  src: "/videos/out-loud-launch.mp4"
+  poster: "../../assets/video/out-loud-launch.png"
+  alt: "Launch video for Out Loud: a practice question appears on a phone, then the app scores the answer and plots it on a five-axis chart."
+  seconds: 23
 links:
   - label: "Live"
     href: "https://madhurjyabharadwaj.github.io/Out-Loud/"
