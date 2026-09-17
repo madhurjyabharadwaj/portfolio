@@ -44,24 +44,60 @@ const scorecard = [
 // The four jobs inside the product role.
 const roles = [
   {
-    role: 'Product management',
+    role: 'Product Manager',
     word: 'Roadmaps',
     text: 'Prioritising, sequencing, and keeping a room full of opinions pointed the same way. Choosing what gets built next, then holding that line when someone senior wants to jump the queue.',
   },
   {
-    role: 'Product ownership',
+    role: 'Product Owner',
     word: 'Backlogs',
     text: 'PRDs, user stories, refinement. Turning a vague ask into something an engineering team can pick up on Monday morning without asking me three questions first.',
   },
   {
-    role: 'Programme delivery',
+    role: 'Project Manager',
     word: 'Governance',
     text: 'Test plans, sign-offs, cutover checklists and the monthly numbers. The unglamorous rhythm that tells you where a programme actually is, rather than where the status slide says it is.',
   },
   {
-    role: 'Research',
+    role: 'Business Analyst',
     word: 'Fieldwork',
     text: 'Interviews, shadowing, and funnel data read alongside them. Where somebody gets stuck says far more than what they tell you they want.',
+  },
+];
+
+// Grouped from the skills section of the CV, plus the tools the projects on
+// this site were actually built with.
+const toolkit = [
+  {
+    group: 'Product',
+    items: [
+      'Discovery',
+      'PRDs and user stories',
+      'Roadmap and backlog',
+      'Prioritisation',
+      'Experimentation and A/B testing',
+      'KPI and OKR design',
+      'UAT',
+      'Rollout and change management',
+      'Build and run',
+      'Stakeholder management',
+    ],
+  },
+  {
+    group: 'Data and analytics',
+    items: ['SQL', 'Python', 'Power BI', 'Tableau', 'Looker', 'Excel'],
+  },
+  {
+    group: 'AI',
+    items: ['LLM-powered MVPs', 'Prompt engineering', 'AI agent deployment', 'Fuzzy matching'],
+  },
+  {
+    group: 'Platforms and tools',
+    items: ['Jira', 'ServiceNow', 'Figma', 'AWS', 'GCP', 'Git'],
+  },
+  {
+    group: 'Building',
+    items: ['JavaScript', 'Three.js', 'Web Audio', 'Offline-first PWAs', 'Lovable', 'Replit', 'Glide'],
   },
 ];
 
@@ -160,12 +196,12 @@ const principles = [
     </ul>
   </section>
 
-  <section class="section container" aria-labelledby="roles-title">
+  <section id="roles" class="section container" aria-labelledby="roles-title">
     <div class="section-head" data-reveal>
-      <h2 id="roles-title" class="title">Four jobs, one role</h2>
+      <h2 id="roles-title" class="title">The roles I cover</h2>
       <p class="lead">
-        Most teams split these between different people. I have carried them in the same week, which is the
-        argument for hiring someone who has done all four rather than one of them very neatly.
+        Most teams split these titles between different people. I have carried all four in the same week,
+        which is the argument for hiring someone who has done each of them rather than one of them neatly.
       </p>
     </div>
     <ul class="roles" data-reveal-group>
@@ -181,7 +217,7 @@ const principles = [
     </ul>
   </section>
 
-  <section class="section container philosophy" aria-labelledby="philosophy-title">
+  <section id="approach" class="section container philosophy" aria-labelledby="philosophy-title">
     <div class="philosophy-head" data-reveal>
       <h2 id="philosophy-title" class="title">How I make the call</h2>
       <p class="lead">
@@ -201,6 +237,29 @@ const principles = [
         ))
       }
     </ol>
+  </section>
+
+  <section id="toolkit" class="section container" aria-labelledby="toolkit-title">
+    <div class="section-head" data-reveal>
+      <h2 id="toolkit-title" class="title">Capabilities and toolkit</h2>
+      <p class="lead">What I actually use, grouped by the job it does.</p>
+    </div>
+    <dl class="stack" data-reveal-group>
+      {
+        toolkit.map((row) => (
+          <div class="stack-row">
+            <dt>{row.group}</dt>
+            <dd>
+              <ul class="tags">
+                {row.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
   </section>
 
   <section id="work" class="section container" aria-labelledby="work-title">
@@ -563,16 +622,15 @@ const principles = [
   }
 
   .principle-mark {
-    width: 0.75rem;
-    height: 0.75rem;
-    margin-top: 0.5rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    margin-top: 0.55rem;
     border: 2px solid var(--cobalt);
-    border-radius: 3px;
+    border-radius: 2px;
+    transform: rotate(45deg);
   }
 
-  .principles li:first-child .principle-mark {
-    background: var(--cobalt);
-  }
+
 
   .principles h3 {
     font-size: var(--size-subhead);
@@ -597,6 +655,36 @@ const principles = [
 
     .principles li {
       gap: 1rem;
+    }
+  }
+
+  /* Capabilities: label on the left, chips on the right, one row per group. */
+  .stack-row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 2fr);
+    gap: 0.75rem 2rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .stack-row:last-child {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .stack-row dt {
+    font-size: var(--size-label);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .stack-row dd {
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .stack-row {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
     }
   }
 

@@ -1,5 +1,5 @@
 ---
-import { NAV, SITE } from '../site';
+import { NAV, SECTION_NAV, SITE } from '../site';
 ---
 
 <footer class="site-footer">
@@ -8,6 +8,7 @@ import { NAV, SITE } from '../site';
       <a class="wordmark" href="/" aria-label="Home">M.</a>
       <ul>
         {NAV.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        {SECTION_NAV.map((item) => <li class="section-link"><a href={item.href}>{item.label}</a></li>)}
       </ul>
     </nav>
     <ul class="social">
@@ -85,6 +86,11 @@ import { NAV, SITE } from '../site';
 
   nav ul a:hover {
     text-decoration: underline;
+  }
+
+  /* Landing-page sections sit a shade quieter than the pages. */
+  .section-link a {
+    color: var(--muted);
   }
 
   .social {
