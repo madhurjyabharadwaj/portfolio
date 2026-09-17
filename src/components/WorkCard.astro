@@ -381,11 +381,15 @@ const Heading = headingLevel;
     color: var(--slate);
   }
 
-  /* Sits above the stretched title link, so these links stay clickable while
-     the rest of the card still opens the write-up. */
+  /* Sits above the stretched title link so the Live and Repo links stay
+     clickable. The row itself takes no pointer events: it spans the full width
+     of the body, and anything in it that is not a real link -- the call to
+     action, the gaps -- would otherwise sit on top of the card link and
+     swallow the click instead of opening the write-up. */
   .card-actions {
     position: relative;
     z-index: 1;
+    pointer-events: none;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -400,6 +404,7 @@ const Heading = headingLevel;
   }
 
   .card-links a {
+    pointer-events: auto;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
