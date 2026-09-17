@@ -18,8 +18,6 @@ const work = defineCollection({
       role: z.string(),
       outcome: z.string(),
       tags: z.array(z.string()).default([]),
-      /** Counts towards the "products built" figure on the home page. */
-      product: z.boolean().default(false),
       cover: image(),                          // card and page image
       coverAlt: z.string(),
       links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
