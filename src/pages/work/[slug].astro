@@ -19,8 +19,14 @@ const { title, subtitle, name, type, category, year, links, downloads, cover, co
 const { Content } = await render(entry);
 
 // The poster is optimised at build time; the video itself is only fetched
-// once someone presses play.
-const poster = video ? await getImage({ src: video.poster, width: 540, format: 'webp' }) : null;
+// once someone presses play. Its proportions drive the layout, so a landscape
+// clip is not squeezed into the slot a vertical one wants.
+const poster = video ? await getImage({ src: video.poster, width: 960, format: 'webp' }) : null;
+const clipAspect = video ? video.poster.width / video.poster.height : 1;
+const COVER_ASPECT = 4 / 3;
+const mediaStyle = video
+  ? `--media-columns: minmax(0, ${COVER_ASPECT}fr) minmax(0, ${clipAspect}fr); --clip-aspect: ${clipAspect}; --clip-narrow-width: ${clipAspect < 1 ? '320px' : '100%'}`
+  : undefined;
 ---
 
 <Base
@@ -40,7 +46,7 @@ const poster = video ? await getImage({ src: video.poster, width: 540, format: '
       <p class="subtitle">{subtitle}</p>
     </header>
 
-    <div class:list={['media', { 'with-video': !!video }]} data-reveal>
+    <div class:list={['media', { 'with-video': !!video }]} style={mediaStyle} data-reveal>
       <figure class="cover">
         <Image
           src={cover}
@@ -123,7 +129,7 @@ const poster = video ? await getImage({ src: video.poster, width: 540, format: '
   }
 
   .media.with-video {
-    grid-template-columns: minmax(0, 2.37fr) minmax(0, 1fr);
+    grid-template-columns: var(--media-columns);
     align-items: start;
   }
 
@@ -147,7 +153,7 @@ const poster = video ? await getImage({ src: video.poster, width: 540, format: '
   .clip video {
     display: block;
     width: 100%;
-    aspect-ratio: 9 / 16;
+    aspect-ratio: var(--clip-aspect, 9 / 16);
     border-radius: var(--radius-menu);
     background: var(--ink);
     box-shadow: 0 18px 40px -22px rgba(20, 27, 61, 0.5);
@@ -167,7 +173,7 @@ const poster = video ? await getImage({ src: video.poster, width: 540, format: '
     }
 
     .clip {
-      width: min(100%, 320px);
+      width: min(100%, var(--clip-narrow-width, 320px));
     }
   }
 
