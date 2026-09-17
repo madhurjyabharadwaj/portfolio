@@ -12,6 +12,11 @@ outcome: "2,325 lines, one file, zero assets. Every model is built from Three.js
 tags: ["Three.js", "Game design", "Procedural", "Systems design"]
 cover: "../../assets/work/virtua-justice.png"
 coverAlt: "Virtua Justice title screen: rail shooter controls, a difficulty choice between Rookie and Veteran, and a Start Game button over a night-time street scene."
+video:
+  src: "/videos/virtua-justice-launch.mp4"
+  poster: "../../assets/video/virtua-justice-launch.png"
+  alt: "Launch video for Virtua Justice: the title card, threat reticles counting down over enemies, and the three-phase boss."
+  seconds: 22
 links:
   - label: "Play"
     href: "https://madhurjyabharadwaj.github.io/virtua-justice-rail-shooter/"

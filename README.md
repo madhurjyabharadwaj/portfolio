@@ -29,7 +29,7 @@ Every push to `main` deploys production. Pull requests get preview URLs.
 |---|---|
 | Site URL | `SITE_URL` in `astro.config.mjs`, one line. Drives canonical links, Open Graph tags, `robots.txt` and `sitemap.xml`. It must match the address the site is actually served from, or link previews break. |
 | Formspree endpoint | `formEndpoint` in `src/site.ts`. See "Connecting the contact form" below. |
-| Entalpic deck | Upload the cleaned PDF to `public/decks/` and set `deck:` in `src/content/work/entalpic.md` to its path. Remove the `deck:` line to hide the button. |
+| Entalpic deck | Published at `public/decks/`, with the stakeholder-logo appendix removed. Replace the file to update it. |
 | CV | Replace `public/cv/Madhurjya-Bharadwaj-CV.pdf` with a newer file of the same name. |
 
 ## Connecting the contact form
@@ -69,7 +69,14 @@ coverAlt: "What the image shows, for people who cannot see it."
 links:                      # optional, rendered as buttons at the end of the page
   - label: "Repo"
     href: "https://..."
-deck: "/decks/file.pdf"     # optional, adds a download button
+downloads:                  # optional files, first one gets the solid button
+  - label: "Download the deck"
+    href: "/decks/file.pdf"
+video:                      # optional launch video
+  src: "/videos/my-piece.mp4"
+  poster: "../../assets/video/my-piece.png"
+  alt: "What happens in the video, for people who cannot see it."
+  seconds: 23
 ---
 
 First paragraph is set larger as the lead.
@@ -78,6 +85,8 @@ First paragraph is set larger as the lead.
 
 Body copy. Blockquotes and inline code are styled.
 ```
+
+A piece with a `video` shows it beside the cover on its own page, and flags it with a small clip on the card. Put the file in `public/videos/` and a still frame in `src/assets/video/`; nothing downloads until someone presses play. Vertical files work best.
 
 Cover images are 1200 by 900. The current ones are screenshots of the live products in a browser or phone frame, and, for the two analysis pieces, a chart and a diagram built from the numbers in the write-up. Replace any of them by overwriting the file with the same name.
 
@@ -97,6 +106,9 @@ Smaller pieces that need a card but no page go in `src/content/also-built/` with
 | `public/fonts/` | Self-hosted Bricolage Grotesque, variable, latin subset. The only typeface on the site. |
 | `public/og.png` | Square Open Graph image (the avatar on butter). |
 | `src/assets/work/` | Cover image for each work card and page, one per markdown file. |
+| `src/assets/video/` | Poster frame for each launch video. |
+| `public/videos/` | Launch videos, served as-is and loaded only on play. |
+| `public/decks/` | Downloadable files offered at the end of a work page. |
 | `src/components/WorkCard.astro` | The rich work card. Whole card is one link. |
 
 ## Checks that were run
