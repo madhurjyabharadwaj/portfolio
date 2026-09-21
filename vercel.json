@@ -3,9 +3,9 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "portfolio-olive-seven-27.vercel.app" }],
-      "destination": "https://www.madhurjyabharadwaj.com/:path*",
+      "destination": "https://www.madhurjyabharadwaj.com/$1",
       "permanent": true
     }
   ],
