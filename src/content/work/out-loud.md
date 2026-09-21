@@ -8,7 +8,7 @@ year: 2026
 order: 4
 problem: "Reading isn’t practising. And nobody revises at a desk with a stable connection. They revise on the way somewhere."
 role: "Product, content and full build"
-outcome: "One 1.9 MB file holding 27 chapters, 68 scored practice questions and a 352-term glossary on spaced repetition, precached by a service worker so an offline load renders byte-identical. All colour pairs audited to 4.5:1 or better, every tap target at least 44 px."
+outcome: "Replaces reading about PM interviews with practising for them. Every answer is scored on structure, user empathy, prioritisation, data reasoning and communication, so you can see whether week four beats week one, and it all works offline, with no sign-up."
 tags: ["Offline-first PWA", "Spaced repetition", "Accessibility", "Vanilla JS"]
 cover: "../../assets/work/out-loud.png"
 coverAlt: "Out Loud on a phone: the PM interview studio home screen with today’s tasks, a level card and the module list."
