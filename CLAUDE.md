@@ -6,7 +6,7 @@ Working notes for this repo. [README.md](README.md) is the human-facing guide (d
 
 Madhurjya Bharadwaj's personal portfolio. He is a Product Manager, and this site is what he sends to hiring managers instead of a PDF. It has to load fast, read well on a phone, and make someone want to open a case study.
 
-- **Live:** https://www.madhurjyabharadwaj.com (production, deploys on push to `main`). The bare domain 308-redirects to www. The old https://portfolio-olive-seven-27.vercel.app still serves the same build; canonical tags point every page at www.
+- **Live:** https://www.madhurjyabharadwaj.com (production, deploys on push to `main`). The bare domain 308-redirects to www. The old https://portfolio-olive-seven-27.vercel.app 308-redirects every path to www, set in `vercel.json` by host match, so links already sent out still land. Canonical tags point every page at www.
 - **Domain:** madhurjyabharadwaj.com, registered through Vercel, renews yearly. DNS is managed in Vercel, so subdomains (e.g. `work.madhurjyabharadwaj.com`) can be added there for free and pointed at other projects.
 - **Repo:** https://github.com/madhurjyabharadwaj/portfolio
 - **Source copy:** `D:\Downloads\portfolio-content-v5.md` is the approved wording. Later rounds were agreed in chat, so the site is ahead of that file in places.
