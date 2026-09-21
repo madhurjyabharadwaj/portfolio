@@ -88,7 +88,7 @@ Screenshots in past sessions were taken with a small DevTools-protocol script in
 
 ## Known issues
 
-- **Videos have no captions.** All three launch videos carry sound. Transcripts have been requested but not supplied.
+- **Videos are music only.** The three launch videos have a music track and no narration (checked with whisper.cpp on 2026-09-22, confirmed by him), so they need no captions. He chose to leave them as they are.
 - **Entalpic permission is unconfirmed.** His own content file said to confirm the client is happy for the deck to be public. The deck is live minus its final page, a third-party stakeholder logo map that he asked to cut. He has never confirmed the permission itself in writing.
 - **Lighthouse on this machine swings between 85 and 99** depending on load. Compare builds interleaved and take a median; a single run means nothing. On quiet runs every page scores 99 or 100 across all four categories.
 - **The dev server can serve stale scoped CSS** after edits. If a change is not showing, restart it before debugging the CSS.
@@ -100,7 +100,6 @@ Screenshots in past sessions were taken with a small DevTools-protocol script in
 
 Nothing is in flight. Open items, roughly in order of value:
 
-1. Caption the three launch videos once transcripts exist.
-2. Confirm the Entalpic permission, or pull the deck download.
-3. The CV at `public/cv/` still says Apprentice and Intern while the site says Product Manager and Data Product Owner. He was told; it is his call.
-4. `astro check` is not installed. Offer it if type checking would help.
+1. Confirm the Entalpic permission, or pull the deck download.
+2. The CV at `public/cv/` still says Apprentice and Intern while the site says Product Manager and Data Product Owner. He decided on 2026-09-21 to keep both as they are: the site shows roles, the CV the specifics. Do not raise it again.
+3. `astro check` is not installed. Offer it if type checking would help.
