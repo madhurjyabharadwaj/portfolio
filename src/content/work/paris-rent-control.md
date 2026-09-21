@@ -6,9 +6,9 @@ type: "case-study"
 category: "Data product"
 year: 2026
 order: 2
-problem: "An investor can find out what a flat costs in about ten seconds and can't find out what it returns at all."
+problem: "An investor can find out what a flat costs in about ten seconds and can’t find out what it returns at all."
 role: "Product concept, data pipeline and investor tool"
-outcome: "Joined three open French datasets (DVF, DPE, DRIHL) into 8,960 rent-zone records, applied the legal cap to every recorded transaction, and built a ranked table and map of cash-on-cash returns by rooms, budget and arrondissement. Match rate of 58% is documented, not hidden."
+outcome: "Joined three open French datasets (DVF, DPE, DRIHL) into 8,960 rent-zone records, applied the legal cap to every recorded transaction, and built a ranked table and map of cash-on-cash returns by rooms, budget and arrondissement. The 58% match rate is written up in the README; showing it inside the tool is the next fix."
 tags: ["Geospatial data", "Python", "Open data", "Investor tool"]
 cover: "../../assets/work/paris-rent-control.png"
 coverAlt: "Diagram of the pipeline: DVF sale prices, DPE energy ratings and DRIHL rent zones joined into 8,960 zone records, then a capped cash-on-cash return per flat."
@@ -17,9 +17,9 @@ links:
     href: "https://github.com/madhurjyabharadwaj/Paris-real-estate-ROI-under-rent-control-data-pipeline-and-investor-tool"
 ---
 
-Paris publishes what properties sell for. It doesn't publish what they earn. Rent here is legally capped under *l'encadrement des loyers*, and the cap depends on which neighbourhood polygon the flat sits inside, how big it is, how many rooms it has, when the building went up, and its energy rating. All of that exists publicly. None of it exists in one place.
+Paris publishes what properties sell for. It doesn’t publish what they earn. Rent here is legally capped under *l’encadrement des loyers*, and the cap depends on which neighbourhood polygon the flat sits inside, how big it is, how many rooms it has, when the building went up, and its energy rating. All of that exists publicly. None of it exists in one place.
 
-So an investor can find out what a flat costs in about ten seconds and can't find out what it returns at all. That gap is the whole project.
+So an investor can find out what a flat costs in about ten seconds and can’t find out what it returns at all. That gap is the whole project.
 
 ## How I closed it
 
@@ -31,6 +31,6 @@ DVF and DPE join on a standardised address key at about a 58% match rate. Every 
 
 Three inputs: rooms, budget, arrondissement. Out comes a ranked table of the best-returning properties and a clustered map where the marker colour tells you the return band. Click any property and you get its price, surface, computed return, postal code, and the specific rent zone it sits in.
 
-## Where it's weak
+## Where it’s weak
 
-That 58% match rate is the soft spot, and the tool doesn't surface it. Somebody looking at a ranked table has no way to tell which rows sit on a matched energy rating and which ones fall back to an assumption. It's in the README, which is the wrong place for it. Each row needs a confidence flag.
+That 58% match rate is the soft spot, and the tool doesn’t surface it. Somebody looking at a ranked table has no way to tell which rows sit on a matched energy rating and which ones fall back to an assumption. It’s in the README, which is the wrong place for it. Each row needs a confidence flag.

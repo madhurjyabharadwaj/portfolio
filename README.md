@@ -104,7 +104,7 @@ Smaller pieces that need a card but no page go in `src/content/also-built/` with
 | `src/content.config.ts` | Collection schemas. |
 | `src/pages/` | One file per route. Page copy for About, Experience and Connect lives in these files. |
 | `public/fonts/` | Self-hosted Bricolage Grotesque, variable, latin subset. The only typeface on the site. |
-| `public/og.png` | Square Open Graph image (the avatar on butter). |
+| `public/og-card.png` | Link-preview image, 1200 by 630: name, role and domain beside the avatar on butter. `public/og.png` is the old square version and is no longer referenced. |
 | `src/assets/work/` | Cover image for each work card and page, one per markdown file. |
 | `src/assets/video/` | Poster frame for each launch video. |
 | `public/videos/` | Launch videos, served as-is and loaded only on play. |

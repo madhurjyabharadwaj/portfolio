@@ -22,9 +22,9 @@ const chips = [
 
 const menu = [
   { href: '/about', label: 'Who I am', sub: 'Engineer who moved into product', colour: 'butter' },
-  { href: '/experience', label: "Where I've worked", sub: 'Enterprise, beauty, e-commerce, life sciences', colour: 'cobalt' },
+  { href: '/experience', label: "Where I’ve worked", sub: 'Industrial, beauty, e-commerce, life sciences', colour: 'cobalt' },
   { href: '/work', label: 'Case studies and projects', sub: 'Problems, trade-offs, shipped outcomes', colour: 'raspberry' },
-  { href: '/connect', label: "Let's talk", sub: 'Roles, collaboration, or just product', colour: 'ink' },
+  { href: '/connect', label: "Let’s talk", sub: 'Roles, collaboration, or just product', colour: 'ink' },
 ];
 
 // Figures split into the number that counts up and the words after it.
@@ -35,7 +35,7 @@ const figure = (text: string) => {
 };
 
 const scorecard = [
-  { figure: '4+ years', caption: 'in product and analytics' },
+  { figure: '4+ years', caption: 'in product, data and strategy' },
   { figure: '4 sectors', caption: 'life sciences, e-commerce, beauty, industrial' },
   { figure: '20+ markets', caption: 'worked across' },
   { figure: 'Paris & remote', caption: 'open to roles internationally' },
@@ -85,11 +85,11 @@ const toolkit = [
   },
   {
     group: 'Data and analytics',
-    items: ['SQL', 'Python', 'Power BI', 'Tableau', 'Looker', 'Excel'],
+    items: ['SQL', 'Python', 'Power BI', 'Tableau', 'Looker', 'Excel', 'Fuzzy matching'],
   },
   {
     group: 'AI',
-    items: ['LLM-powered MVPs', 'Prompt engineering', 'AI agent deployment', 'Fuzzy matching'],
+    items: ['LLM-powered MVPs', 'Prompt engineering', 'AI agent deployment'],
   },
   {
     group: 'Platforms and tools',
@@ -104,7 +104,7 @@ const toolkit = [
 const principles = [
   {
     title: 'Name the problem first',
-    text: "A feature request is somebody's guess at a solution. I work backwards from it until the problem fits in one sentence, and only then talk about what to build.",
+    text: "A feature request is somebody’s guess at a solution. I work backwards from it until the problem fits in one sentence, and only then talk about what to build.",
   },
   {
     title: 'Buy certainty cheaply',
@@ -112,7 +112,7 @@ const principles = [
   },
   {
     title: 'Make the trade-off visible',
-    text: "Every real decision gives something up. I'd rather write down what we're sacrificing and defend it than ship a compromise nobody actually chose.",
+    text: "Every real decision gives something up. I’d rather write down what we’re sacrificing and defend it than ship a compromise nobody actually chose.",
   },
   {
     title: 'Judge it by what moved',
@@ -123,7 +123,7 @@ const principles = [
 
 <Base
   title="Madhurjya Bharadwaj, Product Manager"
-  description="I'm a Product Manager who takes products from the first PRD to running in production, and writes the code for my own on the side. Four sectors and twenty-plus markets have taught me one thing that carries across all of them: the real problem usually sits with whoever has to use the product, not whoever asked for it. That's where I start."
+  description="I’m a Product Manager who takes products from the first PRD to running in production, and builds my own products on the side."
 >
   <section class="hero container" aria-labelledby="hero-title">
     <p class="label-pill hero-pill"><span class="dot" aria-hidden="true"></span><span class="eyebrow">Product Manager</span></p>
@@ -135,10 +135,10 @@ const principles = [
     <div class="hero-grid">
       <div class="hero-copy">
         <p class="lead">
-          I'm a Product Manager who takes products from the first PRD to running in production, and writes
-          the code for my own on the side. Four sectors and twenty-plus markets have taught me one thing that
+          I’m a Product Manager who takes products from the first PRD to running in production, and builds
+          my own products on the side. Four sectors and twenty-plus markets have taught me one thing that
           carries across all of them: the real problem usually sits with whoever has to use the product, not
-          whoever asked for it. That's where I start.
+          whoever asked for it. That’s where I start.
         </p>
         <div class="hero-chips">
           <p class="eyebrow">Working across the product lifecycle</p>
@@ -148,7 +148,7 @@ const principles = [
         </div>
         <div class="hero-actions">
           <a class="button primary" href={SITE.cv} download>Resume ↓</a>
-          <a class="button" href="/connect">Let's connect →</a>
+          <a class="button" href="/connect">Let’s connect →</a>
         </div>
       </div>
       <div class="hero-avatar-wrap">
@@ -201,7 +201,7 @@ const principles = [
       <h2 id="roles-title" class="title">The roles I cover</h2>
       <p class="lead">
         Most teams split these titles between different people. I have carried all four in the same week,
-        which is the argument for hiring someone who has done each of them rather than one of them neatly.
+        so I know where each one hands over to the next, and where work usually falls between them.
       </p>
     </div>
     <ul class="roles" data-reveal-group>
@@ -268,7 +268,7 @@ const principles = [
       <p class="lead">
         Case studies and projects. Each one goes into how the problem was framed, the trade-offs, the
         architecture where there is one, and what actually changed, across AI, B2B, data and consumer
-        products. Every write-up includes the part I'd do differently.
+        products. Every write-up includes the part I’d do differently.
       </p>
     </div>
     <ul class="cards">
@@ -368,7 +368,7 @@ const principles = [
     background: var(--butter);
   }
 
-  /* :global because the <Image> component's img is not scoped to this file. */
+  /* :global because the <Image> component’s img is not scoped to this file. */
   .hero-avatar :global(img) {
     width: 130%;
     max-width: none;
@@ -389,7 +389,7 @@ const principles = [
   }
 
   /* Card menu: white cards on the frost ground, one small mark each in its
-     section colour. The same colour reappears as the rule under that page's title. */
+     section colour. The same colour reappears as the rule under that page’s title. */
   .menu ul {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -475,7 +475,9 @@ const principles = [
   }
 
   /* Scorecard strip: four figures on one line. The figures size themselves
-     from the strip's own width, so they fit whatever the viewport. */
+     from the strip’s own width, so they fit whatever the viewport. The divisor
+     is set by the longest figure, "Paris & remote", which is about 6.6em wide:
+     a quarter of the strip, less the gaps, has to hold it. */
   .scorecard {
     margin-top: var(--section-gap);
   }
@@ -494,7 +496,7 @@ const principles = [
     display: block;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(1.5rem, 3.6cqi, 2.75rem);
+    font-size: clamp(1.5rem, calc((100cqi - 6rem) / 28), 2.75rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
     white-space: nowrap;

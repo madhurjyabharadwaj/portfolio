@@ -17,11 +17,11 @@ interface Props {
   outcome: string;
   tags: string[];
   href: string;
-  /** Text of the card's own call to action. Omitted when the links carry it. */
+  /** Text of the card’s own call to action. Omitted when the links carry it. */
   cta?: string;
   /** Live site, repo, anything else worth reaching without opening the page. */
   links?: { label: string; href: string }[];
-  /** Used to tell one card's links from another's for screen readers. */
+  /** Used to tell one card’s links from another’s for screen readers. */
   name?: string;
   number?: string;
   type?: 'case-study' | 'project';

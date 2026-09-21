@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 const pageFiles = import.meta.glob('./**/*.astro');
 
 const staticRoutes = Object.keys(pageFiles)
-  .filter((file) => !file.includes('['))
+  .filter((file) => !file.includes('[') && !file.endsWith('/404.astro'))
   .map((file) =>
     file
       .replace(/^\.\//, '/')
