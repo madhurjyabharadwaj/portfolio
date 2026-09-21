@@ -6,7 +6,8 @@ Working notes for this repo. [README.md](README.md) is the human-facing guide (d
 
 Madhurjya Bharadwaj's personal portfolio. He is a Product Manager, and this site is what he sends to hiring managers instead of a PDF. It has to load fast, read well on a phone, and make someone want to open a case study.
 
-- **Live:** https://portfolio-olive-seven-27.vercel.app (production, deploys on push to `main`)
+- **Live:** https://www.madhurjyabharadwaj.com (production, deploys on push to `main`). The bare domain 308-redirects to www. The old https://portfolio-olive-seven-27.vercel.app still serves the same build; canonical tags point every page at www.
+- **Domain:** madhurjyabharadwaj.com, registered through Vercel, renews yearly. DNS is managed in Vercel, so subdomains (e.g. `work.madhurjyabharadwaj.com`) can be added there for free and pointed at other projects.
 - **Repo:** https://github.com/madhurjyabharadwaj/portfolio
 - **Source copy:** `D:\Downloads\portfolio-content-v5.md` is the approved wording. Later rounds were agreed in chat, so the site is ahead of that file in places.
 
@@ -89,7 +90,6 @@ Screenshots in past sessions were taken with a small DevTools-protocol script in
 
 - **Videos have no captions.** All three launch videos carry sound. Transcripts have been requested but not supplied.
 - **Entalpic permission is unconfirmed.** His own content file said to confirm the client is happy for the deck to be public. The deck is live minus its final page, a third-party stakeholder logo map that he asked to cut. He has never confirmed the permission itself in writing.
-- **No custom domain yet.** `SITE_URL` points at the Vercel address. When a domain is bought, change that one line, or link previews break.
 - **Lighthouse on this machine swings between 85 and 99** depending on load. Compare builds interleaved and take a median; a single run means nothing. On quiet runs every page scores 99 or 100 across all four categories.
 - **The dev server can serve stale scoped CSS** after edits. If a change is not showing, restart it before debugging the CSS.
 - **Git is set to `autocrlf=true`** while `.gitattributes` forces LF, so every commit prints CRLF warnings. Harmless, but noisy.
@@ -100,8 +100,7 @@ Screenshots in past sessions were taken with a small DevTools-protocol script in
 
 Nothing is in flight. Open items, roughly in order of value:
 
-1. Buy the domain and point it at Vercel, then update `SITE_URL`.
-2. Caption the three launch videos once transcripts exist.
-3. Confirm the Entalpic permission, or pull the deck download.
-4. The CV at `public/cv/` still says Apprentice and Intern while the site says Product Manager and Data Product Owner. He was told; it is his call.
-5. `astro check` is not installed. Offer it if type checking would help.
+1. Caption the three launch videos once transcripts exist.
+2. Confirm the Entalpic permission, or pull the deck download.
+3. The CV at `public/cv/` still says Apprentice and Intern while the site says Product Manager and Data Product Owner. He was told; it is his call.
+4. `astro check` is not installed. Offer it if type checking would help.
