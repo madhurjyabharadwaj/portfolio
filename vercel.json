@@ -1,6 +1,14 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "portfolio-olive-seven-27.vercel.app" }],
+      "destination": "https://www.madhurjyabharadwaj.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/_astro/(.*)",
