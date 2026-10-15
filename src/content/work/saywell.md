@@ -11,7 +11,7 @@ role: "Product, build and release"
 outcome: "Takes the typing out of the parts of the day that are just writing: hold a hotkey, speak, and finished text appears in whatever app has focus, whether that’s Slack, an email, a ticket or a terminal. A cleanup pass removes filler and applies spoken corrections, so what lands is sendable rather than a raw transcript, and every dictation stays on the machine in a searchable local history."
 tags: ["Desktop app", "Speech to text", "Windows", "Python"]
 cover: "../../assets/work/saywell.png"
-coverAlt: "Diagram of the dictation flow: hold Ctrl and Win to record, a cleanup pass that strips filler and applies spoken corrections, then finished text pasted at the cursor."
+coverAlt: "The spoken sentence with its filler struck through, a cleanup pass, and the tidied sentence landing at the cursor in the app you were already typing in, with Saywell’s floating bar listening below."
 links:
   - label: "Repo"
     href: "https://github.com/madhurjyabharadwaj/saywell"
@@ -29,7 +29,7 @@ Transcription is the part everyone focuses on, and it’s the part that is alrea
 
 ## Fitting into the work, not beside it
 
-The gesture is hold, speak, release: it records while you hold Ctrl and Win, transcribes when you let go, and pastes wherever the cursor already is. Tap Space while holding and it keeps recording hands-free. There is no window to switch to and nothing to paste out of, because the moment you leave the thing you were writing in, dictation stops being faster than typing.
+The gesture is hold, speak, release: it records while you hold your dictation shortcut, transcribes when you let go, and pastes wherever the cursor already is. Tap Space while holding and it keeps recording hands-free. There is no window to switch to and nothing to paste out of, because the moment you leave the thing you were writing in, dictation stops being faster than typing.
 
 Three details carry more weight than they look. It reads the focused app so the text matches where it is going. It skips password fields entirely. And it restores whatever was on your clipboard, keeping dictations out of the clipboard history. Every dictation is saved to a local, searchable history, so a paragraph you dictated last week is one search away.
 
