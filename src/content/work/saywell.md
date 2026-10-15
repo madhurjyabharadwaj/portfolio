@@ -12,6 +12,11 @@ outcome: "Takes the typing out of the parts of the day that are just writing: ho
 tags: ["Desktop app", "Speech to text", "Windows", "Python"]
 cover: "../../assets/work/saywell.png"
 coverAlt: "The spoken sentence with its filler struck through, a cleanup pass, and the tidied sentence landing at the cursor in the app you were already typing in, with Saywell’s floating bar listening below."
+video:
+  src: "/videos/saywell-launch.mp4"
+  poster: "../../assets/video/saywell-launch.png"
+  alt: "Launch video for Saywell: a line of text typing itself out, a Slack message full of filler words, the filler struck through after a dictation, three lines on how it fits into the work, and the Saywell end card."
+  seconds: 20
 links:
   - label: "Repo"
     href: "https://github.com/madhurjyabharadwaj/saywell"
