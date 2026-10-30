@@ -129,7 +129,7 @@
 }
 
 /* Scroll reveal. `.reveal` is only ever added by JavaScript. */
-.reveal {
+.js .reveal {
   opacity: 0;
   transform: translateY(14px);
   transition:
@@ -137,7 +137,7 @@
     transform 600ms var(--ease-out);
 }
 
-.reveal.is-visible {
+.js .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
@@ -146,7 +146,7 @@
 .menu-card,
 .work-card {
   transition:
-    transform var(--dur-card) var(--ease-spring),
+    transform var(--dur-card) var(--ease-out),
     box-shadow var(--dur-card) var(--ease-out),
     border-color var(--dur-card) var(--ease-out);
   will-change: transform;
@@ -156,21 +156,15 @@
 .work-card:hover {
   transform: translateY(-3px) scale(1.01);
   border-color: transparent;
-  box-shadow:
-    0 2px 4px -2px rgba(20, 27, 61, 0.08),
-    0 18px 36px -16px rgba(20, 27, 61, 0.28);
+  box-shadow: var(--shadow-lift);
 }
 
 .work-card[data-type='case-study']:hover {
-  box-shadow:
-    0 2px 4px -2px rgba(39, 72, 245, 0.1),
-    0 18px 36px -16px rgba(39, 72, 245, 0.35);
+  box-shadow: var(--shadow-lift-cobalt);
 }
 
 .work-card[data-type='project']:hover {
-  box-shadow:
-    0 2px 4px -2px rgba(199, 38, 79, 0.1),
-    0 18px 36px -16px rgba(199, 38, 79, 0.32);
+  box-shadow: var(--shadow-lift-raspberry);
 }
 
 /* Pill nav once the page has scrolled past the hero. */
@@ -181,10 +175,10 @@
 }
 
 .site-header.is-scrolled .pill-nav {
-  background: rgba(255, 255, 255, 0.74);
+  background: var(--glass-scrolled);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
-  box-shadow: 0 10px 30px -14px rgba(20, 27, 61, 0.3);
+  box-shadow: var(--shadow-nav);
 }
 
 /* Ambient light: two soft pools of the palette's own colours, drifting very
@@ -212,8 +206,8 @@
   height: 70vmax;
   background: radial-gradient(
     closest-side,
-    rgba(39, 72, 245, 0.16),
-    rgba(39, 72, 245, 0.05) 55%,
+    var(--ambient-cobalt),
+    var(--ambient-cobalt-soft) 55%,
     transparent 72%
   );
   animation: ambient-a 80s ease-in-out infinite alternate;
@@ -226,8 +220,8 @@
   height: 64vmax;
   background: radial-gradient(
     closest-side,
-    rgba(255, 210, 63, 0.24),
-    rgba(255, 210, 63, 0.08) 55%,
+    var(--ambient-butter),
+    var(--ambient-butter-soft) 55%,
     transparent 72%
   );
   animation: ambient-b 96s ease-in-out infinite alternate;
@@ -302,34 +296,27 @@ main,
   width: 8px;
   height: 8px;
   margin: -4px 0 0 -4px;
-  background: #fff;
+  background: var(--cursor);
 }
 
 .cursor-ring {
   width: 36px;
   height: 36px;
   margin: -18px 0 0 -18px;
-  border: 1.5px solid #fff;
+  border: 1.5px solid var(--cursor);
+  /* The script moves the ring with transform; size changes use the separate
+     scale property so the two never fight. */
   transition:
     opacity var(--dur-fast) var(--ease-out),
-    width var(--dur-card) var(--ease-spring),
-    height var(--dur-card) var(--ease-spring),
-    margin var(--dur-card) var(--ease-spring),
-    border-width var(--dur-card) var(--ease-out);
+    scale var(--dur-card) var(--ease-out);
 }
 
 .cursor-hover .cursor-ring {
-  width: 56px;
-  height: 56px;
-  margin: -28px 0 0 -28px;
-  border-width: 1px;
+  scale: 1.56;
 }
 
 .cursor-down .cursor-ring {
-  width: 14px;
-  height: 14px;
-  margin: -7px 0 0 -7px;
-  border-width: 2px;
+  scale: 0.4;
 }
 
 /* Reduced motion: no entrance, no drift, no lift, no reveal, no cursor.
@@ -350,7 +337,7 @@ main,
     transform: none;
   }
 
-  .reveal {
+  .js .reveal {
     opacity: 1;
     transform: none;
     transition: none;

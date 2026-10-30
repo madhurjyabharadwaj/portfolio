@@ -163,7 +163,7 @@ const Heading = headingLevel;
   }
 
   .work-card.no-cover {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .card-cover {
@@ -223,7 +223,7 @@ const Heading = headingLevel;
     border-radius: 12px;
     box-shadow:
       0 0 0 3px var(--white),
-      0 10px 24px -10px rgba(20, 27, 61, 0.55);
+      var(--shadow-clip);
   }
 
   .cover-clip :global(img) {
@@ -240,7 +240,7 @@ const Heading = headingLevel;
     justify-content: center;
     gap: 0.3rem;
     padding: 0.35rem 0.25rem;
-    background: rgba(20, 27, 61, 0.82);
+    background: var(--scrim);
     color: var(--white);
     font-size: 0.6875rem;
     font-weight: 600;
@@ -443,7 +443,7 @@ const Heading = headingLevel;
 
   @media (max-width: 860px) {
     .work-card {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .work-card.flip .card-cover {

@@ -16,6 +16,7 @@
 }
 
 html {
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-offset);
@@ -31,6 +32,7 @@ html {
 }
 
 body {
+  overflow-x: clip;
   margin: 0;
   background: var(--frost);
   color: var(--slate);
@@ -95,6 +97,13 @@ h2,
 h3 {
   color: var(--ink);
   font-weight: 400;
+  text-wrap: balance;
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
 }
 
 /* Optical size is held at a moderate value so large headings stay plain and
@@ -294,7 +303,7 @@ h3 {
 
 /* Long-form prose rendered from markdown. */
 .prose {
-  max-width: var(--measure);
+  max-width: 60ch; /* Bricolage runs wide: 68ch set about 90 characters a line */
 }
 
 .prose > * + * {

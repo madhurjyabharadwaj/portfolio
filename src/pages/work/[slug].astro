@@ -156,7 +156,7 @@ const mediaStyle = video
     aspect-ratio: var(--clip-aspect, 9 / 16);
     border-radius: var(--radius-menu);
     background: var(--ink);
-    box-shadow: 0 18px 40px -22px rgba(20, 27, 61, 0.5);
+    box-shadow: var(--shadow-media);
   }
 
   .clip figcaption {
@@ -168,7 +168,7 @@ const mediaStyle = video
 
   @media (max-width: 860px) {
     .media.with-video {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       justify-items: start;
     }
 

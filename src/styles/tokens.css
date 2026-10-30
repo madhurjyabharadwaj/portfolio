@@ -14,6 +14,29 @@
   --frost: #f3f5fb; /* page ground: a faint cobalt tint so white surfaces read as cards */
   --hairline: rgba(20, 27, 61, 0.14);
   --hairline-strong: rgba(20, 27, 61, 0.3);
+  --glass: rgba(255, 255, 255, 0.92);        /* pill nav at rest */
+  --glass-scrolled: rgba(255, 255, 255, 0.74);
+  --scrim: rgba(20, 27, 61, 0.82);           /* label strip over a video poster */
+  --ambient-cobalt: rgba(39, 72, 245, 0.16);
+  --ambient-cobalt-soft: rgba(39, 72, 245, 0.05);
+  --ambient-butter: rgba(255, 210, 63, 0.24);
+  --ambient-butter-soft: rgba(255, 210, 63, 0.08);
+  --cursor: #ffffff; /* pure white on purpose: difference blending inverts it over any ground */
+
+  /* Shadows: ink-tinted, always offset downward */
+  --shadow-lift:
+    0 2px 4px -2px rgba(20, 27, 61, 0.08),
+    0 18px 36px -16px rgba(20, 27, 61, 0.28);
+  --shadow-lift-cobalt:
+    0 2px 4px -2px rgba(39, 72, 245, 0.1),
+    0 18px 36px -16px rgba(39, 72, 245, 0.35);
+  --shadow-lift-raspberry:
+    0 2px 4px -2px rgba(199, 38, 79, 0.1),
+    0 18px 36px -16px rgba(199, 38, 79, 0.32);
+  --shadow-nav: 0 10px 30px -14px rgba(20, 27, 61, 0.3);
+  --shadow-menu: 0 18px 40px -18px rgba(20, 27, 61, 0.45);
+  --shadow-media: 0 18px 40px -22px rgba(20, 27, 61, 0.5);
+  --shadow-clip: 0 10px 24px -10px rgba(20, 27, 61, 0.55);
 
   /* Type families */
   /* One family. Display and text differ by weight and size, not by face. */

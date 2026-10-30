@@ -59,7 +59,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     padding: 0.5rem 0.75rem 0.5rem 1.25rem;
     border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.92);
+    background: var(--glass);
   }
 
   .wordmark {
@@ -181,7 +181,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       border: 1px solid var(--hairline-strong);
       border-radius: var(--radius-menu);
       background: var(--white);
-      box-shadow: 0 18px 40px -18px rgba(20, 27, 61, 0.45);
+      box-shadow: var(--shadow-menu);
     }
 
     :global(html.js) .pill-nav ul[hidden] {

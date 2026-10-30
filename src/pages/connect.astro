@@ -177,7 +177,7 @@ import { SITE, isFormConfigured } from '../site';
   .field textarea {
     width: 100%;
     padding: 0.85rem 1rem;
-    border: 1.5px solid var(--hairline-strong);
+    border: 1.5px solid var(--muted);
     border-radius: var(--radius-button);
     background: var(--white);
     transition: border-color var(--dur-fast) var(--ease-out);
@@ -198,8 +198,11 @@ import { SITE, isFormConfigured } from '../site';
   }
 
   .form .button:disabled {
-    opacity: 0.6;
-    cursor: default;
+    border-color: var(--hairline-strong);
+    background: var(--frost);
+    color: var(--muted);
+    opacity: 0.8;
+    cursor: not-allowed;
   }
 
   .form-status {
@@ -222,7 +225,7 @@ import { SITE, isFormConfigured } from '../site';
 
   @media (max-width: 720px) {
     .connect {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

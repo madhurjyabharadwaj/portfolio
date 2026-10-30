@@ -185,7 +185,7 @@ const education = [
 
   @media (max-width: 480px) {
     .school {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .school-what {
@@ -206,7 +206,7 @@ const education = [
 
   .leverage li {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
     gap: 0.9rem;
     padding: 1.25rem 1.5rem;
     border: 1px solid var(--hairline-strong);
@@ -237,7 +237,7 @@ const education = [
 
   @media (max-width: 860px) {
     .about {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .about-side {

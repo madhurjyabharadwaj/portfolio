@@ -140,15 +140,15 @@ const principles = [
           carries across all of them: the real problem usually sits with whoever has to use the product, not
           whoever asked for it. That’s where I start.
         </p>
+        <div class="hero-actions">
+          <a class="button primary" href={SITE.cv} download>Resume ↓</a>
+          <a class="button" href="/connect">Let’s connect →</a>
+        </div>
         <div class="hero-chips">
           <p class="eyebrow">Working across the product lifecycle</p>
           <ul class="tags" aria-label="Areas of work">
             {chips.map((chip) => <li>{chip}</li>)}
           </ul>
-        </div>
-        <div class="hero-actions">
-          <a class="button primary" href={SITE.cv} download>Resume ↓</a>
-          <a class="button" href="/connect">Let’s connect →</a>
         </div>
       </div>
       <div class="hero-avatar-wrap">
@@ -306,12 +306,12 @@ const principles = [
 <style>
   /* Hero: the headline owns the full width; copy and portrait sit beneath it. */
   .hero {
-    padding-top: calc(var(--nav-offset) + clamp(1.5rem, 4vw, 3.5rem));
+    padding-top: calc(var(--nav-offset) + clamp(1.5rem, 4vw, 2.5rem));
     padding-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
   .hero-title {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
   }
 
   .hero-title .line {
@@ -327,7 +327,7 @@ const principles = [
     grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
     align-items: end;
     gap: clamp(2rem, 5vw, 4rem);
-    margin-top: clamp(2rem, 4vw, 3rem);
+    margin-top: 2rem;
   }
 
   .hero-copy > * + * {
@@ -346,8 +346,10 @@ const principles = [
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+  }
+
+  .hero-chips {
+    padding-bottom: 1rem;
   }
 
   .hero-avatar-wrap {
@@ -378,7 +380,7 @@ const principles = [
 
   @media (max-width: 720px) {
     .hero-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       align-items: start;
     }
 
@@ -462,7 +464,7 @@ const principles = [
 
   @media (max-width: 480px) {
     .menu ul {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .menu-card {
@@ -587,7 +589,7 @@ const principles = [
 
   @media (max-width: 560px) {
     .roles {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .roles li + li {
@@ -650,7 +652,7 @@ const principles = [
 
   @media (max-width: 860px) {
     .philosophy {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
 
     .philosophy-head {
@@ -687,7 +689,7 @@ const principles = [
 
   @media (max-width: 720px) {
     .stack-row {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 0.75rem;
     }
   }
