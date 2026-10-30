@@ -37,7 +37,7 @@ src/
   content/work/     one .md per case study or project
   content/also-built/  smaller pieces: a card, no page
   components/       Nav, Footer, WorkCard
-  layouts/Base.astro   head, meta, skip link, ambient layer, script tags
+  layouts/Base.astro   head, meta, skip link, script tags
   lib/work.ts       type labels and the sort helper
   site.ts           name, contact links, CV path, form endpoint, nav items
   styles/           tokens.css, base.css, motion.css
@@ -56,7 +56,9 @@ Routes: `/`, `/about`, `/experience`, `/work`, `/work/[slug]`, `/connect`.
 
 **Avoid a page of identical cards.** The four role blocks are one panel divided by hairlines. The scorecard is a strip between two rules. The principles are a list with small diamond markers. Only the menu and the work cards are actual cards.
 
-**Motion is additive.** Content is complete without JavaScript: the reveal works by JS adding a hidden class and then removing it, never by hiding things in base CSS. Everything is off under `prefers-reduced-motion`. `motion.js` holds the nav blur state, scroll reveal, scorecard count-up, ambient light and the custom cursor; `nav.js` holds the mobile menu and the section spy. Scroll-linked effects use native scroll-driven animations behind `@supports (animation-timeline: ...)` and degrade to the finished state elsewhere.
+**Motion is additive.** Content is complete without JavaScript: the reveal works by JS adding a hidden class and then removing it, never by hiding things in base CSS. Everything is off under `prefers-reduced-motion`. `motion.js` holds the nav blur state, scroll reveal and scorecard count-up; `nav.js` holds the mobile menu and the section spy. Scroll-linked effects use native scroll-driven animations behind `@supports (animation-timeline: ...)` and degrade to the finished state elsewhere.
+
+**No template tells** (removed 2026-10-30 after a Hallmark audit): no tracked all-caps labels or eyebrows over headings, no arrows glued to button or link text, no decorative dots, no single accented word in the headline, no drifting background glow, no custom cursor, no card lift on hover (cards answer hover with an ink border and a cobalt title), and no drawn browser or window bars in cover images. Do not bring them back without being asked.
 
 **Browser surfaces are themed**: selection, caret, scrollbar, focus ring.
 

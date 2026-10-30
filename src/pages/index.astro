@@ -126,11 +126,10 @@ const principles = [
   description="I’m a Product Manager who takes products from the first PRD to running in production, and builds my own products on the side."
 >
   <section class="hero container" aria-labelledby="hero-title">
-    <p class="label-pill hero-pill"><span class="dot" aria-hidden="true"></span><span class="eyebrow">Product Manager</span></p>
     <h1 id="hero-title" class="display hero-title">
       <span class="line"><span class="line-in">Right problem.</span></span>
       <span class="line"><span class="line-in">Real product.</span></span>
-      <span class="line"><span class="line-in accent">Shipped.</span></span>
+      <span class="line"><span class="line-in">Shipped.</span></span>
     </h1>
     <div class="hero-grid">
       <div class="hero-copy">
@@ -141,12 +140,11 @@ const principles = [
           whoever asked for it. That’s where I start.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href={SITE.cv} download>Resume ↓</a>
-          <a class="button" href="/connect">Let’s connect →</a>
+          <a class="button primary" href={SITE.cv} download>Download resume</a>
+          <a class="button" href="/connect">Let’s connect</a>
         </div>
         <div class="hero-chips">
-          <p class="eyebrow">Working across the product lifecycle</p>
-          <ul class="tags" aria-label="Areas of work">
+          <ul class="tags" aria-label="Working across the product lifecycle">
             {chips.map((chip) => <li>{chip}</li>)}
           </ul>
         </div>
@@ -293,7 +291,7 @@ const principles = [
               links={entry.data.links}
               name={entry.data.name}
               href={`/work/${entry.id}`}
-              cta="Read the full case study →"
+              cta="Read the full case study"
               flip={i % 2 === 1}
             />
           </li>
@@ -308,10 +306,6 @@ const principles = [
   .hero {
     padding-top: calc(var(--nav-offset) + clamp(1.5rem, 4vw, 2.5rem));
     padding-bottom: clamp(2.5rem, 5vw, 4rem);
-  }
-
-  .hero-title {
-    margin-top: 1.25rem;
   }
 
   .hero-title .line {
@@ -336,10 +330,6 @@ const principles = [
 
   .hero-copy .lead {
     color: var(--ink);
-  }
-
-  .hero-chips .eyebrow {
-    margin-bottom: 0.75rem;
   }
 
   .hero-actions {

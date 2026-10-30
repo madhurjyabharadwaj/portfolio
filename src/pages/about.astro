@@ -43,7 +43,6 @@ const education = [
 >
   <div class="container about">
     <div class="about-main" data-reveal>
-      <p class="eyebrow with-rule">About me</p>
       <h1 class="title">Engineer by training. Product manager by choice.</h1>
       <p class="lead">
         I trained as an engineer and came out of it more interested in why things get built than in whether
@@ -63,7 +62,7 @@ const education = [
         </p>
       </div>
       <section class="education" aria-labelledby="education">
-        <h2 id="education" class="eyebrow">Education</h2>
+        <h2 id="education">Education</h2>
         <ol class="schools">
           {
             education.map((item) => (
@@ -84,16 +83,13 @@ const education = [
     </div>
 
     <aside class="about-side" aria-labelledby="leverage">
-      <p id="leverage" class="eyebrow with-rule">How I create leverage</p>
+      <h2 id="leverage">How I create leverage</h2>
       <ul class="leverage" data-reveal-group>
         {
           leverage.map((item) => (
             <li>
-              <span class="dot" aria-hidden="true" />
-              <div>
-                <h2>{item.title}</h2>
-                <p>{item.text}</p>
-              </div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
             </li>
           ))
         }
@@ -117,7 +113,7 @@ const education = [
   }
 
   .about-main .title {
-    margin-top: 1rem;
+    margin-top: 0;
     max-width: 16ch;
   }
 
@@ -134,6 +130,14 @@ const education = [
   .about-main .lead {
     color: var(--ink);
     font-weight: 500;
+  }
+
+  .education h2,
+  .about-side h2 {
+    font-size: var(--size-subhead);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
   }
 
   .education {
@@ -194,8 +198,8 @@ const education = [
   }
 
   .about-side {
-    /* Line up the aside heading with the main eyebrow, then let the cards run. */
-    padding-top: 0;
+    /* Line up the aside heading with the page title, then let the cards run. */
+    padding-top: 0.6rem;
   }
 
   .leverage {
@@ -205,24 +209,13 @@ const education = [
   }
 
   .leverage li {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 0.9rem;
     padding: 1.25rem 1.5rem;
     border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-tile);
     background: var(--white);
   }
 
-  .leverage .dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-top: 0.55rem;
-    border-radius: 50%;
-    background: var(--cobalt);
-  }
-
-  .leverage h2 {
+  .leverage h3 {
     font-size: 1.0625rem;
     font-weight: 600;
     line-height: 1.35;

@@ -2,7 +2,6 @@
 // visible without it. Nothing runs under prefers-reduced-motion.
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const finePointer = window.matchMedia('(pointer: fine)').matches;
 
 /* ---------------------------------------------------------------------------
    Pill nav: blur and a soft shadow once the page has scrolled past the hero
@@ -115,121 +114,8 @@ function initCounters() {
   nums.forEach((el) => observer.observe(el));
 }
 
-/* ---------------------------------------------------------------------------
-   Ambient light follows the cursor a little, with lag. Fine pointers only.
---------------------------------------------------------------------------- */
-function initAmbient() {
-  const ambient = document.querySelector('.ambient');
-  if (!ambient) return;
-  let tx = 0;
-  let ty = 0;
-  let x = 0;
-  let y = 0;
-  let running = false;
-  const frame = () => {
-    x += (tx - x) * 0.04;
-    y += (ty - y) * 0.04;
-    ambient.style.setProperty('--mx', x.toFixed(2));
-    ambient.style.setProperty('--my', y.toFixed(2));
-    if (Math.abs(tx - x) > 0.2 || Math.abs(ty - y) > 0.2) {
-      requestAnimationFrame(frame);
-    } else {
-      running = false;
-    }
-  };
-  document.addEventListener(
-    'mousemove',
-    (event) => {
-      tx = (event.clientX / window.innerWidth - 0.5) * 40;
-      ty = (event.clientY / window.innerHeight - 0.5) * 40;
-      if (!running) {
-        running = true;
-        requestAnimationFrame(frame);
-      }
-    },
-    { passive: true }
-  );
-}
-
-/* ---------------------------------------------------------------------------
-   Custom cursor. A dot that tracks exactly and a ring that follows with lag.
-   Fine pointers only, never under reduced motion, and the native cursor comes
-   back over text fields.
---------------------------------------------------------------------------- */
-function initCursor() {
-  const dot = document.createElement('div');
-  const ring = document.createElement('div');
-  dot.className = 'cursor-dot';
-  ring.className = 'cursor-ring';
-  dot.setAttribute('aria-hidden', 'true');
-  ring.setAttribute('aria-hidden', 'true');
-  document.body.append(dot, ring);
-  document.documentElement.classList.add('has-cursor');
-
-  let x = -100;
-  let y = -100;
-  let ringX = x;
-  let ringY = y;
-  let visible = false;
-  let running = false;
-
-  const INTERACTIVE = 'a, button, [role="button"], label, summary, .work-card';
-  const TEXT_FIELD = 'input, textarea, select, [contenteditable="true"]';
-
-  const frame = () => {
-    ringX += (x - ringX) * 0.18;
-    ringY += (y - ringY) * 0.18;
-    dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-    if (Math.abs(x - ringX) > 0.1 || Math.abs(y - ringY) > 0.1) {
-      requestAnimationFrame(frame);
-    } else {
-      running = false;
-    }
-  };
-
-  const tick = () => {
-    if (!running) {
-      running = true;
-      requestAnimationFrame(frame);
-    }
-  };
-
-  document.addEventListener(
-    'mousemove',
-    (event) => {
-      x = event.clientX;
-      y = event.clientY;
-      if (!visible) {
-        visible = true;
-        ringX = x;
-        ringY = y;
-        document.documentElement.classList.add('cursor-visible');
-      }
-      const target = event.target instanceof Element ? event.target : null;
-      const overText = !!target?.closest(TEXT_FIELD);
-      const overLink = !overText && !!target?.closest(INTERACTIVE);
-      document.documentElement.classList.toggle('cursor-native', overText);
-      document.documentElement.classList.toggle('cursor-hover', overLink);
-      tick();
-    },
-    { passive: true }
-  );
-
-  document.addEventListener('mousedown', () => document.documentElement.classList.add('cursor-down'));
-  document.addEventListener('mouseup', () => document.documentElement.classList.remove('cursor-down'));
-  document.addEventListener('mouseleave', () => {
-    visible = false;
-    document.documentElement.classList.remove('cursor-visible');
-  });
-}
-
 if (!reduceMotion) {
   initReveal();
   initCounters();
-  if (finePointer) {
-    initCursor();
-    initAmbient();
-  }
 }
 initNav();
