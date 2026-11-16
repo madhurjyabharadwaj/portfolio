@@ -20,10 +20,10 @@ import { SITE, isFormConfigured } from '../site';
 
     <div class="connect">
       <ul class="ways" aria-label="Ways to reach me" data-reveal-group>
-        <li><a href={`mailto:${SITE.email}`}>Email</a><span class="label">{SITE.email}</span></li>
-        <li><a href={SITE.linkedin} rel="me">LinkedIn</a><span class="label">madhurjya-bharadwaj</span></li>
-        <li><a href={SITE.github} rel="me">GitHub</a><span class="label">madhurjyabharadwaj</span></li>
-        <li><a href={SITE.cv} download>Resume</a><span class="label">PDF</span></li>
+        <li><a href={`mailto:${SITE.email}`}><span class="way">Email</span> <span class="label">{SITE.email}</span></a></li>
+        <li><a href={SITE.linkedin} rel="me"><span class="way">LinkedIn</span> <span class="label">madhurjya-bharadwaj</span></a></li>
+        <li><a href={SITE.github} rel="me"><span class="way">GitHub</span> <span class="label">madhurjyabharadwaj</span></a></li>
+        <li><a href={SITE.cv} download><span class="way">Resume</span> <span class="label">PDF</span></a></li>
       </ul>
 
       {
@@ -131,14 +131,12 @@ import { SITE, isFormConfigured } from '../site';
   .connect {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-    gap: clamp(2rem, 6vw, 5rem);
+    gap: var(--space-fluid-m);
     align-items: start;
   }
 
+  /* The whole row is the link, address included, not just the word above it. */
   .ways li {
-    display: flex;
-    flex-direction: column;
-    padding-block: 1rem;
     border-top: 1px solid var(--hairline);
   }
 
@@ -147,24 +145,30 @@ import { SITE, isFormConfigured } from '../site';
   }
 
   .ways a {
-    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--space-4);
     color: var(--ink);
     text-decoration: none;
   }
 
-  .ways a:hover {
+  .way {
+    font-weight: 600;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .ways a:hover .way {
     color: var(--cobalt);
-    text-decoration: underline;
   }
 
   .form {
     display: grid;
-    gap: 1.25rem;
+    gap: var(--space-5);
   }
 
   .field {
     display: grid;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   label {
@@ -176,9 +180,9 @@ import { SITE, isFormConfigured } from '../site';
   .field input,
   .field textarea {
     width: 100%;
-    padding: 0.85rem 1rem;
-    border: 1.5px solid var(--muted);
-    border-radius: var(--radius-button);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-m);
     background: var(--white);
     transition: border-color var(--dur-fast) var(--ease-out);
   }
@@ -207,7 +211,7 @@ import { SITE, isFormConfigured } from '../site';
 
   .form-status {
     margin: 0;
-    padding-left: 1rem;
+    padding-left: var(--space-4);
     border-left: 3px solid var(--butter);
     color: var(--ink);
   }
@@ -218,7 +222,7 @@ import { SITE, isFormConfigured } from '../site';
   }
 
   .form-fallback {
-    padding-left: 1rem;
+    padding-left: var(--space-4);
     border-left: 3px solid var(--butter);
     color: var(--ink);
   }

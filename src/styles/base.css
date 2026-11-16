@@ -50,6 +50,7 @@ h4,
 p,
 ul,
 ol,
+dl,
 figure,
 blockquote {
   margin: 0;
@@ -149,18 +150,23 @@ dd {
   padding-block: var(--section-gap);
 }
 
+/* The footer brings its own gap, so the last section does not add a second. */
+main > .section:last-child {
+  padding-bottom: 0;
+}
+
 .section-head {
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: var(--space-fluid-m);
 }
 
 .section-head .lead {
-  margin-top: 1rem;
+  margin-top: var(--space-4);
 }
 
 /* Each sub-page title carries a short rule in its menu colour. */
 .page-head {
-  padding-top: clamp(2rem, 6vw, 5rem);
-  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: var(--space-fluid-m);
+  padding-bottom: var(--space-fluid-s);
 }
 
 .page-head .title::after {
@@ -168,13 +174,12 @@ dd {
   display: block;
   width: 3rem;
   height: 0.5rem;
-  margin-top: 1.25rem;
-  border-radius: 2px;
+  margin-top: var(--space-5);
   background: var(--accent, var(--ink));
 }
 
 .page-head .lead {
-  margin-top: 1.5rem;
+  margin-top: var(--space-5);
 }
 
 /* Buttons */
@@ -183,12 +188,12 @@ dd {
   align-items: center;
   justify-content: center;
   min-height: 3rem;
-  padding: 0.75rem 1.5rem;
-  border: 1.5px solid var(--ink);
-  border-radius: var(--radius-button);
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-m);
   background: var(--white);
   color: var(--ink);
-  font-size: var(--size-button);
+  font-size: var(--size-small);
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
@@ -218,7 +223,7 @@ dd {
 /* Type pill on work cards and pages. Colour comes from data-type. */
 .pill {
   display: inline-block;
-  padding: 0.3rem 0.75rem;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
   font-size: var(--size-label);
   font-weight: 500;
@@ -235,21 +240,22 @@ dd {
   color: var(--raspberry);
 }
 
-/* Tag chips: hero lifecycle row, experience themes, work card tags. */
+/* Tags: hero lifecycle row, experience themes, work card tags. Flat and
+   borderless, so they read as labels; only real links carry a border. */
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .tags li {
-  padding: 0.35rem 0.75rem;
-  border: 1px solid var(--hairline-strong);
-  border-radius: 8px;
-  background: var(--white);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-s);
+  background: var(--wash);
   font-size: var(--size-label);
   font-weight: 500;
-  color: var(--ink);
+  line-height: 1.4;
+  color: var(--slate);
 }
 
 /* Long-form prose rendered from markdown. */
@@ -258,7 +264,7 @@ dd {
 }
 
 .prose > * + * {
-  margin-top: 1.25em;
+  margin-top: var(--space-5);
 }
 
 .prose > p:first-child {
@@ -268,7 +274,7 @@ dd {
 }
 
 .prose h2 {
-  margin-top: 2.5em;
+  margin-top: var(--space-7);
   font-family: var(--font-text);
   font-size: var(--size-subhead);
   font-weight: 600;
@@ -276,12 +282,12 @@ dd {
 }
 
 .prose h2 + * {
-  margin-top: 0.75em;
+  margin-top: var(--space-3);
 }
 
 .prose blockquote {
-  padding: 1rem 1.25rem;
-  border-radius: 12px;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-m);
   background: var(--white);
   color: var(--ink);
   font-weight: 500;
@@ -290,8 +296,8 @@ dd {
 .prose code {
   font-family: ui-monospace, 'Cascadia Mono', Menlo, monospace;
   font-size: 0.9em;
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-s);
   background: var(--cobalt-tint);
   color: var(--ink);
 }
@@ -306,8 +312,8 @@ dd {
   top: 0.5rem;
   left: 0.5rem;
   z-index: 100;
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius-button);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-m);
   background: var(--ink);
   color: var(--white);
   font-weight: 600;

@@ -25,7 +25,7 @@ const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
 
     <ul class="cards">
       {
-        work.map((entry, i) => (
+        work.map((entry) => (
           <li data-reveal>
             <WorkCard
               headingLevel="h2"
@@ -47,7 +47,6 @@ const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
               name={entry.data.name}
               href={`/work/${entry.id}`}
               cta="Read the full case study"
-              flip={i % 2 === 1}
             />
           </li>
         ))
@@ -94,7 +93,7 @@ const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
 
   .cards {
     display: grid;
-    gap: 1.5rem;
+    gap: var(--space-5);
   }
 
   .also {

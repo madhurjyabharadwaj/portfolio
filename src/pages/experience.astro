@@ -118,15 +118,15 @@ const steps = [
 
   .intro-note {
     max-width: var(--measure);
-    margin-top: 1.25rem;
+    margin-top: var(--space-5);
     color: var(--muted);
   }
 
   /* A single rail runs down the left, one node per role. */
   .jobs {
     position: relative;
-    margin-top: 1rem;
-    padding-left: 2rem;
+    margin-top: var(--space-4);
+    padding-left: var(--space-6);
   }
 
   .jobs::before {
@@ -187,8 +187,8 @@ const steps = [
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2.6fr);
-    gap: 1rem clamp(2rem, 5vw, 4rem);
-    padding-block: clamp(2rem, 4vw, 3rem);
+    gap: var(--space-4) var(--space-fluid-m);
+    padding-block: var(--space-fluid-m);
     border-bottom: 1px solid var(--hairline);
   }
 
@@ -225,7 +225,7 @@ const steps = [
   }
 
   .sector {
-    margin-top: 0.25rem;
+    margin-top: var(--space-1);
     font-size: var(--size-label);
     font-weight: 500;
     color: var(--muted);
@@ -246,15 +246,15 @@ const steps = [
   /* Problem / Action / Product / Outcome as a labelled strip. */
   .steps {
     display: grid;
-    gap: 0.9rem;
+    gap: var(--space-4);
     max-width: var(--measure);
-    margin-top: 1.5rem;
+    margin-top: var(--space-5);
   }
 
   .step {
     display: grid;
     grid-template-columns: 5.5rem minmax(0, 1fr);
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .step dt {
@@ -269,7 +269,7 @@ const steps = [
   }
 
   .step.outcome {
-    padding-top: 0.9rem;
+    padding-top: var(--space-4);
     border-top: 1px solid var(--hairline);
   }
 
@@ -283,18 +283,18 @@ const steps = [
   }
 
   .job-what .tags {
-    margin-top: 1.5rem;
+    margin-top: var(--space-5);
   }
 
   @media (max-width: 720px) {
     .job {
       grid-template-columns: minmax(0, 1fr);
-      gap: 0.75rem;
+      gap: var(--space-3);
     }
 
     .step {
       grid-template-columns: minmax(0, 1fr);
-      gap: 0.2rem;
+      gap: var(--space-1);
     }
   }
 </style>

@@ -2,8 +2,10 @@
    is a hover/transition that degrades to nothing. Reduced motion turns it
    all off at the bottom of this file. */
 
-/* Hero entrance: one orchestrated sequence, only when JS is present so the
-   no-JS page never hides anything. */
+/* Hero entrance: one short sequence, only when JS is present so the no-JS
+   page never hides anything. Everything is on screen within about 650ms of
+   first paint, and the portrait is never faded: it is the largest thing in
+   the hero, so it paints at once and only slides. */
 @keyframes rise-in {
   from {
     opacity: 0;
@@ -17,11 +19,9 @@
 
 @keyframes arch-in {
   from {
-    opacity: 0;
     transform: translateY(18px) scale(0.97);
   }
   to {
-    opacity: 1;
     transform: none;
   }
 }
@@ -50,43 +50,39 @@
 }
 
 .js .hero-title .line-in {
-  animation: line-in 900ms var(--ease-out) both;
-}
-
-.js .hero-title .line:nth-child(1) .line-in {
-  animation-delay: 80ms;
+  animation: line-in 500ms var(--ease-out) both;
 }
 
 .js .hero-title .line:nth-child(2) .line-in {
-  animation-delay: 200ms;
+  animation-delay: 60ms;
 }
 
 .js .hero-title .line:nth-child(3) .line-in {
-  animation-delay: 320ms;
+  animation-delay: 120ms;
 }
 
 .js .hero-copy > * {
-  animation: rise-in 700ms var(--ease-out) both;
+  animation: rise-in 400ms var(--ease-out) both;
 }
 
 .js .hero-copy > :nth-child(1) {
-  animation-delay: 520ms;
+  animation-delay: 120ms;
 }
 
 .js .hero-copy > :nth-child(2) {
-  animation-delay: 640ms;
+  animation-delay: 180ms;
 }
 
 .js .hero-copy > :nth-child(3) {
-  animation-delay: 760ms;
+  animation-delay: 240ms;
 }
 
 .js .hero-avatar {
-  animation: arch-in 800ms var(--ease-out) 600ms both;
+  animation: arch-in 500ms var(--ease-out) both;
 }
 
 .js .hero-avatar img {
-  animation: portrait-in 900ms var(--ease-out) 760ms both;
+  animation: portrait-in 500ms var(--ease-out) 100ms both;
 }
 
 /* Scroll drift: as the page starts to move, the headline lines leave at

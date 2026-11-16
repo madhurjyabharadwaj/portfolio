@@ -50,7 +50,9 @@ Routes: `/`, `/about`, `/experience`, `/work`, `/work/[slug]`, `/connect`.
 
 ## Design decisions
 
-**Palette** lives in `tokens.css` and nowhere else. Ink `#141b3d`, slate `#3c4460`, muted `#5b6280`, cobalt `#2748f5`, butter `#ffd23f`, raspberry `#c7264f`, on a frost ground `#f3f5fb` so white surfaces read as cards. Colour is allocated, not decorative: each of the four menu cards owns one, and that colour returns as the rule under that page's title.
+**Palette** lives in `tokens.css` and nowhere else. Ink `#141b3d`, slate `#3c4460`, muted `#5b6280`, cobalt `#2748f5`, butter `#ffd23f`, raspberry `#c7264f`, on a frost ground `#f3f5fb` so white surfaces read as cards. Colour is allocated, not decorative: each of the four menu cards owns one, and that colour returns as the rule under that page's title. A single-accent (cobalt only) version was tried on 2026-11-15 and rejected the next day; keep the three colours.
+
+**One scale for everything** (2026-11-15). Spacing is `--space-1` to `--space-9` (4 to 96px) plus `--space-fluid-s`, `--space-fluid-m` and `--section-gap`; every padding, margin and gap uses one of them. Font sizes come from the `--size-*` tokens, with `--size-micro` (12px) as the floor. Radii are `--radius-s/m/l` (6, 12, 20px) and `--radius-pill`. Anything pressable is at least `--tap` (44px) tall. Tags are flat and borderless; only real links and buttons carry a border.
 
 **One typeface.** Bricolage Grotesque, variable, self-hosted as a single woff2. Display and body differ by weight and size, not by family. An earlier round used Bodoni Moda for display and it was rejected as hard to read, so do not reintroduce a second face without being asked. `font-variation-settings: 'opsz' 32` is pinned on headings to stop the face turning condensed at large sizes.
 

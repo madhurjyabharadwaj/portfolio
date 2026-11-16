@@ -30,8 +30,6 @@ interface Props {
   year?: number;
   cover?: ImageMetadata;
   coverAlt?: string;
-  /** Put the cover on the right instead of the left. */
-  flip?: boolean;
   headingLevel?: 'h2' | 'h3';
   external?: boolean;
 }
@@ -55,14 +53,13 @@ const {
   year,
   cover,
   coverAlt = '',
-  flip = false,
   headingLevel = 'h3',
   external = false,
 } = Astro.props;
 const Heading = headingLevel;
 ---
 
-<article class:list={['work-card', { flip, 'no-cover': !cover }]} data-type={type}>
+<article class:list={['work-card', { 'no-cover': !cover }]} data-type={type}>
   {
     cover && (
       <div class="card-cover">
@@ -86,7 +83,7 @@ const Heading = headingLevel;
       </div>
     )
   }
-  <div class="card-body">
+  <div class="card-head">
     <p class="card-meta">
       {number && <span class="card-number">{number}</span>}
       <span class="card-cat">
@@ -104,6 +101,8 @@ const Heading = headingLevel;
     <blockquote class="card-problem">
       <p><strong>Problem statement:</strong> {problem}</p>
     </blockquote>
+  </div>
+  <div class="card-detail">
     <dl class="card-facts">
       <div>
         <dt>My role</dt>
@@ -145,30 +144,37 @@ const Heading = headingLevel;
 </article>
 
 <style>
+  /* Top row: cover beside the title and problem. Second row, full width:
+     role, outcome, tags and links. Every card has the cover on the same side
+     so the titles line up down the page. */
   .work-card {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-    align-items: center;
-    padding: clamp(1.25rem, 2.5vw, 2rem);
+    grid-template-areas:
+      'cover head'
+      'detail detail';
+    gap: var(--space-fluid-s);
+    align-items: start;
+    padding: var(--space-fluid-s);
     border: 1px solid var(--hairline-strong);
-    border-radius: var(--radius-menu);
+    border-radius: var(--radius-l);
     background: var(--white);
-  }
-
-  .work-card.flip .card-cover {
-    order: 2;
   }
 
   .work-card.no-cover {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'head'
+      'detail';
+    gap: var(--space-4);
   }
 
   .card-cover {
+    grid-area: cover;
     position: relative;
     overflow: hidden;
-    border-radius: var(--radius-tile);
+    border-radius: var(--radius-m);
     border: 1px solid var(--hairline);
     background: var(--frost);
     aspect-ratio: 4 / 3;
@@ -219,7 +225,7 @@ const Heading = headingLevel;
     max-width: 190px;
     aspect-ratio: var(--clip-aspect, 9 / 16);
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: var(--radius-m);
     box-shadow:
       0 0 0 3px var(--white),
       var(--shadow-clip);
@@ -237,33 +243,41 @@ const Heading = headingLevel;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.3rem;
-    padding: 0.35rem 0.25rem;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-1);
     background: var(--scrim);
     color: var(--white);
-    font-size: 0.6875rem;
+    font-size: var(--size-micro);
     font-weight: 600;
     line-height: 1;
   }
 
-  @media (max-width: 420px) {
-    .cover-clip-label {
-      font-size: 0.625rem;
-    }
-  }
-
-  .card-body {
+  .card-head,
+  .card-detail {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.9rem;
+    gap: var(--space-4);
     min-width: 0;
+  }
+
+  .card-head {
+    grid-area: head;
+  }
+
+  .card-detail {
+    grid-area: detail;
+  }
+
+  .work-card:not(.no-cover) .card-detail {
+    padding-top: var(--space-fluid-s);
+    border-top: 1px solid var(--hairline);
   }
 
   .card-meta {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--space-3);
     width: 100%;
     font-size: var(--size-label);
     font-weight: 500;
@@ -279,7 +293,7 @@ const Heading = headingLevel;
     display: inline-flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .card-year {
@@ -320,7 +334,7 @@ const Heading = headingLevel;
   }
 
   .card-subtitle {
-    margin-top: -0.4rem;
+    margin-top: calc(var(--space-2) * -1);
     color: var(--muted);
     font-weight: 500;
   }
@@ -330,8 +344,8 @@ const Heading = headingLevel;
   .card-problem {
     position: relative;
     width: 100%;
-    padding: 0.9rem 1.1rem;
-    border-radius: 12px;
+    padding: var(--space-4) var(--space-4);
+    border-radius: var(--radius-m);
     background: var(--cobalt-tint);
   }
 
@@ -345,24 +359,27 @@ const Heading = headingLevel;
     font-weight: 700;
   }
 
+  /* Role in a narrow column, outcome in a wide one, each under its label. */
   .card-facts {
     display: grid;
-    gap: 0.6rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+    gap: var(--space-4) var(--space-fluid-s);
+    width: 100%;
+  }
+
+  .work-card.no-cover .card-facts {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: var(--measure);
   }
 
   .card-facts dt {
-    display: inline;
+    font-size: var(--size-label);
     font-weight: 600;
     color: var(--ink);
   }
 
-  .card-facts dt::after {
-    content: ': ';
-  }
-
   .card-facts dd {
-    display: inline;
-    margin: 0;
+    margin: var(--space-1) 0 0;
     color: var(--slate);
   }
 
@@ -378,24 +395,25 @@ const Heading = headingLevel;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.75rem 1.25rem;
-    margin-top: 0.25rem;
+    gap: var(--space-3) var(--space-5);
+    margin-top: var(--space-1);
   }
 
   .card-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .card-links a {
     pointer-events: auto;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 0.75rem;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
     border: 1px solid var(--hairline-strong);
-    border-radius: 8px;
+    border-radius: var(--radius-s);
     background: var(--white);
     color: var(--ink);
     font-size: var(--size-label);
@@ -429,10 +447,14 @@ const Heading = headingLevel;
   @media (max-width: 860px) {
     .work-card {
       grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'cover'
+        'head'
+        'detail';
     }
 
-    .work-card.flip .card-cover {
-      order: 0;
+    .card-facts {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

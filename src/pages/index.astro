@@ -126,12 +126,12 @@ const principles = [
   description="I’m a Product Manager who takes products from the first PRD to running in production, and builds my own products on the side."
 >
   <section class="hero container" aria-labelledby="hero-title">
-    <h1 id="hero-title" class="display hero-title">
-      <span class="line"><span class="line-in">Right problem.</span></span>
-      <span class="line"><span class="line-in">Real product.</span></span>
-      <span class="line"><span class="line-in">Shipped.</span></span>
-    </h1>
     <div class="hero-grid">
+      <h1 id="hero-title" class="display hero-title">
+        <span class="line"><span class="line-in">Right problem.</span></span>
+        <span class="line"><span class="line-in">Real product.</span></span>
+        <span class="line"><span class="line-in">Shipped.</span></span>
+      </h1>
       <div class="hero-copy">
         <p class="lead">
           I’m a Product Manager who takes products from the first PRD to running in production, and builds
@@ -155,7 +155,7 @@ const principles = [
             src={avatar}
             alt="Illustration of Madhurjya smiling at a laptop, in glasses, a dark jacket and a white t-shirt."
             widths={[420, 640, 900]}
-            sizes="(min-width: 900px) 400px, 80vw"
+            sizes="(min-width: 721px) 520px, 125px"
             loading="eager"
             fetchpriority="high"
           />
@@ -271,7 +271,7 @@ const principles = [
     </div>
     <ul class="cards">
       {
-        work.map((entry, i) => (
+        work.map((entry) => (
           <li data-reveal>
             <WorkCard
               number={String(entry.data.order).padStart(2, '0')}
@@ -292,7 +292,6 @@ const principles = [
               name={entry.data.name}
               href={`/work/${entry.id}`}
               cta="Read the full case study"
-              flip={i % 2 === 1}
             />
           </li>
         ))
@@ -302,10 +301,10 @@ const principles = [
 </Base>
 
 <style>
-  /* Hero: the headline owns the full width; copy and portrait sit beneath it. */
+  /* Hero: headline and copy stack on the left, the portrait stands beside both. */
   .hero {
-    padding-top: calc(var(--nav-offset) + clamp(1.5rem, 4vw, 2.5rem));
-    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    padding-top: calc(var(--nav-offset) + var(--space-fluid-s));
+    padding-bottom: var(--space-fluid-m);
   }
 
   .hero-title .line {
@@ -318,14 +317,25 @@ const principles = [
 
   .hero-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-areas:
+      'title avatar'
+      'copy avatar';
     align-items: end;
-    gap: clamp(2rem, 5vw, 4rem);
-    margin-top: 2rem;
+    gap: var(--space-6) var(--space-fluid-m);
+  }
+
+  .hero-title {
+    grid-area: title;
+    white-space: nowrap;
+  }
+
+  .hero-copy {
+    grid-area: copy;
   }
 
   .hero-copy > * + * {
-    margin-top: 1.5rem;
+    margin-top: var(--space-5);
   }
 
   .hero-copy .lead {
@@ -335,14 +345,15 @@ const principles = [
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .hero-chips {
-    padding-bottom: 1rem;
+    padding-bottom: var(--space-4);
   }
 
   .hero-avatar-wrap {
+    grid-area: avatar;
     justify-self: end;
     width: 100%;
     max-width: 400px;
@@ -356,7 +367,7 @@ const principles = [
     aspect-ratio: 4 / 5;
     width: 100%;
     overflow: hidden;
-    border-radius: 999px 999px var(--radius-menu) var(--radius-menu);
+    border-radius: var(--radius-pill) var(--radius-pill) var(--radius-l) var(--radius-l);
     background: var(--butter);
   }
 
@@ -365,18 +376,24 @@ const principles = [
     width: 130%;
     max-width: none;
     height: auto;
-    margin-bottom: -2%;
+    margin-bottom: -6%; /* crops the strip of desk along the bottom of the drawing */
   }
 
   @media (max-width: 720px) {
+    /* Phone: the portrait shrinks to a small arch beside the headline, so the
+       face and both buttons are on the first screen. */
     .hero-grid {
-      grid-template-columns: minmax(0, 1fr);
-      align-items: start;
+      grid-template-columns: minmax(0, 1fr) min(22vw, 6rem);
+      grid-template-areas:
+        'title avatar'
+        'copy copy';
+      gap: var(--space-5) var(--space-3);
     }
+  }
 
-    .hero-avatar-wrap {
-      justify-self: start;
-      max-width: 300px;
+  @media (max-width: 350px) {
+    .hero-title {
+      white-space: normal;
     }
   }
 
@@ -385,18 +402,18 @@ const principles = [
   .menu ul {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .menu-card {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
     min-height: 13rem;
     height: 100%;
-    padding: 1.5rem;
+    padding: var(--space-5);
     border: 1px solid var(--hairline-strong);
-    border-radius: var(--radius-menu);
+    border-radius: var(--radius-l);
     background: var(--white);
     color: var(--ink);
     text-decoration: none;
@@ -406,7 +423,7 @@ const principles = [
     width: 0.875rem;
     height: 0.875rem;
     margin-bottom: auto;
-    border-radius: 4px;
+    border-radius: 4px; /* a rounded square, as before; --radius-s would make it a dot */
   }
 
   .menu-mark.butter {
@@ -426,7 +443,7 @@ const principles = [
   }
 
   .menu-label {
-    margin-top: 2.5rem;
+    margin-top: var(--space-6);
     font-family: var(--font-display);
     font-size: var(--size-tile);
     font-weight: 700;
@@ -462,7 +479,7 @@ const principles = [
     }
 
     .menu-label {
-      margin-top: 1.25rem;
+      margin-top: var(--space-5);
     }
   }
 
@@ -478,8 +495,8 @@ const principles = [
     container-type: inline-size;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.5rem 2rem;
-    padding-block: clamp(1.75rem, 3vw, 2.5rem);
+    gap: var(--space-5) var(--space-6);
+    padding-block: var(--space-fluid-s);
     border-top: 1px solid var(--hairline);
     border-bottom: 1px solid var(--hairline);
   }
@@ -502,13 +519,13 @@ const principles = [
   .scorecard .label {
     display: block;
     max-width: 24ch;
-    margin-top: 0.6rem;
+    margin-top: var(--space-2);
   }
 
   @media (max-width: 900px) {
     .scorecard ul {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      row-gap: 2rem;
+      row-gap: var(--space-6);
     }
 
     .scorecard strong {
@@ -527,13 +544,13 @@ const principles = [
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     border: 1px solid var(--hairline-strong);
-    border-radius: var(--radius-menu);
+    border-radius: var(--radius-l);
     background: var(--white);
     overflow: hidden;
   }
 
   .roles li {
-    padding: clamp(1.5rem, 2.5vw, 2rem);
+    padding: var(--space-fluid-s);
   }
 
   .roles li + li {
@@ -548,17 +565,17 @@ const principles = [
   }
 
   .role-word {
-    margin-top: 0.5rem;
+    margin-top: var(--space-2);
     font-family: var(--font-display);
-    font-size: var(--size-word);
+    font-size: var(--size-tile);
     font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.03em;
   }
 
   .roles p {
-    margin-top: 1rem;
-    font-size: 1rem;
+    margin-top: var(--space-4);
+    font-size: var(--size-small);
     line-height: 1.55;
     color: var(--slate);
   }
@@ -592,7 +609,7 @@ const principles = [
   .philosophy {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: clamp(2rem, 6vw, 5rem);
+    gap: var(--space-fluid-m);
     align-items: start;
   }
 
@@ -602,14 +619,14 @@ const principles = [
   }
 
   .philosophy-head .lead {
-    margin-top: 1rem;
+    margin-top: var(--space-4);
   }
 
   .principles li {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
-    gap: 1.25rem;
-    padding-block: clamp(1.5rem, 2.5vw, 2rem);
+    gap: var(--space-5);
+    padding-block: var(--space-fluid-s);
     border-top: 1px solid var(--hairline);
   }
 
@@ -620,9 +637,8 @@ const principles = [
   .principle-mark {
     width: 0.625rem;
     height: 0.625rem;
-    margin-top: 0.55rem;
+    margin-top: var(--space-2);
     border: 2px solid var(--cobalt);
-    border-radius: 2px;
     transform: rotate(45deg);
   }
 
@@ -636,7 +652,7 @@ const principles = [
   }
 
   .principles p {
-    margin-top: 0.5rem;
+    margin-top: var(--space-2);
     max-width: 52ch;
   }
 
@@ -650,7 +666,7 @@ const principles = [
     }
 
     .principles li {
-      gap: 1rem;
+      gap: var(--space-4);
     }
   }
 
@@ -658,8 +674,8 @@ const principles = [
   .stack-row {
     display: grid;
     grid-template-columns: minmax(0, 0.5fr) minmax(0, 2fr);
-    gap: 0.75rem 2rem;
-    padding-block: 1.5rem;
+    gap: var(--space-3) var(--space-6);
+    padding-block: var(--space-5);
     border-top: 1px solid var(--hairline);
   }
 
@@ -680,13 +696,13 @@ const principles = [
   @media (max-width: 720px) {
     .stack-row {
       grid-template-columns: minmax(0, 1fr);
-      gap: 0.75rem;
+      gap: var(--space-3);
     }
   }
 
   /* Work cards */
   .cards {
     display: grid;
-    gap: 1.5rem;
+    gap: var(--space-5);
   }
 </style>

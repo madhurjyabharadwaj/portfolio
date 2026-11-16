@@ -109,13 +109,13 @@ const mediaStyle = video
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
   }
 
   .subtitle {
     max-width: var(--measure);
-    margin-top: 1.25rem;
+    margin-top: var(--space-5);
     font-size: var(--size-lead);
     line-height: 1.4;
     color: var(--muted);
@@ -124,8 +124,8 @@ const mediaStyle = video
   /* Cover and launch video sit side by side, sized so their heights match. */
   .media {
     display: grid;
-    gap: 1.25rem;
-    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+    gap: var(--space-5);
+    margin-bottom: var(--space-fluid-m);
   }
 
   .media.with-video {
@@ -141,7 +141,7 @@ const mediaStyle = video
   .cover {
     overflow: hidden;
     border: 1px solid var(--hairline-strong);
-    border-radius: var(--radius-menu);
+    border-radius: var(--radius-l);
     background: var(--white);
   }
 
@@ -154,13 +154,13 @@ const mediaStyle = video
     display: block;
     width: 100%;
     aspect-ratio: var(--clip-aspect, 9 / 16);
-    border-radius: var(--radius-menu);
+    border-radius: var(--radius-l);
     background: var(--ink);
     box-shadow: var(--shadow-media);
   }
 
   .clip figcaption {
-    margin-top: 0.6rem;
+    margin-top: var(--space-2);
     font-size: var(--size-label);
     font-weight: 500;
     color: var(--muted);
@@ -180,16 +180,22 @@ const mediaStyle = video
   .actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: var(--space-3);
     max-width: var(--measure);
-    margin-top: 3rem;
+    margin-top: var(--space-7);
   }
 
   .back {
     max-width: var(--measure);
-    margin-top: 3rem;
-    padding-top: 2rem;
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
     border-top: 1px solid var(--hairline);
     font-weight: 500;
+  }
+
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
   }
 </style>

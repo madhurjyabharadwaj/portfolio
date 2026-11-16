@@ -12,6 +12,7 @@
   --raspberry-tint: #fbe4ea;
   --white: #ffffff;
   --frost: #f3f5fb; /* page ground: a faint cobalt tint so white surfaces read as cards */
+  --wash: rgba(20, 27, 61, 0.06); /* flat fill for tags: reads on frost and on white */
   --hairline: rgba(20, 27, 61, 0.14);
   --hairline-strong: rgba(20, 27, 61, 0.3);
   --glass: rgba(255, 255, 255, 0.92);        /* pill nav at rest */
@@ -30,15 +31,15 @@
   --font-text: 'Bricolage Grotesque', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
   /* Type scale (fluid between ~360px and ~1200px) */
-  --size-display: clamp(2.25rem, 0.9rem + 6vw, 5.5rem);    /* hero headline, full width */
+  --size-display: clamp(2.25rem, 1rem + 4.6vw, 5rem);      /* hero headline, beside the portrait */
   --size-title: clamp(2.125rem, 1.5rem + 2.6vw, 3.5rem);   /* section h2, page h1 */
-  --size-word: clamp(1.875rem, 1.5rem + 1.2vw, 2.5rem);    /* the four role words */
-  --size-tile: clamp(1.5rem, 1.25rem + 1vw, 2.125rem);     /* work card titles, menu labels */
+  --size-tile: clamp(1.5rem, 1.25rem + 1vw, 2.125rem);     /* work card titles, menu labels, role words */
   --size-subhead: 1.375rem;                                /* h2 inside prose, job titles */
   --size-lead: clamp(1.25rem, 1.15rem + 0.45vw, 1.375rem);
   --size-body: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);
+  --size-small: 1rem;      /* buttons, secondary copy in narrow columns */
   --size-label: 0.875rem;
-  --size-button: 1rem;
+  --size-micro: 0.75rem;   /* the floor: nothing on the site is set smaller */
 
   --leading-display: 1;
   --leading-title: 1.05;
@@ -47,14 +48,29 @@
   /* Layout */
   --container: 1120px;
   --measure: 68ch;
-  --gutter: clamp(1rem, 4vw, 2.5rem);
-  --section-gap: clamp(4rem, 8vw, 7rem);
+  --gutter: clamp(1rem, 4vw, 2rem);
+
+  /* Spacing: one scale. Every padding, margin and gap on the site is one of
+     these steps or one of the three fluid gaps below. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-fluid-s: clamp(1.5rem, 3vw, 2rem); /* card padding, gaps inside a block */
+  --space-fluid-m: clamp(2rem, 5vw, 3rem);   /* between blocks, column gaps */
+  --section-gap: clamp(4rem, 8vw, 6rem);     /* between sections */
   --nav-offset: 5.5rem; /* pill nav height plus its top margin */
+  --tap: 2.75rem;       /* 44px: the least height of anything you can press */
 
   /* Shape */
-  --radius-menu: 20px;
-  --radius-tile: 16px;
-  --radius-button: 12px;
+  --radius-s: 6px;   /* tags, small link buttons, inline code */
+  --radius-m: 12px;  /* buttons, fields, covers, tinted blocks */
+  --radius-l: 20px;  /* cards and panels */
   --radius-pill: 999px;
 
   /* Motion */

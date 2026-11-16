@@ -103,13 +103,13 @@ const education = [
   .about {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(2.5rem, 6vw, 5rem);
+    gap: var(--space-fluid-m);
     align-items: start;
-    padding-top: calc(var(--nav-offset) + clamp(1.5rem, 5vw, 4rem));
+    padding-top: calc(var(--nav-offset) + var(--space-fluid-m));
   }
 
   .about-main > * + * {
-    margin-top: 1.5rem;
+    margin-top: var(--space-5);
   }
 
   .about-main .title {
@@ -122,14 +122,21 @@ const education = [
     display: block;
     width: 3rem;
     height: 0.5rem;
-    margin-top: 1.25rem;
-    border-radius: 2px;
+    margin-top: var(--space-5);
     background: var(--accent, var(--ink));
   }
 
   .about-main .lead {
     color: var(--ink);
     font-weight: 500;
+  }
+
+  /* The lead above already opens the page, so the first paragraph of the
+     prose stays at body size instead of becoming a second lead. */
+  .about-main .prose > p:first-child {
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
   }
 
   .education h2,
@@ -141,22 +148,22 @@ const education = [
   }
 
   .education {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
     border-top: 1px solid var(--hairline);
   }
 
   /* Education mirrors an Experience entry: dates and place on the left,
      qualification and school on the right. */
   .schools {
-    margin-top: 0.5rem;
+    margin-top: var(--space-2);
   }
 
   .school {
     display: grid;
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
-    gap: 0.25rem 1.5rem;
-    padding-block: 1rem;
+    gap: var(--space-1) var(--space-5);
+    padding-block: var(--space-4);
   }
 
   .school + .school {
@@ -170,20 +177,20 @@ const education = [
   }
 
   .school .place {
-    margin-top: 0.15rem;
+    margin-top: var(--space-1);
     font-size: var(--size-label);
     font-weight: 500;
     color: var(--muted);
   }
 
   .school h3 {
-    font-size: 1.0625rem;
+    font-size: var(--size-body);
     font-weight: 600;
     line-height: 1.35;
   }
 
   .school-name {
-    margin-top: 0.15rem;
+    margin-top: var(--space-1);
     color: var(--cobalt);
   }
 
@@ -193,37 +200,37 @@ const education = [
     }
 
     .school-what {
-      margin-top: 0.4rem;
+      margin-top: var(--space-2);
     }
   }
 
   .about-side {
     /* Line up the aside heading with the page title, then let the cards run. */
-    padding-top: 0.6rem;
+    padding-top: var(--space-2);
   }
 
   .leverage {
     display: grid;
-    gap: 1rem;
-    margin-top: 1.25rem;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
   }
 
   .leverage li {
-    padding: 1.25rem 1.5rem;
+    padding: var(--space-5) var(--space-5);
     border: 1px solid var(--hairline-strong);
-    border-radius: var(--radius-tile);
+    border-radius: var(--radius-m);
     background: var(--white);
   }
 
   .leverage h3 {
-    font-size: 1.0625rem;
+    font-size: var(--size-body);
     font-weight: 600;
     line-height: 1.35;
   }
 
   .leverage p {
-    margin-top: 0.35rem;
-    font-size: 0.95rem;
+    margin-top: var(--space-1);
+    font-size: var(--size-small);
     line-height: 1.55;
     color: var(--slate);
   }
@@ -234,7 +241,7 @@ const education = [
     }
 
     .about-side {
-      padding-top: 1rem;
+      padding-top: var(--space-4);
     }
   }
 </style>

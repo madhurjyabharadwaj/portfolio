@@ -54,17 +54,20 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     position: relative;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-4);
     max-width: 100%;
-    padding: 0.5rem 0.75rem 0.5rem 1.25rem;
+    padding: var(--space-1) var(--space-2) var(--space-1) var(--space-5);
     border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-pill);
     background: var(--glass);
   }
 
   .wordmark {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
     font-family: var(--font-display);
-    font-size: 1.625rem;
+    font-size: var(--size-subhead);
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1;
@@ -75,12 +78,14 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   ul {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   li a {
-    display: inline-block;
-    padding: 0.5rem 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
     border-radius: var(--radius-pill);
     color: var(--ink);
     font-size: var(--size-label);
@@ -107,9 +112,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   }
 
   .section-link.first {
-    margin-left: 0.6rem;
+    margin-left: var(--space-2);
     border-left: 1px solid var(--hairline);
-    padding-left: 0.6rem;
+    padding-left: var(--space-2);
   }
 
   /* The menu button only appears once JavaScript is there to run it, so the
@@ -117,8 +122,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
   .menu-button {
     display: none;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.9rem;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
     border: 1px solid var(--hairline-strong);
     border-radius: var(--radius-pill);
     background: var(--white);
@@ -155,11 +161,11 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
 
   @media (max-width: 1024px) {
     li a {
-      padding: 0.5rem 0.55rem;
+      padding: 0 var(--space-2);
     }
 
     .pill-nav {
-      gap: 0.75rem;
+      gap: var(--space-3);
     }
   }
 
@@ -175,11 +181,11 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       right: 0;
       z-index: 1;
       display: grid;
-      gap: 0.15rem;
+      gap: var(--space-1);
       min-width: 12rem;
-      padding: 0.5rem;
+      padding: var(--space-2);
       border: 1px solid var(--hairline-strong);
-      border-radius: var(--radius-menu);
+      border-radius: var(--radius-l);
       background: var(--white);
       box-shadow: var(--shadow-menu);
     }
@@ -189,9 +195,9 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     }
 
     :global(html.js) li a {
-      display: block;
-      padding: 0.6rem 0.75rem;
-      border-radius: 10px;
+      display: flex;
+      padding: 0 var(--space-3);
+      border-radius: var(--radius-s);
     }
 
     :global(html.js) .section-link.first {
@@ -199,8 +205,8 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
       padding-left: 0;
       border-left: 0;
       border-top: 1px solid var(--hairline);
-      margin-top: 0.35rem;
-      padding-top: 0.35rem;
+      margin-top: var(--space-1);
+      padding-top: var(--space-1);
     }
   }
 
@@ -209,7 +215,7 @@ const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`)
     :global(html:not(.js)) .pill-nav {
       flex-wrap: wrap;
       justify-content: center;
-      border-radius: var(--radius-menu);
+      border-radius: var(--radius-l);
     }
 
     :global(html:not(.js)) ul {
