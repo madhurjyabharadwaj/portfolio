@@ -5,6 +5,7 @@ name: "Entalpic"
 type: "case-study"
 category: "GTM strategy"
 year: 2026
+featured: true
 order: 1
 problem: "When your technology applies to a dozen industries, the hard question stops being ‘can we’ and becomes ‘which one, and why that one first’."
 role: "Market analysis and go-to-market recommendation"

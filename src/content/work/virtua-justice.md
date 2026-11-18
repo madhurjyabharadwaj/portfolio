@@ -5,7 +5,8 @@ name: "Virtua Justice"
 type: "project"
 category: "Game design"
 year: 2026
-order: 5
+featured: true
+order: 6
 problem: "Arcade games had three minutes and one coin to teach you the rules, make you care, and make you want to play again. Most products get more than that and do worse."
 role: "Design and full build"
 outcome: "Shows that changing what a product rewards changes how people use it. The arcade format keeps its no-tutorial onboarding, but disarming an enemy now pays more than shooting, and civilians cost you, so the top score goes to the most careful player, not the fastest."

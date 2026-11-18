@@ -5,7 +5,7 @@ name: "Out Loud"
 type: "project"
 category: "Consumer / Ed-tech"
 year: 2026
-order: 4
+order: 5
 problem: "Reading isn’t practising. And nobody revises at a desk with a stable connection. They revise on the way somewhere."
 role: "Product, content and full build"
 outcome: "Replaces reading about PM interviews with practising for them. Every answer is scored on structure, user empathy, prioritisation, data reasoning and communication, so you can see whether week four beats week one, and it all works offline, with no sign-up."

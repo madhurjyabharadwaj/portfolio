@@ -3,11 +3,14 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import WorkCard from '../components/WorkCard.astro';
+import TeardownCard from '../components/TeardownCard.astro';
 import avatar from '../assets/avatar.png';
-import { WORK_TYPE_LABEL, byOrder } from '../lib/work';
+import { TEARDOWNS_INTRO, WORK_TYPE_LABEL, byOrder } from '../lib/work';
 import { SITE } from '../site';
 
-const work = (await getCollection('work')).sort(byOrder);
+// Only pieces marked `featured: true` appear here; everything is on /work.
+const work = (await getCollection('work')).filter((e) => e.data.featured).sort(byOrder);
+const teardowns = (await getCollection('teardowns')).filter((e) => e.data.featured).sort(byOrder);
 
 const chips = [
   'Product Discovery',
@@ -271,10 +274,10 @@ const principles = [
     </div>
     <ul class="cards">
       {
-        work.map((entry) => (
+        work.map((entry, i) => (
           <li data-reveal>
             <WorkCard
-              number={String(entry.data.order).padStart(2, '0')}
+              number={String(i + 1).padStart(2, '0')}
               type={entry.data.type}
               typeLabel={WORK_TYPE_LABEL[entry.data.type]}
               category={entry.data.category}
@@ -297,7 +300,31 @@ const principles = [
         ))
       }
     </ul>
+    <p class="more" data-reveal>
+      <a class="button" href="/work">See all work</a>
+    </p>
   </section>
+
+  {
+    teardowns.length > 0 && (
+      <section id="teardowns" class="section container" aria-labelledby="teardowns-title">
+        <div class="section-head" data-reveal>
+          <h2 id="teardowns-title" class="title">Product Teardowns</h2>
+          <p class="lead">{TEARDOWNS_INTRO}</p>
+        </div>
+        <ul class="cards">
+          {teardowns.map((entry) => (
+            <li data-reveal>
+              <TeardownCard entry={entry} headingLevel="h3" />
+            </li>
+          ))}
+        </ul>
+        <p class="more" data-reveal>
+          <a class="button" href="/teardowns">All teardowns</a>
+        </p>
+      </section>
+    )
+  }
 </Base>
 
 <style>
@@ -704,5 +731,10 @@ const principles = [
   .cards {
     display: grid;
     gap: var(--space-5);
+  }
+
+  /* The way through to the full list, under the featured cards. */
+  .more {
+    margin-top: var(--space-6);
   }
 </style>

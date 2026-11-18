@@ -5,6 +5,7 @@ standfirst: "What I would track, what I would test, and why."
 subtitle: "A full event tracking plan for a live mobile game, built from playing it and reading what its players say."
 date: "October 2026"
 readTime: "10 min read"
+featured: true
 order: 1
 tags: ["Event tracking", "A/B testing", "Retention", "Mobile games"]
 cover: "../../assets/teardowns/cup-heroes.png"

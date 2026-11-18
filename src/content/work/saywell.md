@@ -5,7 +5,8 @@ name: "Saywell"
 type: "project"
 category: "Desktop app"
 year: 2026
-order: 6
+featured: true
+order: 3
 problem: "Half my day goes into typing things I could say in a quarter of the time, and dictation leaves me editing a transcript instead of sending a message."
 role: "Product, build and release"
 outcome: "Takes the typing out of the parts of the day that are just writing: hold a hotkey, speak, and finished text appears in whatever app has focus, whether that’s Slack, an email, a ticket or a terminal. A cleanup pass removes filler and applies spoken corrections, so what lands is sendable rather than a raw transcript, and every dictation stays on the machine in a searchable local history."

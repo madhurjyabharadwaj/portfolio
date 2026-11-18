@@ -14,6 +14,7 @@ const work = defineCollection({
       category: z.string(),                    // "GTM strategy", "Marketplace", ...
       year: z.number(),
       order: z.number(),                       // lower comes first; also the card number
+      featured: z.boolean().default(false),    // also shown on the home page
       problem: z.string(),                     // quoted problem statement on the card
       role: z.string(),
       outcome: z.string(),
@@ -63,6 +64,7 @@ const teardowns = defineCollection({
       date: z.string(),                        // as printed: "October 2026"
       readTime: z.string(),
       order: z.number(),                       // lower comes first
+      featured: z.boolean().default(false),    // also shown on the home page
       tags: z.array(z.string()).default([]),
       cover: image(),                          // card and link preview, 1200 x 630
       coverAlt: z.string(),

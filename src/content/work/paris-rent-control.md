@@ -5,6 +5,7 @@ name: "Investing in Paris under rent control"
 type: "case-study"
 category: "Data product"
 year: 2026
+featured: true
 order: 2
 problem: "An investor can find out what a flat costs in about ten seconds and can’t find out what it returns at all."
 role: "Product concept, data pipeline and investor tool"
