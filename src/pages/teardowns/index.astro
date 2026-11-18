@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TeardownCard from '../../components/TeardownCard.astro';
+import { byOrder } from '../../lib/work';
+
+const teardowns = (await getCollection('teardowns')).sort(byOrder);
+const intro =
+  'I play the games and use the products, read what users say, then write down what I would change and how I would measure it. Each teardown ends with an event tracking plan and the tests it feeds, not just opinions.';
+---
+
+<Base title="Product Teardowns · Madhurjya Bharadwaj" description={intro} accent="var(--raspberry)">
+  <div class="container">
+    <header class="page-head" data-reveal>
+      <h1 class="title">Product Teardowns</h1>
+      <p class="lead">{intro}</p>
+    </header>
+
+    <ul class="cards">
+      {
+        teardowns.map((entry) => (
+          <li data-reveal>
+            <TeardownCard entry={entry} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .container {
+    padding-top: var(--nav-offset);
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--space-5);
+  }
+</style>

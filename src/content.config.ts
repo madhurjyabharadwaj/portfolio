@@ -50,4 +50,29 @@ const alsoBuilt = defineCollection({
   }),
 });
 
-export const collections = { work, alsoBuilt };
+// One markdown file in src/content/teardowns = one card on /teardowns and at
+// the foot of /work, plus one page at /teardowns/<filename>.
+const teardowns = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/teardowns' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      summary: z.string(),                     // the one line on the card
+      standfirst: z.string(),                  // bold opening of the subtitle
+      subtitle: z.string(),
+      date: z.string(),                        // as printed: "October 2026"
+      readTime: z.string(),
+      order: z.number(),                       // lower comes first
+      tags: z.array(z.string()).default([]),
+      cover: image(),                          // card and link preview, 1200 x 630
+      coverAlt: z.string(),
+      seoTitle: z.string(),
+      description: z.string(),
+      disclaimer: z.string(),
+      // The sticky contents list: each id is an h2 id in the body.
+      toc: z.array(z.object({ id: z.string(), label: z.string() })),
+      downloads: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
+    }),
+});
+
+export const collections = { work, alsoBuilt, teardowns };

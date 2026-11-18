@@ -2,10 +2,12 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import WorkCard from '../../components/WorkCard.astro';
+import TeardownCard from '../../components/TeardownCard.astro';
 import { WORK_TYPE_LABEL, byOrder } from '../../lib/work';
 
 const work = (await getCollection('work')).sort(byOrder);
 const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
+const teardowns = (await getCollection('teardowns')).sort(byOrder);
 ---
 
 <Base
@@ -80,6 +82,21 @@ const alsoBuilt = (await getCollection('alsoBuilt')).sort(byOrder);
               </li>
             );
           })
+        }
+      </ul>
+    </section>
+
+    <section class="also section" aria-labelledby="teardowns-title">
+      <div class="section-head" data-reveal>
+        <h2 id="teardowns-title" class="title">Product Teardowns</h2>
+      </div>
+      <ul class="cards">
+        {
+          teardowns.map((entry) => (
+            <li data-reveal>
+              <TeardownCard entry={entry} headingLevel="h3" />
+            </li>
+          ))
         }
       </ul>
     </section>

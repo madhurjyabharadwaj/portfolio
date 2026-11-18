@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 // Static routes are read from the pages folder; dynamic ones come from the
-// work collection. A new markdown file is picked up with no changes here.
+// work and teardowns collections. A new markdown file is picked up with no changes here.
 const pageFiles = import.meta.glob('./**/*.astro');
 
 const staticRoutes = Object.keys(pageFiles)
@@ -17,7 +17,12 @@ const staticRoutes = Object.keys(pageFiles)
 
 export const GET: APIRoute = async ({ site }) => {
   const work = await getCollection('work');
-  const routes = [...staticRoutes, ...work.map((entry) => `/work/${entry.id}`)];
+  const teardowns = await getCollection('teardowns');
+  const routes = [
+    ...staticRoutes,
+    ...work.map((entry) => `/work/${entry.id}`),
+    ...teardowns.map((entry) => `/teardowns/${entry.id}`),
+  ];
   const urls = routes
     .map((route) => `  <url><loc>${new URL(route, site).href}</loc></url>`)
     .join('\n');
